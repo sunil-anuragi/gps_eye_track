@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "781126975504",
+    "firebase_url": "https://twings-324f4.firebaseio.com",
+    "project_id": "twings-324f4",
+    "storage_bucket": "twings-324f4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:781126975504:android:a2d206f59e9eee1f",
+        "android_client_info": {
+          "package_name": "com.trackingwings.trackingwings"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "781126975504-rca9qeqa17dae1utm40it7q96ct8r27t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.trackingwings.trackingwings",
+            "certificate_hash": "5f652baab37feada738999dcbd93fd03f973c5ed"
+          }
+        },
+        {
+          "client_id": "781126975504-mge4pev4j2qk8e082gu0nbm9c6n9flkp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArPO00VX_f803MA4TF9HxLRBkulSdVGf0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "781126975504-mge4pev4j2qk8e082gu0nbm9c6n9flkp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "781126975504-mfhls3spfdvnn6l7ei4l4qtnuqd93t2g.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.trackingwings.trackingwings"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,89 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+    id "com.google.gms.google-services"
+}
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '1.0'
+}
+
+def loadEnv() {
+    def props = new Properties()
+    def envFile = file('../../.env')
+    if (envFile.exists()) {
+        envFile.withInputStream { stream ->
+            props.load(stream)
+        }
+    } else {
+        props.setProperty('APP_NAME', 'GPS Software')
+        props.setProperty('MAP_KEY', '')
+    }
+    return props
+}
+
+def envProps = loadEnv()
+
+android {
+    namespace = "com.trackingwings.trackingwings"
+    compileSdk = 36
+    ndkVersion = "28.0.12433566"
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+        coreLibraryDesugaringEnabled true
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    defaultConfig {
+        applicationId = "com.trackingwings.trackingwings"
+        minSdk = 24
+        targetSdk = 36
+        versionCode = flutterVersionCode.toInteger()
+        versionName = flutterVersionName
+        multiDexEnabled true
+        manifestPlaceholders = [appName: envProps['APP_NAME'] ?: 'GPS Software', mapKey: envProps['MAP_KEY'] ?: '']
+    }
+
+    buildTypes {
+        release {
+            signingConfig = signingConfigs.debug
+        }
+    }
+}
+
+flutter {
+    source = "../.."
+}
+
+dependencies {
+    implementation "androidx.appcompat:appcompat:1.6.1"
+    implementation 'com.google.firebase:firebase-analytics:21.5.0'
+    coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:2.1.4"
+    implementation "androidx.core:core-ktx:1.12.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.2.10"
+    implementation 'com.google.firebase:firebase-messaging:23.1.2'
+}

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/alertLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:paddingTop="42dp"
+    android:paddingBottom="42dp"
+    tools:context=".AlarmScreenActivity">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/alertTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Alert"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#1E192C"
+        android:layout_marginTop="32dp"
+        android:layout_centerHorizontal="true" />
+
+
+
+    <!-- Bell with ripple container -->
+    <FrameLayout
+        android:id="@+id/bellContainer"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:layout_below="@id/alertTitle"
+        android:layout_marginTop="64dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/bg_circle_soft">
+
+        <ImageView
+    android:id="@+id/bellIcon"
+    android:layout_width="80dp"
+    android:layout_height="80dp"
+    android:src="@drawable/img_alert"
+    android:layout_gravity="center" />
+    </FrameLayout>
+
+    <!-- Bottom Button -->
+    <LinearLayout
+        android:id="@+id/btnContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="24dp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:background="@drawable/red_button_rounded"
+        android:paddingVertical="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Go to App and Disable alert"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+</RelativeLayout>
