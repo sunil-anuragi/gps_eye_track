@@ -22,6 +22,30 @@ class AppColors {
   static const Color black87 = Color(0xDD000000);
   static const Color black54 = Color(0x8A000000);
 
+  // Bottom bar & home module
+  static const Color activeTabColor = Color(0xffC4302B);
+  static const Color statusRunningColor = Color(0xff2E7D32);
+  static const Color statusRunningBgColor = Color(0xffE8F5E9);
+  static const Color statusStopColor = Color(0xff29B6F6);
+  static const Color statusStopBgColor = Color(0xffE1F5FE);
+  static const Color statusIdleColor = Color(0xffFFA726);
+  static const Color statusIdleBgColor = Color(0xffFFF3E0);
+  static const Color statusOfflineColor = Color(0xff757575);
+  static const Color statusOfflineBgColor = Color(0xffEEEEEE);
+  static const Color statusAllColor = Color(0xff9E9E9E);
+  static const Color statusAllBgColor = Color(0xffF5F5F5);
+  static const Color textGreenColor = Color(0xff4CAF50);
+  static const Color textRedColor = Color(0xffF44336);
+  static const Color searchBgColor = Color(0xffF0F0F0);
+  static const Color dividerColor = Color(0xffE0E0E0);
+  static const Color mapOverlayColor = Color(0xCC333333);
+  static const Color geofenceBlueColor = Color(0xff29B6F6);
+  static const Color geofenceCircleFillColor = Color(0x4D9E9E9E);
+  static const Color screenBgColor = Color(0xffF5F5F5);
+  static const Color supportTealColor = Color(0xff00BCD4);
+  static const Color supportWhatsAppColor = Color(0xff25D366);
+  static const Color supportMailBlueColor = Color(0xff42A5F5);
+
   static MaterialColor primaryColorShades = MaterialColor(
     primaryColor.value,
     <int, Color>{
@@ -147,6 +171,64 @@ extension SizeBoxWidget on double {
   Widget sizeBoxFromWidth() {
     return SizedBox(width: this);
   }
+}
+
+class AppStrings {
+  static const String appTitle = "Sangeetbhati";
+  static const String me = "Me";
+  static const String map = "Map";
+  static const String list = "List";
+  static const String notification = "Notification";
+  static const String account = "Account";
+  static const String searchPlaceholder = "Search...";
+  static const String all = "All";
+  static const String running = "Running";
+  static const String stop = "Stop";
+  static const String idle = "Idle";
+  static const String offline = "Offline";
+  static const String pwr = "PWR";
+  static const String gps = "GPS";
+  static const String ign = "IGN";
+  static const String on = "ON";
+  static const String off = "OFF";
+  static const String userNameLabel = "User Name :";
+  static const String generateReports = "Generate reports";
+  static const String geofence = "Geofence";
+  static const String markerAnimation = "Marker Animation";
+  static const String changePassword = "Change Password";
+  static const String helpAndSupport = "Help and Support";
+  static const String deleteAccount = "Delete Account";
+  static const String logOut = "Log Out";
+  static const String version = "version";
+  static const String refreshIn = "Refresh In";
+  static const String sec = "sec";
+  static const String ignitionOn = "Ignition On";
+  static const String createGeofence = "Create Geofence";
+  static const String enterName = "Enter Name";
+  static const String cancel = "Cancel";
+  static const String save = "Save";
+  static const String saveUpper = "SAVE";
+  static const String circularRadius = "Circular Radius";
+  static const String mtr = "mtr";
+  static const String gpsSoftware = "GPS Software";
+  static const String currentPassword = "Current Password";
+  static const String newPassword = "New Password";
+  static const String confirmPassword = "Confirm Password";
+  static const String changePasswordUpper = "CHANGE PASSWORD";
+  static const String slowMotion = "Slow Motion";
+  static const String jumpMotion = "Jump Motion";
+  static const String ok = "Ok";
+  static const String weAreHappyToHelp = "We are happy to help you";
+  static const String supportSubtitle =
+      "We and our team are ready to assist you in any way, please tell us your problem by calling or messaging us!";
+  static const String contactInformation = "Contact Information";
+  static const String mobile = "Mobile";
+  static const String email = "Email";
+  static const String supportMobile = "81305045000";
+  static const String supportEmail = "support@acutecommunication";
+  static const String deleteAccountMessage = "Are you sure delete account !";
+  static const String cancelUpper = "CANCEL";
+  static const String confirmUpper = "CONFIRM";
 }
 
 class AuthStrings {

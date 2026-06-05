@@ -21,8 +21,17 @@ class Assets {
   static const String assetsSupport = 'assets/support.png';
   static const String assetsVehicle = 'assets/vehicle.png';
   static const String ringtoneAlarmTone = 'assets/ringtone/alarm_tone.mp3';
-
   static const String assetsGpsLogo = 'assets/gps_logo.png';
   static const String assetsPhone = 'assets/phone.png';
   static const String assetsForgetPassword = 'assets/forget_password_1.jpg';
+  static const String assetsNavMap = 'assets/nav_map.png';
+  static const String assetsNavList = 'assets/nav_list.png';
+  static const String assetsNavNotification = 'assets/nav_notification.png';
+  static const String assetsNavAccount = 'assets/nav_account.png';
+  static const String assetsSupportIllustration = 'assets/support_illustration.png';
+  static const String assetsSupportCall = 'assets/support_call.png';
+  static const String assetsSupportWhatsapp = 'assets/support_whatsapp.png';
+  static const String assetsSupportGmail = 'assets/support_gmail.png';
+  static const String assetsSupportSms = 'assets/support_sms.png';
+  static const String assetsMarkerAnimationCar = 'assets/marker_animation_car.png';
 }

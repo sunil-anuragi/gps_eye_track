@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:gps_software/custom_widget.dart';
 import 'package:gps_software/generated/assets.dart';
 import 'package:gps_software/screens/authentications/view/sign_in_view.dart';
 import 'package:gps_software/util/app_constant.dart';
@@ -11,7 +12,7 @@ class CongratulationsDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.whiteColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.r),
       ),
@@ -26,57 +27,30 @@ class CongratulationsDialog extends StatelessWidget {
               fit: BoxFit.contain,
             ),
             16.h.sizeBoxFromHeight(),
-            Text(
-              'Congratulations'.tr,
-              style: TextStyle(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Poppins',
-                color: Colors.black,
-              ),
+            CustomWidget.text(
+              AuthStrings.congratulations,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: AppColors.blackColor,
             ),
             8.h.sizeBoxFromHeight(),
-            Text(
-              "Awesome, you've successfully password send".tr,
+            CustomWidget.text(
+              AuthStrings.successSubtitle,
+              fontSize: 14,
+              color: AppColors.subtitleColor,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 14.sp,
-                fontFamily: 'Poppins',
-                color: Colors.grey[600],
-              ),
             ),
             24.h.sizeBoxFromHeight(),
-            InkWell(
-              onTap: () {
+            CustomWidget.customButton(
+              callBack: () {
                 Get.back();
                 Get.offAllNamed(SignInView.signInView);
               },
-              child: Container(
-                height: 48.h,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: const Color(0xff404040), // Dark grey
-                  borderRadius: BorderRadius.circular(24.r),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
-                      blurRadius: 8,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Center(
-                  child: Text(
-                    'Go To Login'.tr,
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'Poppins',
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
+              btnText: AuthStrings.goToLogin,
+              borderRadius: 24.0,
+              color: AppColors.primaryColor,
+              width: double.infinity,
+              height: 48,
             ),
           ],
         ),

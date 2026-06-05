@@ -1,38 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gps_software/screens/bottomBar/module/account/view/account_view.dart';
+import 'package:gps_software/screens/bottomBar/module/map/view/map_view.dart';
+import 'package:gps_software/screens/bottomBar/module/notification/view/notification_view.dart';
+import 'package:gps_software/screens/bottomBar/module/vehicleList/view/vehicle_list_view.dart';
 import 'package:gps_software/util/base_controller.dart';
 
 class BottomBarViewModel extends BaseController {
-  List<Widget> buildMainScreen() {
-    return [
-      const Center(child: Text("Vehicle")),
-      const Center(child: Text("Map")),
-      const Center(child: Text("Chart")),
-      const Center(child: Text("Summary")),
-      const Center(child: Text("Setting")),
-    ];
-  }
-
-  List<Widget> buildSummaryScreen() {
-    return [
-      const Center(child: Text("Vehicle")),
-      const Center(child: Text("Map")),
-      const Center(child: Text("Summary")),
-      const Center(child: Text("Setting")),
-    ];
-  }
-
-  List<Widget> buildchartScreen() {
-    return [
-      const Center(child: Text("Vehicle")),
-      const Center(child: Text("Map")),
-      const Center(child: Text("Chart")),
-      const Center(child: Text("Setting")),
-    ];
-  }
-
   RxInt selectedIndex = 0.obs;
   RxString appVersion = "1.0.0".obs;
+
+  void onTabSelected(int index) {
+    if (selectedIndex.value == index) return;
+    selectedIndex.value = index;
+  }
+
+  List<Widget> buildMainScreen() {
+    return const [
+      MapView(),
+      VehicleListView(),
+      NotificationView(),
+      AccountView(),
+    ];
+  }
 
   Future<void> checkConnectionStatus() async {}
   Future<void> getAppVersion() async {}

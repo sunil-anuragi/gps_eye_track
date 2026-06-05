@@ -1,0 +1,80 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gps_software/custom_widget.dart';
+import 'package:gps_software/screens/bottomBar/module/notification/viewModel/notification_view_model.dart';
+import 'package:gps_software/util/app_constant.dart';
+
+class NotificationListTile extends StatelessWidget {
+  const NotificationListTile({
+    super.key,
+    required this.notification,
+  });
+
+  final NotificationItem notification;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                width: 40.r,
+                height: 40.r,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: AppColors.textGreenColor,
+                    width: 2,
+                  ),
+                ),
+                child: Icon(
+                  Icons.vpn_key_outlined,
+                  color: AppColors.textGreenColor,
+                  size: 18.r,
+                ),
+              ),
+              12.w.sizeBoxFromWidth(),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomWidget.text(
+                      notification.vehicleId,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.blackColor,
+                    ),
+                    4.h.sizeBoxFromHeight(),
+                    CustomWidget.text(
+                      notification.message,
+                      fontSize: 12,
+                      color: AppColors.subtitleColor,
+                    ),
+                  ],
+                ),
+              ),
+              CustomWidget.text(
+                notification.timestamp,
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: AppColors.blackColor,
+                textAlign: TextAlign.end,
+              ),
+            ],
+          ),
+        ),
+        Divider(
+          height: 1,
+          thickness: 2.0.r,
+          color: AppColors.dividerColor,
+          // indent: 16.w,
+          // endIndent: 16.w,
+        ),
+      ],
+    );
+  }
+}
