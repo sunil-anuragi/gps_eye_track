@@ -11,8 +11,10 @@ import 'package:gps_software/screens/bottomBar/module/account/widget/delete_acco
 import 'package:gps_software/util/app_constant.dart';
 import 'package:gps_software/util/base_controller.dart';
 
+import '../../../../../generated/assets.dart';
+
 class AccountMenuItem {
-  final IconData icon;
+  final String icon;
   final String title;
 
   const AccountMenuItem({
@@ -31,29 +33,29 @@ class AccountViewModel extends BaseController {
   RxString userName = 'SangeetBhati'.obs;
   RxString appVersion = '1.0.0'.obs;
 
-  final List<AccountMenuItem> menuItems = const [
+  final List<AccountMenuItem> menuItems = [
     AccountMenuItem(
-      icon: Icons.bar_chart,
+      icon: Assets.assetsGenrateReport,
       title: AppStrings.generateReports,
     ),
     AccountMenuItem(
-      icon: Icons.grid_on,
+      icon: Assets.assetsGeofence,
       title: AppStrings.geofence,
     ),
     AccountMenuItem(
-      icon: Icons.animation,
+      icon: Assets.assetsGeofence,
       title: AppStrings.markerAnimation,
     ),
     AccountMenuItem(
-      icon: Icons.settings,
+      icon: Assets.assetsChangePassword,
       title: AppStrings.changePassword,
     ),
     AccountMenuItem(
-      icon: Icons.support_agent,
+      icon: Assets.assetsHelpSupport,
       title: AppStrings.helpAndSupport,
     ),
     AccountMenuItem(
-      icon: Icons.person_remove_outlined,
+      icon: Assets.assetsAccount,
       title: AppStrings.deleteAccount,
     ),
   ];
@@ -105,6 +107,9 @@ class AccountViewModel extends BaseController {
 
   void onMenuTap(String title) {
     switch (title) {
+      // case AppStrings.generateReports:
+      //   Get.toNamed(GenerateReportsView.generateReportsView);
+      //   break;
       case AppStrings.geofence:
         Get.toNamed(GeofenceListView.geofenceListView);
         break;

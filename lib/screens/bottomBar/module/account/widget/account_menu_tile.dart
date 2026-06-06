@@ -24,17 +24,17 @@ class AccountMenuTile extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
             child: Row(
               children: [
-                Icon(
+                Image.asset(
                   item.icon,
-                  size: 22.r,
-                  color: AppColors.iconGrayColor,
+                  height: 20.h,
+                  width: 20.w,
                 ),
                 16.w.sizeBoxFromWidth(),
                 Expanded(
                   child: CustomWidget.text(
                     item.title,
                     fontSize: 14,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w400,
                     color: AppColors.blackColor,
                   ),
                 ),
@@ -49,10 +49,8 @@ class AccountMenuTile extends StatelessWidget {
         ),
         Divider(
           height: 1,
-          thickness: 0.5,
+          thickness: 1.0,
           color: AppColors.dividerColor,
-          indent: 16.w,
-          endIndent: 16.w,
         ),
       ],
     );

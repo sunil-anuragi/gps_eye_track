@@ -37,36 +37,36 @@ class VehicleListViewModel extends BaseController {
   final TextEditingController searchController = TextEditingController();
   RxInt selectedFilterIndex = 0.obs;
 
-  final List<StatusFilterItem> statusFilters = const [
+  final List<StatusFilterItem> statusFilters = [
     StatusFilterItem(
       label: AppStrings.all,
       count: 30,
-      borderColor: AppColors.statusAllColor,
-      bgColor: AppColors.statusAllBgColor,
+      borderColor: AppColors.allColor,
+      bgColor: AppColors.allInnerColor,
     ),
     StatusFilterItem(
       label: AppStrings.running,
       count: 30,
-      borderColor: AppColors.statusRunningColor,
-      bgColor: AppColors.statusRunningBgColor,
+      borderColor: AppColors.runningColor,
+      bgColor: AppColors.runningInnerColor.withValues(alpha: 0.29),
     ),
     StatusFilterItem(
       label: AppStrings.stop,
       count: 25,
-      borderColor: AppColors.statusStopColor,
-      bgColor: AppColors.statusStopBgColor,
+      borderColor: AppColors.stopColor,
+      bgColor: AppColors.stopColor.withValues(alpha: 0.12),
     ),
     StatusFilterItem(
       label: AppStrings.idle,
       count: 20,
-      borderColor: AppColors.statusIdleColor,
-      bgColor: AppColors.statusIdleBgColor,
+      borderColor: AppColors.idleColor,
+      bgColor: AppColors.idleInnerColor,
     ),
     StatusFilterItem(
       label: AppStrings.offline,
       count: 50,
-      borderColor: AppColors.statusOfflineColor,
-      bgColor: AppColors.statusOfflineBgColor,
+      borderColor: AppColors.offlineColor,
+      bgColor: AppColors.offlineInnerColor,
     ),
   ];
 

@@ -18,15 +18,19 @@ class AccountView extends GetView<AccountViewModel> {
       body: Column(
         children: [
           const AccountProfileHeader(),
+          Divider(
+            height: 1,
+            thickness: 1.0,
+            color: AppColors.dividerColor,
+          ),
           Expanded(
             child: ListView.builder(
               itemCount: controller.menuItems.length,
               itemBuilder: (context, index) {
                 final item = controller.menuItems[index];
-                return AccountMenuTile(
-                  item: item,
-                  onTap: () => controller.onMenuTap(item.title),
-                );
+                return AccountMenuTile(item: item, onTap: () => ()
+                    // controller.onMenuTap(item.title),
+                    );
               },
             ),
           ),

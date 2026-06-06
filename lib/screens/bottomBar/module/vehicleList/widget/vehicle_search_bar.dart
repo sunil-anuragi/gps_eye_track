@@ -4,6 +4,9 @@ import 'package:get/get.dart';
 import 'package:gps_software/screens/bottomBar/module/vehicleList/viewModel/vehicle_list_view_model.dart';
 import 'package:gps_software/util/app_constant.dart';
 
+import '../../../../../custom_widget.dart';
+import '../../../../../generated/assets.dart';
+
 class VehicleSearchBar extends StatefulWidget {
   const VehicleSearchBar({super.key});
 
@@ -93,25 +96,13 @@ class _VehicleSearchBarState extends State<VehicleSearchBar>
           height: 48.h,
           decoration: BoxDecoration(
             color: AppColors.searchBgColor,
-            borderRadius: BorderRadius.circular(12.r),
+            borderRadius: BorderRadius.circular(5.r),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
+                color: AppColors.blackColor.withValues(alpha: 0.25),
                 blurRadius: 4,
-                offset: const Offset(0, 2),
+                offset: const Offset(0, 4),
                 spreadRadius: 0,
-              ),
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.10),
-                blurRadius: 14,
-                offset: const Offset(0, 6),
-                spreadRadius: 1,
-              ),
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.04),
-                blurRadius: 24,
-                offset: const Offset(0, 12),
-                spreadRadius: 2,
               ),
             ],
           ),
@@ -134,21 +125,14 @@ class _VehicleSearchBarState extends State<VehicleSearchBar>
                     ),
                     10.w.sizeBoxFromWidth(),
                     Expanded(
-                      child: Text(
-                        AppStrings.searchPlaceholder.tr,
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontFamily: 'Poppins',
-                          color: AppColors.grayColor,
-                          height: 1.2,
-                        ),
+                      child: CustomWidget.text(
+                        AppStrings.searchPlaceholder,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.statusAllColor,
                       ),
                     ),
-                    Icon(
-                      Icons.search,
-                      color: AppColors.grayColor,
-                      size: searchIconSize,
-                    ),
+                    Image.asset(Assets.assetsSearch, height: 15.r),
                     14.w.sizeBoxFromWidth(),
                   ],
                 );
@@ -216,11 +200,7 @@ class _VehicleSearchBarState extends State<VehicleSearchBar>
                         child: Center(child: child),
                       );
                     },
-                    child: Icon(
-                      Icons.search,
-                      color: AppColors.grayColor,
-                      size: searchIconSize,
-                    ),
+                    child: Image.asset(Assets.assetsSearch, height: 15.r),
                   ),
                 ],
               );

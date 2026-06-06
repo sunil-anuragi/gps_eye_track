@@ -18,7 +18,7 @@ class AppColors {
 
   // Custom colors for auth module
   static const Color blueColor = Color(0xff4285F4);
-  static const Color subtitleColor = Color(0xFF757575);
+  static const Color subtitleColor = Color(0xFF333333);
   static const Color black87 = Color(0xDD000000);
   static const Color black54 = Color(0x8A000000);
 
@@ -37,7 +37,7 @@ class AppColors {
   static const Color textGreenColor = Color(0xff4CAF50);
   static const Color textRedColor = Color(0xffF44336);
   static const Color searchBgColor = Color(0xffF0F0F0);
-  static const Color dividerColor = Color(0xffE0E0E0);
+  static const Color dividerColor = Color(0xffD9D9D9);
   static const Color mapOverlayColor = Color(0xCC333333);
   static const Color geofenceBlueColor = Color(0xff29B6F6);
   static const Color geofenceCircleFillColor = Color(0x4D9E9E9E);
@@ -45,6 +45,16 @@ class AppColors {
   static const Color supportTealColor = Color(0xff00BCD4);
   static const Color supportWhatsAppColor = Color(0xff25D366);
   static const Color supportMailBlueColor = Color(0xff42A5F5);
+  static const Color textColor = Color(0xffA8A8A8);
+  static const Color allColor = Color(0xff615E5E);
+  static const Color allInnerColor = Color(0xffEBEBEB);
+  static const Color runningColor = Color(0xff007C2A);
+  static const Color runningInnerColor = Color(0xff4AC373);
+  static const Color stopColor = Color(0xff00CEFF);
+  static const Color idleColor = Color(0xffFF9900);
+  static const Color idleInnerColor = Color(0xffF9DEB5);
+  static const Color offlineInnerColor = Color(0xffADADAD);
+  static const Color offlineColor = Color(0xff414141);
 
   static MaterialColor primaryColorShades = MaterialColor(
     primaryColor.value,
@@ -242,17 +252,20 @@ class AuthStrings {
   static const String login = "Login";
 
   static const String forgetPasswordTitle = "Forget Password";
-  static const String forgetPasswordSubtitle = "Enter your user account to reset password";
+  static const String forgetPasswordSubtitle =
+      "Enter your user account to reset password";
   static const String enterUserId = "Enter your user id";
   static const String continueBtn = "Continue";
 
   static const String resetPasswordTitle = "Reset Password";
   static const String resetPasswordSubtitle = "Select option to reset password";
-  static const String registerEmail = "Register Email Id: ac***********@gmail.com";
+  static const String registerEmail =
+      "Register Email Id: ac***********@gmail.com";
   static const String registerMobile = "Register Mobile No: **********7078";
 
   static const String congratulations = "Congratulations";
-  static const String successSubtitle = "Awesome, you've successfully password send";
+  static const String successSubtitle =
+      "Awesome, you've successfully password send";
   static const String goToLogin = "Go To Login";
 }
 

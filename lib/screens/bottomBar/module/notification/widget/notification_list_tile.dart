@@ -44,14 +44,14 @@ class NotificationListTile extends StatelessWidget {
                   children: [
                     CustomWidget.text(
                       notification.vehicleId,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
                       color: AppColors.blackColor,
                     ),
                     4.h.sizeBoxFromHeight(),
                     CustomWidget.text(
                       notification.message,
-                      fontSize: 12,
+                      fontSize: 10,
                       color: AppColors.subtitleColor,
                     ),
                   ],
@@ -61,7 +61,7 @@ class NotificationListTile extends StatelessWidget {
                 notification.timestamp,
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
-                color: AppColors.blackColor,
+                color: AppColors.subtitleColor,
                 textAlign: TextAlign.end,
               ),
             ],
@@ -69,10 +69,8 @@ class NotificationListTile extends StatelessWidget {
         ),
         Divider(
           height: 1,
-          thickness: 2.0.r,
+          thickness: 1.0.r,
           color: AppColors.dividerColor,
-          // indent: 16.w,
-          // endIndent: 16.w,
         ),
       ],
     );

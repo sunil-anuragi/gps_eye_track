@@ -28,10 +28,17 @@ class Assets {
   static const String assetsNavList = 'assets/nav_list.png';
   static const String assetsNavNotification = 'assets/nav_notification.png';
   static const String assetsNavAccount = 'assets/nav_account.png';
-  static const String assetsSupportIllustration = 'assets/support_illustration.png';
+  static const String assetsSupportIllustration =
+      'assets/support_illustration.png';
   static const String assetsSupportCall = 'assets/support_call.png';
   static const String assetsSupportWhatsapp = 'assets/support_whatsapp.png';
   static const String assetsSupportGmail = 'assets/support_gmail.png';
   static const String assetsSupportSms = 'assets/support_sms.png';
-  static const String assetsMarkerAnimationCar = 'assets/marker_animation_car.png';
+  static const String assetsMarkerAnimationCar =
+      'assets/marker_animation_car.png';
+  static const String assetsAccount = 'assets/account.png';
+  static const String assetsChangePassword = 'assets/changePassword.png';
+  static const String assetsGeofence = 'assets/geofence.png';
+  static const String assetsHelpSupport = 'assets/helpSupport.png';
+  static const String assetsGenrateReport = 'assets/genrateReport.png';
 }

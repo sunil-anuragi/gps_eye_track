@@ -19,25 +19,13 @@ class VehicleListTile extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
       decoration: BoxDecoration(
         color: AppColors.whiteColor,
-        borderRadius: BorderRadius.circular(10.r),
+        borderRadius: BorderRadius.circular(4.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.06),
+            color: AppColors.blackColor.withValues(alpha: 0.25),
             blurRadius: 4,
-            offset: const Offset(0, 2),
+            offset: const Offset(0, 4),
             spreadRadius: 0,
-          ),
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.10),
-            blurRadius: 12,
-            offset: const Offset(0, 6),
-            spreadRadius: 1,
-          ),
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-            spreadRadius: 2,
           ),
         ],
       ),
@@ -63,15 +51,15 @@ class VehicleListTile extends StatelessWidget {
               children: [
                 CustomWidget.text(
                   vehicle.name,
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
                   color: AppColors.blackColor,
                 ),
                 4.h.sizeBoxFromHeight(),
                 CustomWidget.text(
                   vehicle.status,
-                  fontSize: 11,
-                  color: AppColors.subtitleColor,
+                  fontSize: 12,
+                  color: AppColors.textColor,
                 ),
               ],
             ),
@@ -107,15 +95,16 @@ class VehicleListTile extends StatelessWidget {
       children: [
         CustomWidget.text(
           value,
-          fontSize: 11,
-          fontWeight: FontWeight.w600,
+          fontSize: 10,
+          fontWeight: FontWeight.w400,
           color: isOn ? AppColors.textGreenColor : AppColors.textRedColor,
         ),
         2.h.sizeBoxFromHeight(),
         CustomWidget.text(
           label,
-          fontSize: 10,
-          color: AppColors.grayColor,
+          fontSize: 9,
+          fontWeight: FontWeight.w400,
+          color: AppColors.textColor,
         ),
       ],
     );
