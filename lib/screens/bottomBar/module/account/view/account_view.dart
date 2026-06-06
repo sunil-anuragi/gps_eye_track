@@ -28,9 +28,10 @@ class AccountView extends GetView<AccountViewModel> {
               itemCount: controller.menuItems.length,
               itemBuilder: (context, index) {
                 final item = controller.menuItems[index];
-                return AccountMenuTile(item: item, onTap: () => ()
-                    // controller.onMenuTap(item.title),
-                    );
+                return AccountMenuTile(
+                  item: item,
+                  onTap: () => controller.onMenuTap(item.title),
+                );
               },
             ),
           ),
