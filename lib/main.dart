@@ -411,7 +411,7 @@ class _MyAppState extends State<MyApp> {
 
   void _checkIntent() async {
     const MethodChannel channel =
-        MethodChannel('com.trackingwings.trackingwings/alert');
+        MethodChannel('com.gpssoftware/alert');
     try {
       final result = await channel.invokeMethod('getSafeAlert');
       print("resy;ut" + result.toString());

@@ -1,4 +1,4 @@
-package com.trackingwings.trackingwings
+package com.gpssoftware
 import android.media.MediaPlayer
 import android.app.KeyguardManager
 import android.os.Build

@@ -1,4 +1,4 @@
-package com.trackingwings.trackingwings
+package com.gpssoftware
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -10,7 +10,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.trackingwings.trackingwings.AlarmScreenActivity 
+import com.gpssoftware.AlarmScreenActivity 
 import android.app.Notification
 import android.app.ActivityManager
 import org.json.JSONObject

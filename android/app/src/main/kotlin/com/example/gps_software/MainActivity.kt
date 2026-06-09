@@ -1,4 +1,4 @@
-package com.trackingwings.trackingwings
+package com.gpssoftware
 import android.os.Bundle
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
@@ -6,7 +6,7 @@ import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : FlutterActivity() {
 
-    private val CHANNEL = "com.trackingwings.trackingwings/alert"
+    private val CHANNEL = "com.gpssoftware/alert"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

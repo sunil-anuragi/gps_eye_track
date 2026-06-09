@@ -35,12 +35,12 @@ class AccountModuleAppBar extends StatelessWidget implements PreferredSizeWidget
       title: CustomWidget.text(
         title,
         color: AppColors.whiteColor,
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: FontWeight.w600,
       ),
       actions: [
         if (action != null) action!,
-        SizedBox(width: 8.w),
+        SizedBox(width: 5.w),
       ],
     );
   }

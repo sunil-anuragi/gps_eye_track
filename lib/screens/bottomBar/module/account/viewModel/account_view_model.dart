@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:gps_software/screens/bottomBar/module/account/module/change_password/view/change_password_view.dart';
+import 'package:gps_software/screens/bottomBar/module/account/module/generate_report/view/generate_report_view.dart';
+import 'package:gps_software/screens/bottomBar/module/account/module/generate_report/widget/report_date_selection_dialog.dart';
+import 'package:gps_software/screens/bottomBar/module/account/module/generate_report/widget/report_selection_dialog.dart';
 import 'package:gps_software/screens/bottomBar/module/account/module/geofence/view/geofence_list_view.dart';
 import 'package:gps_software/screens/bottomBar/module/account/module/geofence/view/geofence_map_view.dart';
 import 'package:gps_software/screens/bottomBar/module/account/module/geofence/widget/geofence_create_dialog.dart';
@@ -20,6 +23,30 @@ class AccountMenuItem {
   const AccountMenuItem({
     required this.icon,
     required this.title,
+  });
+}
+
+enum ReportSelectionDialogType { vehicle, reportType }
+
+class ReportTripItem {
+  final String startAddress;
+  final String startTime;
+  final String endAddress;
+  final String endTime;
+  final String avgSpeed;
+  final String duration;
+  final String maxSpeed;
+  final String distance;
+
+  const ReportTripItem({
+    required this.startAddress,
+    required this.startTime,
+    required this.endAddress,
+    required this.endTime,
+    required this.avgSpeed,
+    required this.duration,
+    required this.maxSpeed,
+    required this.distance,
   });
 }
 
@@ -93,12 +120,80 @@ class AccountViewModel extends BaseController {
   // Marker animation
   RxString selectedMotion = AppStrings.slowMotion.obs;
 
+  // Generate report
+  RxString selectedReportVehicle = ''.obs;
+  RxString selectedReportType = ''.obs;
+  RxString selectedDateRange = AppStrings.oneHrAgo.obs;
+  RxBool showReportResults = false.obs;
+  RxString reportSearchQuery = ''.obs;
+  ReportSelectionDialogType reportSelectionDialogType =
+      ReportSelectionDialogType.vehicle;
+  final TextEditingController reportSearchController = TextEditingController();
+
+  final List<String> reportVehicles =
+      List.generate(8, (_) => 'DL2RQ-4235');
+
+  final List<String> reportTypes = const [
+    AppStrings.distanceReport,
+    AppStrings.stopReport,
+    AppStrings.idleReport,
+    AppStrings.tripReport,
+    AppStrings.overspeedReport,
+    AppStrings.geofenceReport,
+  ];
+
+  final List<ReportTripItem> reportResults = List.generate(
+    4,
+    (_) => const ReportTripItem(
+      startAddress: AppStrings.reportSampleAddress,
+      startTime: '12:06 Am',
+      endAddress: AppStrings.reportSampleAddress,
+      endTime: '12:06 Am',
+      avgSpeed: '21.16Km',
+      duration: '00:00:30',
+      maxSpeed: '21.16Km',
+      distance: '21.16Km',
+    ),
+  );
+
+  List<String> get filteredReportSelectionItems {
+    final query = reportSearchQuery.value.trim().toLowerCase();
+    final source = reportSelectionDialogType ==
+            ReportSelectionDialogType.vehicle
+        ? reportVehicles
+        : reportTypes;
+    if (query.isEmpty) return source;
+    return source
+        .where((item) => item.toLowerCase().contains(query))
+        .toList();
+  }
+
+  String? getReportTypeIcon(String type) {
+    switch (type) {
+      case AppStrings.distanceReport:
+        return Assets.reportDistance;
+      case AppStrings.stopReport:
+        return Assets.reportStop;
+      case AppStrings.idleReport:
+        return Assets.reportIdle;
+      case AppStrings.tripReport:
+        return Assets.reportTrip;
+      case AppStrings.overspeedReport:
+        return Assets.reportOverspeed;
+      case AppStrings.geofenceReport:
+        return Assets.reportGeofence;
+      default:
+        return null;
+    }
+  }
+
   @override
   void onClose() {
     currentPasswordController.dispose();
     newPasswordController.dispose();
     confirmPasswordController.dispose();
     geofenceNameController.dispose();
+    reportSearchController.dispose();
     geofenceMapController?.dispose();
     super.onClose();
   }
@@ -107,9 +202,10 @@ class AccountViewModel extends BaseController {
 
   void onMenuTap(String title) {
     switch (title) {
-      // case AppStrings.generateReports:
-      //   Get.toNamed(GenerateReportsView.generateReportsView);
-      //   break;
+      case AppStrings.generateReports:
+        resetGenerateReportState();
+        Get.toNamed(GenerateReportView.generateReportView);
+        break;
       case AppStrings.geofence:
         Get.toNamed(GeofenceListView.geofenceListView);
         break;
@@ -279,6 +375,81 @@ class AccountViewModel extends BaseController {
 
   void onMarkerAnimationOk() {
     Get.back();
+  }
+
+  // Generate report
+  void showVehicleSelectionDialog() {
+    reportSelectionDialogType = ReportSelectionDialogType.vehicle;
+    reportSearchController.clear();
+    reportSearchQuery.value = '';
+    Get.dialog(
+      const ReportSelectionDialog(),
+      barrierDismissible: true,
+    );
+  }
+
+  void showReportTypeSelectionDialog() {
+    reportSelectionDialogType = ReportSelectionDialogType.reportType;
+    reportSearchController.clear();
+    reportSearchQuery.value = '';
+    Get.dialog(
+      const ReportSelectionDialog(),
+      barrierDismissible: true,
+    );
+  }
+
+  void onReportSearchChanged(String value) {
+    reportSearchQuery.value = value;
+  }
+
+  void onReportItemSelected(String item) {
+    if (reportSelectionDialogType == ReportSelectionDialogType.vehicle) {
+      selectedReportVehicle.value = item;
+      Get.back();
+      return;
+    }
+
+    selectedReportType.value = item;
+    Get.back();
+    Future.microtask(showDateSelectionDialog);
+  }
+
+  void resetGenerateReportState() {
+    selectedReportVehicle.value = '';
+    selectedReportType.value = '';
+    selectedDateRange.value = AppStrings.oneHrAgo;
+    showReportResults.value = false;
+    reportSearchController.clear();
+    reportSearchQuery.value = '';
+  }
+
+  void showDateSelectionDialog() {
+    selectedDateRange.value = AppStrings.oneHrAgo;
+    Get.dialog(
+      const ReportDateSelectionDialog(),
+      barrierDismissible: true,
+    );
+  }
+
+  void selectDateRange(String range) {
+    selectedDateRange.value = range;
+  }
+
+  void onDateSelectionClose() {
+    Get.back();
+  }
+
+  void onDateSelectionOk() {
+    Get.back();
+  }
+
+  void onGenerateReportSearch() {
+    if (selectedReportVehicle.value.isEmpty ||
+        selectedReportType.value.isEmpty ||
+        selectedDateRange.value.isEmpty) {
+      return;
+    }
+    showReportResults.value = true;
   }
 
   // Help & support

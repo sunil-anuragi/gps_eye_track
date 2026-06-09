@@ -40,7 +40,7 @@ def loadEnv() {
 def envProps = loadEnv()
 
 android {
-    namespace = "com.trackingwings.trackingwings"
+    namespace = "com.gpssoftware"
     compileSdk = 36
     ndkVersion = "28.0.12433566"
 
@@ -59,7 +59,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.trackingwings.trackingwings"
+        applicationId = "com.gpssoftware"
         minSdk = 24
         targetSdk = 36
         versionCode = flutterVersionCode.toInteger()

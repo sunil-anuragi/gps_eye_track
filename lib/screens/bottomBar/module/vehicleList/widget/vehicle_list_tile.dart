@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:gps_software/commonWidget/animations/bouncing_widget.dart';
 import 'package:gps_software/custom_widget.dart';
 import 'package:gps_software/screens/bottomBar/module/vehicleList/viewModel/vehicle_list_view_model.dart';
 import 'package:gps_software/util/app_constant.dart';
 
-class VehicleListTile extends StatelessWidget {
+class VehicleListTile extends GetView<VehicleListViewModel> {
   const VehicleListTile({
     super.key,
     required this.vehicle,
@@ -14,7 +16,9 @@ class VehicleListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return BouncingWidget(
+      onTap: () => controller.onVehicleTap(vehicle),
+      child: Container(
       margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
       decoration: BoxDecoration(
@@ -83,6 +87,7 @@ class VehicleListTile extends StatelessWidget {
           ),
         ],
       ),
+    ),
     );
   }
 

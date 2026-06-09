@@ -41,4 +41,29 @@ class Assets {
   static const String assetsGeofence = 'assets/geofence.png';
   static const String assetsHelpSupport = 'assets/helpSupport.png';
   static const String assetsGenrateReport = 'assets/genrateReport.png';
+  static const String icArrow = 'assets/ic_arrow.png';
+  static const String vehicleMenuImei = 'assets/vehicle_menu_imei.png';
+  static const String vehicleMenuTracking = 'assets/vehicle_menu_tracking.png';
+  static const String vehicleMenuPlayback = 'assets/vehicle_menu_playback.png';
+  static const String vehicleMenuDetail = 'assets/vehicle_menu_detail.png';
+  static const String vehicleMenuCommand = 'assets/vehicle_menu_command.png';
+  static const String vehicleMenuAlert = 'assets/vehicle_menu_alert.png';
+  static const String vehicleMenuManagement = 'assets/vehicle_menu_management.png';
+  static const String vehicleMenuShare = 'assets/vehicle_menu_share.png';
+  static const String vehicleMenuOverspeed = 'assets/vehicle_menu_overspeed.png';
+  static const String vehicleMenuReports = 'assets/vehicle_menu_reports.png';
+  static const String vehicleDetailCarIcon = 'assets/vehicle_detail_car_icon.png';
+  static const String reportDistance = 'assets/report_distance.png';
+  static const String reportStop = 'assets/report_stop.png';
+  static const String reportIdle = 'assets/report_idle.png';
+  static const String reportTrip = 'assets/report_trip.png';
+  static const String reportOverspeed = 'assets/report_overspeed.png';
+  static const String reportGeofence = 'assets/report_geofence.png';
+  static const String geofenceReportIcon = 'assets/geofence_report_icon.png';
+  static const String reportDownloadIcon = 'assets/report_download_icon.png';
+  static const String reportCalendarIcon = 'assets/report_calendar_icon.png';
+  static const String immobilizeCarIcon = 'assets/immobilize_car_icon.png';
+  static const String fuelCutoffSuccessIcon = 'assets/fuel_cutoff_success_icon.png';
+  static const String geofenceConfirmWarningIcon =
+      'assets/geofence_confirm_warning_icon.png';
 }
