@@ -71,6 +71,20 @@ class AppColors {
   static const Color fuelCutoffIconBgColor = Color(0xffEDE7F6);
   static const Color redlightColor = Color(0xffFF2F2F);
 
+  // Playback vehicle screen
+  static const Color playbackCardBg = Color(0xffFFFFFF);
+  static const Color playbackHeaderBg = Color(0xff404040);
+  static const Color playbackSpeedScaleBg = Color(0xffEEF2FF);
+  static const Color playbackSpeedScaleBorder = Color(0xff3F51B5);
+  static const Color playbackSpeedActiveColor = Color(0xff3F51B5);
+  static const Color playbackSpeedInactiveColor = Color(0xffBDBDBD);
+  static const Color playbackInfoLabelColor = Color(0xff787878);
+  static const Color playbackInfoValueColor = Color(0xff18111F);
+  static const Color playbackProgressTrack = Color(0xffE0E0E0);
+  static const Color playbackProgressActive = Color(0xff3F51B5);
+  static const Color playbackPlayBtnColor = Color(0xff3F51B5);
+  static const Color playbackTimelineBg = Color(0xffF5F5F5);
+
   static MaterialColor primaryColorShades = MaterialColor(
     primaryColor.value,
     <int, Color>{
@@ -316,8 +330,7 @@ class AppStrings {
   static const String sampleModel = "CONCOX";
   static const String sampleDateTime = "26-Dec-2022 12:00:00 Am";
   static const String sampleExpireDate = "26-Dec-2023 12:00:00 Am";
-  static const String sampleOfflineStatus =
-      "Offline (61 Day, 12 Hr, 39 Min)";
+  static const String sampleOfflineStatus = "Offline (61 Day, 12 Hr, 39 Min)";
   static const String sampleGpsTime = "26-May-2022 12:00:00 Am";
   static const String sampleSpeed = "0.0 kph";
   static const String sampleCoordinate = "28.505637, 77.3949";
@@ -370,6 +383,39 @@ class AppStrings {
   static const String deleteAccountMessage = "Are you sure delete account !";
   static const String cancelUpper = "CANCEL";
   static const String confirmUpper = "CONFIRM";
+
+  // Playback vehicle screen
+  static const String playbackVehicle = "Playback Vehicle";
+  static const String setPlayBackTime = "Set Play Back Time";
+  static const String speedScale = "Speed Scale";
+  static const String selectSpeedScale = "Select Speed Scale";
+  static const String slow = "Slow";
+  static const String normal = "Normal";
+  static const String fastSpeed = "Fast";
+  static const String veryFast = "Very Fast";
+  static const String speed1x = "1X";
+  static const String normalSpeed = "1x (Normal)";
+  static const String speed2x = "2x";
+  static const String speed4x = "4x";
+  static const String speed8x = "8x";
+  static const String speed16x = "16x";
+  static const String startPlayback = "Start";
+  static const String pausePlayback = "Pause";
+  static const String stopPlayback = "Stop";
+  static const String tripDuration = "Trip Duration";
+  static const String startTime = "Start Time";
+  static const String endTime = "End Time";
+  static const String vehicleNo = "Vehicle No";
+  static const String currentSpeed = "Current Speed";
+  static const String odometer = "Odometer";
+  static const String location = "Location";
+  static const String selectDate = "Select Date";
+  static const String playbackRoute = "Playback Route";
+  static const String kmh = "km/h";
+  static const String km = "km";
+  static const String vehicleId = "Vehicle ID";
+  static const String mileage = "Mileage";
+  static const String gpsTimeLabel = "Gps time";
 }
 
 class AuthStrings {

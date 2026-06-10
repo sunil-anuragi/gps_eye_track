@@ -32,7 +32,8 @@ class _PulseWidgetState extends State<PulseWidget>
       vsync: this,
       duration: widget.duration,
     );
-    _scaleAnimation = Tween<double>(begin: widget.minScale, end: widget.maxScale).animate(
+    _scaleAnimation =
+        Tween<double>(begin: widget.minScale, end: widget.maxScale).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
     );
 

@@ -22,6 +22,7 @@ import 'package:gps_software/screens/bottomBar/module/vehicleList/module/live_tr
 import 'package:gps_software/screens/bottomBar/module/vehicleList/module/live_track/widget/geofence_confirm_dialog.dart';
 import 'package:gps_software/screens/bottomBar/module/vehicleList/module/live_track/widget/immobilize_dialog.dart';
 import 'package:gps_software/screens/bottomBar/module/vehicleList/module/vehicle_menu/view/vehicle_menu_view.dart';
+import 'package:gps_software/screens/bottomBar/module/vehicleList/module/playback_vehicle/view/playback_vehicle_view.dart';
 import 'package:gps_software/screens/bottomBar/module/vehicleList/module/vehicle_notification/view/alert_option_setting_view.dart';
 import 'package:gps_software/screens/bottomBar/module/vehicleList/module/vehicle_notification/view/vehicle_notification_view.dart';
 import 'package:gps_software/util/app_constant.dart';
@@ -285,6 +286,7 @@ class VehicleListViewModel extends BaseController {
       longitude: liveTrackDefaultLocation.longitude,
     );
   }
+
   RxBool receiveNotificationEnabled = false.obs;
   RxBool voiceNotificationEnabled = false.obs;
 
@@ -538,6 +540,9 @@ class VehicleListViewModel extends BaseController {
         initLiveTrack();
         Get.toNamed(LiveTrackView.liveTrackView);
         break;
+      case AppStrings.playback:
+        Get.toNamed(PlaybackVehicleView.playbackVehicleView);
+        break;
     }
   }
 
@@ -578,12 +583,14 @@ class VehicleListViewModel extends BaseController {
   }
 
   Future<void> liveTrackZoomIn() async {
-    final zoom = await liveTrackMapController?.getZoomLevel() ?? liveTrackDefaultZoom;
+    final zoom =
+        await liveTrackMapController?.getZoomLevel() ?? liveTrackDefaultZoom;
     await liveTrackMapController?.animateCamera(CameraUpdate.zoomTo(zoom + 1));
   }
 
   Future<void> liveTrackZoomOut() async {
-    final zoom = await liveTrackMapController?.getZoomLevel() ?? liveTrackDefaultZoom;
+    final zoom =
+        await liveTrackMapController?.getZoomLevel() ?? liveTrackDefaultZoom;
     await liveTrackMapController?.animateCamera(CameraUpdate.zoomTo(zoom - 1));
   }
 
@@ -630,7 +637,7 @@ class VehicleListViewModel extends BaseController {
     });
   }
 
-  void onFuelCutoffContinue() { 
+  void onFuelCutoffContinue() {
     Get.back();
   }
 

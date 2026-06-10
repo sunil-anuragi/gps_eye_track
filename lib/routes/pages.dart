@@ -4,6 +4,7 @@ import 'package:gps_software/screens/authentications/view/sign_in_view.dart';
 import 'package:gps_software/screens/authentications/view/forget_password_view.dart';
 import 'package:gps_software/screens/authentications/view/reset_password_view.dart';
 import 'package:gps_software/screens/bottomBar/bindings/bottom_bar_binding.dart';
+import 'package:gps_software/screens/bottomBar/module/vehicleList/module/playback_vehicle/view/playback_vehicle_view.dart';
 import 'package:gps_software/screens/bottomBar/view/bottom_bar_view.dart';
 import 'package:gps_software/screens/bottomBar/module/account/bindings/account_binding.dart';
 import 'package:gps_software/screens/bottomBar/module/account/module/change_password/view/change_password_view.dart';
@@ -77,6 +78,11 @@ class AppPages {
     GetPage(
         name: HelpSupportView.helpSupportView,
         page: () => const HelpSupportView(),
+        binding: AccountBinding(),
+        transition: transition),
+    GetPage(
+        name: PlaybackVehicleView.playbackVehicleView,
+        page: () => const PlaybackVehicleView(),
         binding: AccountBinding(),
         transition: transition),
     GetPage(
