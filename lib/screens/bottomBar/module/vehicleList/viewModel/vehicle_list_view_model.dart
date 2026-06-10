@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -541,6 +542,7 @@ class VehicleListViewModel extends BaseController {
         Get.toNamed(LiveTrackView.liveTrackView);
         break;
       case AppStrings.playback:
+        initPlayback();
         Get.toNamed(PlaybackVehicleView.playbackVehicleView);
         break;
     }
@@ -824,9 +826,328 @@ class VehicleListViewModel extends BaseController {
     Get.back();
   }
 
+  // ══════════════════════════════════════════════════════════════════════════
+  // ── Playback Animation State ─────────────────────────────────────────────
+  // ══════════════════════════════════════════════════════════════════════════
+
+  /// Dummy route through New Delhi for playback demonstration
+  static const List<LatLng> playbackRoute = [
+    LatLng(28.7041, 77.2650),
+    LatLng(28.7055, 77.2665),
+    LatLng(28.7070, 77.2680),
+    LatLng(28.7090, 77.2700),
+    LatLng(28.7105, 77.2720),
+    LatLng(28.7115, 77.2745),
+    LatLng(28.7125, 77.2770),
+    LatLng(28.7140, 77.2790),
+    LatLng(28.7155, 77.2810),
+    LatLng(28.7165, 77.2835),
+    LatLng(28.7175, 77.2855),
+    LatLng(28.7185, 77.2870),
+    LatLng(28.7200, 77.2885),
+    LatLng(28.7215, 77.2900),
+    LatLng(28.7230, 77.2920),
+  ];
+
+  GoogleMapController? playbackMapController;
+  Timer? _playbackTimer;
+
+  final RxBool playbackIsPlaying = false.obs;
+  final RxInt playbackCurrentIndex = 0.obs;
+  final RxString playbackSelectedSpeed = AppStrings.normal.obs;
+  final Rx<Set<Marker>> playbackMarkers = Rx<Set<Marker>>({});
+  final Rx<Set<Polyline>> playbackPolylines = Rx<Set<Polyline>>({});
+
+  // Current playback info (updated as vehicle moves)
+  final RxString playbackSpeed = '0.0 Km/h'.obs;
+  final RxString playbackMileage = '0.00 Km'.obs;
+  final RxString playbackGpsTime = '2023-07-14 10:05:26'.obs;
+  final RxString playbackAddress = ''.obs;
+
+  /// Addresses corresponding to each point in the dummy route
+  static const List<String> _routeAddresses = [
+    'Yamuna Vihar, Shahdara, New Delhi, Delhi 110053, India',
+    'Block C, Yamuna Vihar, Shahdara, New Delhi, Delhi 110053, India',
+    'Bhagwan Shree Pashuram Rd, Block C, Yamuna Vihar, New Delhi, India',
+    'Wazirabad Rd, Yamuna Vihar, Shahdara, New Delhi, India',
+    'Bhajanpura, Shahdara, New Delhi, Delhi 110053, India',
+    'Loni Rd, Bhajanpura, New Delhi, Delhi 110053, India',
+    'Maujpur, Shahdara, New Delhi, Delhi 110053, India',
+    'Jyoti Nagar, Shahdara, New Delhi, Delhi 110053, India',
+    'Dilshad Colony, Shahdara, New Delhi, Delhi 110096, India',
+    'GT Road, Dilshad Garden, New Delhi, Delhi 110095, India',
+    'Seemapuri, Shahdara, New Delhi, Delhi 110095, India',
+    'Raj Bagh, Shahdara, New Delhi, Delhi 110095, India',
+    'Nand Nagri, Shahdara, New Delhi, Delhi 110093, India',
+    'Sunder Nagri, Shahdara, New Delhi, Delhi 110093, India',
+    'Harsh Vihar, Shahdara, New Delhi, Delhi 110093, India',
+  ];
+
+  /// Calculate distance in km between two LatLng points using Haversine formula
+  double _haversineDistance(LatLng a, LatLng b) {
+    const R = 6371.0; // Earth radius in km
+    final dLat = (b.latitude - a.latitude) * pi / 180;
+    final dLon = (b.longitude - a.longitude) * pi / 180;
+    final sinDLat = sin(dLat / 2);
+    final sinDLon = sin(dLon / 2);
+    final aVal = sinDLat * sinDLat +
+        cos(a.latitude * pi / 180) *
+            cos(b.latitude * pi / 180) *
+            sinDLon *
+            sinDLon;
+    final c = 2 * atan2(sqrt(aVal), sqrt(1 - aVal));
+    return R * c;
+  }
+
+  /// Calculate bearing between two LatLng points (in degrees)
+  double _bearing(LatLng a, LatLng b) {
+    final dLon = (b.longitude - a.longitude) * pi / 180;
+    final lat1 = a.latitude * pi / 180;
+    final lat2 = b.latitude * pi / 180;
+    final y = sin(dLon) * cos(lat2);
+    final x = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(dLon);
+    return (atan2(y, x) * 180 / pi + 360) % 360;
+  }
+
+  /// Initialise playback state when entering the playback screen
+  void initPlayback() {
+    playbackCurrentIndex.value = 0;
+    playbackIsPlaying.value = false;
+    playbackSelectedSpeed.value = AppStrings.normal;
+    _updatePlaybackMarkers();
+    _updatePlaybackPolylines();
+    _updatePlaybackInfo();
+  }
+
+  void onPlaybackMapCreated(GoogleMapController controller) {
+    playbackMapController = controller;
+    // Fit the map to show the full route
+    _fitPlaybackRoute();
+  }
+
+  void _fitPlaybackRoute() {
+    if (playbackRoute.length < 2) return;
+    double minLat = playbackRoute.first.latitude;
+    double maxLat = playbackRoute.first.latitude;
+    double minLng = playbackRoute.first.longitude;
+    double maxLng = playbackRoute.first.longitude;
+    for (final p in playbackRoute) {
+      if (p.latitude < minLat) minLat = p.latitude;
+      if (p.latitude > maxLat) maxLat = p.latitude;
+      if (p.longitude < minLng) minLng = p.longitude;
+      if (p.longitude > maxLng) maxLng = p.longitude;
+    }
+    playbackMapController?.animateCamera(
+      CameraUpdate.newLatLngBounds(
+        LatLngBounds(
+          southwest: LatLng(minLat, minLng),
+          northeast: LatLng(maxLat, maxLng),
+        ),
+        60,
+      ),
+    );
+  }
+
+  void _updatePlaybackMarkers() {
+    final currentPos = playbackRoute[playbackCurrentIndex.value];
+    final startPos = playbackRoute.first;
+    final endPos = playbackRoute.last;
+
+    // Calculate bearing for vehicle rotation
+    double rotation = 0;
+    final idx = playbackCurrentIndex.value;
+    if (idx < playbackRoute.length - 1) {
+      rotation = _bearing(playbackRoute[idx], playbackRoute[idx + 1]);
+    } else if (idx > 0) {
+      rotation = _bearing(playbackRoute[idx - 1], playbackRoute[idx]);
+    }
+
+    final markers = <Marker>{
+      // Start marker (green)
+      Marker(
+        markerId: const MarkerId('playback_start'),
+        position: startPos,
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+        infoWindow: const InfoWindow(title: 'Start'),
+        anchor: const Offset(0.5, 1.0),
+      ),
+      // End marker (red)
+      Marker(
+        markerId: const MarkerId('playback_end'),
+        position: endPos,
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+        infoWindow: const InfoWindow(title: 'End'),
+        anchor: const Offset(0.5, 1.0),
+      ),
+      // Vehicle marker (blue)
+      Marker(
+        markerId: const MarkerId('playback_vehicle'),
+        position: currentPos,
+        icon:
+            BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+        rotation: rotation,
+        anchor: const Offset(0.5, 0.5),
+        flat: true,
+        zIndex: 10,
+      ),
+    };
+
+    playbackMarkers.value = markers;
+  }
+
+  void _updatePlaybackPolylines() {
+    final idx = playbackCurrentIndex.value;
+
+    final polylines = <Polyline>{
+      // Travelled path (blue)
+      if (idx > 0)
+        Polyline(
+          polylineId: const PolylineId('playback_travelled'),
+          points: playbackRoute.sublist(0, idx + 1),
+          color: const Color(0xFF1565C0),
+          width: 5,
+        ),
+      // Remaining path (grey)
+      if (idx < playbackRoute.length - 1)
+        Polyline(
+          polylineId: const PolylineId('playback_remaining'),
+          points: playbackRoute.sublist(idx),
+          color: const Color(0xFF9E9E9E),
+          width: 4,
+          patterns: [PatternItem.dash(20), PatternItem.gap(10)],
+        ),
+    };
+
+    playbackPolylines.value = polylines;
+  }
+
+  void _updatePlaybackInfo() {
+    final idx = playbackCurrentIndex.value;
+
+    // Calculate cumulative mileage
+    double totalDist = 0;
+    for (int i = 1; i <= idx; i++) {
+      totalDist += _haversineDistance(playbackRoute[i - 1], playbackRoute[i]);
+    }
+
+    // Simulate speed based on distance between consecutive points
+    double speedVal = 0;
+    if (idx > 0) {
+      final segDist =
+          _haversineDistance(playbackRoute[idx - 1], playbackRoute[idx]);
+      speedVal = segDist * 120; // Scale up for realistic speed display
+    }
+
+    // Simulate GPS time incrementing
+    final baseTime = DateTime(2023, 7, 14, 10, 5, 26);
+    final gpsTime = baseTime.add(Duration(seconds: idx * 30));
+
+    playbackSpeed.value = '${speedVal.toStringAsFixed(1)} Km/h';
+    playbackMileage.value = '${totalDist.toStringAsFixed(2)} Km';
+    playbackGpsTime.value =
+        '${gpsTime.year}-${gpsTime.month.toString().padLeft(2, '0')}-${gpsTime.day.toString().padLeft(2, '0')} '
+        '${gpsTime.hour.toString().padLeft(2, '0')}:${gpsTime.minute.toString().padLeft(2, '0')}:${gpsTime.second.toString().padLeft(2, '0')}';
+    playbackAddress.value =
+        idx < _routeAddresses.length ? _routeAddresses[idx] : _routeAddresses.last;
+  }
+
+  /// Duration in milliseconds between steps depending on the speed scale
+  int get _playbackIntervalMs {
+    switch (playbackSelectedSpeed.value) {
+      case 'Slow':
+        return 2000;
+      case 'Normal':
+        return 1000;
+      case 'Fast':
+        return 500;
+      case 'Very Fast':
+        return 250;
+      default:
+        return 1000;
+    }
+  }
+
+  void togglePlayback() {
+    if (playbackIsPlaying.value) {
+      pausePlayback();
+    } else {
+      startPlayback();
+    }
+  }
+
+  void startPlayback() {
+    // If at the end, restart
+    if (playbackCurrentIndex.value >= playbackRoute.length - 1) {
+      playbackCurrentIndex.value = 0;
+      _updatePlaybackMarkers();
+      _updatePlaybackPolylines();
+      _updatePlaybackInfo();
+    }
+    playbackIsPlaying.value = true;
+    _startPlaybackTimer();
+  }
+
+  void pausePlayback() {
+    playbackIsPlaying.value = false;
+    _playbackTimer?.cancel();
+    _playbackTimer = null;
+  }
+
+  void stopPlayback() {
+    pausePlayback();
+    playbackCurrentIndex.value = 0;
+    _updatePlaybackMarkers();
+    _updatePlaybackPolylines();
+    _updatePlaybackInfo();
+    _fitPlaybackRoute();
+  }
+
+  void _startPlaybackTimer() {
+    _playbackTimer?.cancel();
+    _playbackTimer = Timer.periodic(
+      Duration(milliseconds: _playbackIntervalMs),
+      (_) => _advancePlayback(),
+    );
+  }
+
+  void _advancePlayback() {
+    if (playbackCurrentIndex.value >= playbackRoute.length - 1) {
+      // Reached the end
+      pausePlayback();
+      return;
+    }
+
+    playbackCurrentIndex.value++;
+    _updatePlaybackMarkers();
+    _updatePlaybackPolylines();
+    _updatePlaybackInfo();
+
+    // Track the vehicle on map
+    final currentPos = playbackRoute[playbackCurrentIndex.value];
+    playbackMapController?.animateCamera(
+      CameraUpdate.newLatLng(currentPos),
+    );
+  }
+
+  /// Called when speed selection changes (restart timer if currently playing)
+  void onPlaybackSpeedChanged(String speed) {
+    playbackSelectedSpeed.value = speed;
+    if (playbackIsPlaying.value) {
+      _startPlaybackTimer(); // Restart with new interval
+    }
+  }
+
+  void _disposePlayback() {
+    _playbackTimer?.cancel();
+    _playbackTimer = null;
+    playbackMapController?.dispose();
+    playbackMapController = null;
+  }
+
   @override
   void onClose() {
     _disposeLiveTrack();
+    _disposePlayback();
     searchController.dispose();
     overSpeedController.dispose();
     immobilizePasswordController.dispose();

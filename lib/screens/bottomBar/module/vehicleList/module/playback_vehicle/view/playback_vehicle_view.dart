@@ -12,18 +12,8 @@ class PlaybackVehicleView extends GetView<VehicleListViewModel> {
 
   const PlaybackVehicleView({super.key});
 
-  // Dummy playback info
-  static const _dummySpeed = '1.0 Km/h';
-  static const _dummyMileage = '1.64 Km';
-  static const _dummyGpsTime = '2023-07-14 10:05:26';
-  static const _dummyAddress =
-      'C6/233 Bhagwan Shree Pashuram Rd, Block C, Yamuna Vihar, Shahdara, New Delhi , Delhi 110053, India';
-  static const LatLng _dummyLatLng = LatLng(28.7041, 77.2650);
-
   @override
   Widget build(BuildContext context) {
-    final RxString selectedSpeed = AppStrings.normal.obs;
-    final RxBool isPlaying = false.obs;
     final RxString selectedDateRange = AppStrings.oneHrAgo.obs;
 
     return Obx(() {
@@ -37,60 +27,74 @@ class PlaybackVehicleView extends GetView<VehicleListViewModel> {
         appBar: _buildAppBar(vehicle.vehicleId, selectedDateRange, context),
         body: Stack(
           children: [
-            // ── Full-screen Map ────────────────────────────────────────
+            // ── Full-screen Map with markers, polylines ──────────────
             Positioned.fill(
-              child: GoogleMap(
-                initialCameraPosition: const CameraPosition(
-                  target: _dummyLatLng,
-                  zoom: 14,
-                ),
-                myLocationEnabled: false,
-                myLocationButtonEnabled: false,
-                zoomControlsEnabled: false,
-                compassEnabled: false,
-                mapToolbarEnabled: false,
-                trafficEnabled: false,
-              ),
+              child: Obx(() => GoogleMap(
+                    initialCameraPosition: CameraPosition(
+                      target: VehicleListViewModel.playbackRoute.first,
+                      zoom: 14,
+                    ),
+                    onMapCreated: controller.onPlaybackMapCreated,
+                    markers: controller.playbackMarkers.value,
+                    polylines: controller.playbackPolylines.value,
+                    myLocationEnabled: false,
+                    myLocationButtonEnabled: false,
+                    zoomControlsEnabled: false,
+                    compassEnabled: false,
+                    mapToolbarEnabled: false,
+                    trafficEnabled: false,
+                  )),
             ),
 
-            // ── Top Control Bar ────────────────────────────────────────
+            // ── Top Control Bar ──────────────────────────────────────
             Positioned(
               top: 0,
               left: 0,
               right: 0,
-              child: _buildControlBar(isPlaying, selectedSpeed, context),
+              child: _buildControlBar(context),
             ),
 
-            // ── Map Type Toggle (top-right) ────────────────────────────
+            // ── Map Type Toggle (top-right) ──────────────────────────
             Positioned(
               top: 56.h,
               right: 10.w,
               child: _buildMapTypeButton(),
             ),
 
-            // ── Playback Tooltip (center) ──────────────────────────────
+            // ── Playback Tooltip (center-left) ───────────────────────
             Positioned(
               top: MediaQuery.of(context).size.height * 0.28,
               left: 16.w,
               child: _buildPlaybackTooltip(),
             ),
 
-            // ── Bottom Address Bar ─────────────────────────────────────
+            // ── Progress Indicator ───────────────────────────────────
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 50.h,
+              child: _buildProgressBar(),
+            ),
+
+            // ── Bottom Address Bar ───────────────────────────────────
             Positioned(
               left: 0,
               right: 0,
               bottom: 0,
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
-                color: AppColors.mapOverlayColor,
-                child: CustomWidget.text(
-                  _dummyAddress,
-                  color: AppColors.whiteColor,
-                  fontSize: 11,
-                  maxLine: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
+              child: Obx(() => Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
+                    color: AppColors.mapOverlayColor,
+                    child: CustomWidget.text(
+                      controller.playbackAddress.value.isNotEmpty
+                          ? controller.playbackAddress.value
+                          : VehicleListViewModel.playbackRoute.first.toString(),
+                      color: AppColors.whiteColor,
+                      fontSize: 11,
+                      maxLine: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  )),
             ),
           ],
         ),
@@ -108,7 +112,10 @@ class PlaybackVehicleView extends GetView<VehicleListViewModel> {
       leading: IconButton(
         icon:
             Icon(Icons.arrow_back_ios, color: AppColors.whiteColor, size: 20.r),
-        onPressed: () => Get.back(),
+        onPressed: () {
+          controller.stopPlayback();
+          Get.back();
+        },
       ),
       title: CustomWidget.text(
         vehicleId,
@@ -144,8 +151,7 @@ class PlaybackVehicleView extends GetView<VehicleListViewModel> {
   }
 
   // ── Control Bar (below AppBar on map) ─────────────────────────────────────
-  Widget _buildControlBar(
-      RxBool isPlaying, RxString selectedSpeed, BuildContext context) {
+  Widget _buildControlBar(BuildContext context) {
     return Container(
       color: AppColors.darkBlack.withValues(alpha: 0.75),
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
@@ -153,11 +159,21 @@ class PlaybackVehicleView extends GetView<VehicleListViewModel> {
             children: [
               // Play / Pause button
               GestureDetector(
-                onTap: () => isPlaying.value = !isPlaying.value,
+                onTap: () => controller.togglePlayback(),
                 child: Icon(
-                  isPlaying.value
+                  controller.playbackIsPlaying.value
                       ? Icons.pause_circle_outline_rounded
                       : Icons.play_circle_outline_rounded,
+                  color: AppColors.whiteColor,
+                  size: 28.r,
+                ),
+              ),
+              SizedBox(width: 8.w),
+              // Stop button
+              GestureDetector(
+                onTap: () => controller.stopPlayback(),
+                child: Icon(
+                  Icons.stop_circle_outlined,
                   color: AppColors.whiteColor,
                   size: 28.r,
                 ),
@@ -171,14 +187,14 @@ class PlaybackVehicleView extends GetView<VehicleListViewModel> {
 
               // Speed scale button  ⏩ 1X
               GestureDetector(
-                onTap: () => _showSpeedScalePopup(context, selectedSpeed),
+                onTap: () => _showSpeedScalePopup(context),
                 child: Row(
                   children: [
                     Icon(Icons.fast_forward_rounded,
                         color: AppColors.whiteColor, size: 20.r),
                     SizedBox(width: 4.w),
                     CustomWidget.text(
-                      _speedLabel(selectedSpeed.value),
+                      _speedLabel(controller.playbackSelectedSpeed.value),
                       color: AppColors.whiteColor,
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
@@ -189,6 +205,56 @@ class PlaybackVehicleView extends GetView<VehicleListViewModel> {
             ],
           )),
     );
+  }
+
+  // ── Progress Bar ───────────────────────────────────────────────────────────
+  Widget _buildProgressBar() {
+    return Obx(() {
+      final total = VehicleListViewModel.playbackRoute.length - 1;
+      final current = controller.playbackCurrentIndex.value;
+      final progress = total > 0 ? current / total : 0.0;
+
+      return Container(
+        margin: EdgeInsets.symmetric(horizontal: 16.w),
+        decoration: BoxDecoration(
+          color: AppColors.darkBlack.withValues(alpha: 0.6),
+          borderRadius: BorderRadius.circular(4.r),
+        ),
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CustomWidget.text(
+                  'Point ${current + 1}/${total + 1}',
+                  color: AppColors.whiteColor,
+                  fontSize: 10,
+                ),
+                CustomWidget.text(
+                  controller.playbackMileage.value,
+                  color: AppColors.whiteColor,
+                  fontSize: 10,
+                  fontWeight: FontWeight.w600,
+                ),
+              ],
+            ),
+            SizedBox(height: 4.h),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(2.r),
+              child: LinearProgressIndicator(
+                value: progress,
+                minHeight: 4.h,
+                backgroundColor: AppColors.playbackProgressTrack,
+                valueColor: const AlwaysStoppedAnimation<Color>(
+                    AppColors.playbackProgressActive),
+              ),
+            ),
+          ],
+        ),
+      );
+    });
   }
 
   // ── Map Type toggle button ─────────────────────────────────────────────────
@@ -206,34 +272,37 @@ class PlaybackVehicleView extends GetView<VehicleListViewModel> {
 
   // ── Playback Tooltip (matches reference: speed, mileage, gps time) ─────────
   Widget _buildPlaybackTooltip() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
-          decoration: BoxDecoration(
-            color: AppColors.mapOverlayColor,
-            borderRadius: BorderRadius.circular(6.r),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _tooltipRow('${AppStrings.speed} : ', _dummySpeed),
-              SizedBox(height: 3.h),
-              _tooltipRow('${AppStrings.mileage} : ', _dummyMileage),
-              SizedBox(height: 3.h),
-              _tooltipRow('${AppStrings.gpsTimeLabel} : ', _dummyGpsTime),
-            ],
-          ),
-        ),
-        // Arrow pointing down
-        CustomPaint(
-          size: Size(16.w, 8.h),
-          painter: _ArrowPainter(),
-        ),
-      ],
-    );
+    return Obx(() => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+              decoration: BoxDecoration(
+                color: AppColors.mapOverlayColor,
+                borderRadius: BorderRadius.circular(6.r),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _tooltipRow(
+                      '${AppStrings.speed} : ', controller.playbackSpeed.value),
+                  SizedBox(height: 3.h),
+                  _tooltipRow('${AppStrings.mileage} : ',
+                      controller.playbackMileage.value),
+                  SizedBox(height: 3.h),
+                  _tooltipRow('${AppStrings.gpsTimeLabel} : ',
+                      controller.playbackGpsTime.value),
+                ],
+              ),
+            ),
+            // Arrow pointing down
+            CustomPaint(
+              size: Size(16.w, 8.h),
+              painter: _ArrowPainter(),
+            ),
+          ],
+        ));
   }
 
   Widget _tooltipRow(String label, String value) {
@@ -275,7 +344,7 @@ class PlaybackVehicleView extends GetView<VehicleListViewModel> {
   }
 
   // ── Speed Scale Popup (matches reference: radio list + Cancel/Ok) ──────────
-  void _showSpeedScalePopup(BuildContext context, RxString selectedSpeed) {
+  void _showSpeedScalePopup(BuildContext context) {
     final options = [
       AppStrings.slow,
       AppStrings.normal,
@@ -312,11 +381,13 @@ class PlaybackVehicleView extends GetView<VehicleListViewModel> {
                 // Radio options
                 Obx(() => Column(
                       children: options.map((option) {
-                        final isSelected = selectedSpeed.value == option;
+                        final isSelected =
+                            controller.playbackSelectedSpeed.value == option;
                         return Column(
                           children: [
                             InkWell(
-                              onTap: () => selectedSpeed.value = option,
+                              onTap: () =>
+                                  controller.onPlaybackSpeedChanged(option),
                               child: Padding(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 16.w, vertical: 4.h),
@@ -324,13 +395,15 @@ class PlaybackVehicleView extends GetView<VehicleListViewModel> {
                                   children: [
                                     Radio<String>(
                                       value: option,
-                                      groupValue: selectedSpeed.value,
+                                      groupValue: controller
+                                          .playbackSelectedSpeed.value,
                                       activeColor: AppColors.blackColor,
                                       materialTapTargetSize:
                                           MaterialTapTargetSize.shrinkWrap,
                                       onChanged: (val) {
                                         if (val != null) {
-                                          selectedSpeed.value = val;
+                                          controller
+                                              .onPlaybackSpeedChanged(val);
                                         }
                                       },
                                     ),
