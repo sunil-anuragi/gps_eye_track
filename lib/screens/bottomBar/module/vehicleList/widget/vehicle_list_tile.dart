@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:gps_software/commonWidget/animations/bouncing_widget.dart';
+import 'package:gps_software/generated/assets.dart';
 import 'package:gps_software/custom_widget.dart';
 import 'package:gps_software/screens/bottomBar/module/vehicleList/viewModel/vehicle_list_view_model.dart';
 import 'package:gps_software/util/app_constant.dart';
@@ -35,18 +36,11 @@ class VehicleListTile extends GetView<VehicleListViewModel> {
       ),
       child: Row(
         children: [
-          Container(
+          Image.asset(
+            Assets.vehicleListCarIcon,
             width: 44.r,
             height: 44.r,
-            decoration: BoxDecoration(
-              color: AppColors.searchBgColor,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              Icons.directions_car_outlined,
-              color: AppColors.textGreenColor,
-              size: 22.r,
-            ),
+            fit: BoxFit.contain,
           ),
           12.w.sizeBoxFromWidth(),
           Expanded(
@@ -69,19 +63,19 @@ class VehicleListTile extends GetView<VehicleListViewModel> {
             ),
           ),
           _statusColumn(
-            value: vehicle.isPwrOn ? AppStrings.on : AppStrings.off,
+            value: vehicle.isPwrOn ? AppStrings.onString : AppStrings.offString,
             label: AppStrings.pwr,
             isOn: vehicle.isPwrOn,
           ),
           12.w.sizeBoxFromWidth(),
           _statusColumn(
-            value: vehicle.isGpsOn ? AppStrings.on : AppStrings.off,
+            value: vehicle.isGpsOn ? AppStrings.onString : AppStrings.offString,
             label: AppStrings.gps,
             isOn: vehicle.isGpsOn,
           ),
           12.w.sizeBoxFromWidth(),
           _statusColumn(
-            value: vehicle.isIgnOn ? AppStrings.on : AppStrings.off,
+            value: vehicle.isIgnOn ? AppStrings.onString : AppStrings.offString,
             label: AppStrings.ign,
             isOn: vehicle.isIgnOn,
           ),

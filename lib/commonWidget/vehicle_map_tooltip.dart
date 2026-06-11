@@ -1,16 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gps_software/custom_widget.dart';
-import 'package:gps_software/screens/bottomBar/module/vehicleList/viewModel/vehicle_list_view_model.dart';
 import 'package:gps_software/util/app_constant.dart';
 
-class LiveTrackTooltip extends StatelessWidget {
-  const LiveTrackTooltip({
+class VehicleMapTooltipData {
+  final String vehicleId;
+  final String vehicleCode;
+  final String time;
+  final String status;
+  final String engine;
+  final String externalPower;
+  final String distance;
+  final String todayKm;
+  final String speed;
+
+  const VehicleMapTooltipData({
+    required this.vehicleId,
+    required this.vehicleCode,
+    required this.time,
+    required this.status,
+    required this.engine,
+    required this.externalPower,
+    required this.distance,
+    required this.todayKm,
+    required this.speed,
+  });
+}
+
+class VehicleMapTooltip extends StatelessWidget {
+  const VehicleMapTooltip({
     super.key,
-    required this.info,
+    required this.data,
   });
 
-  final LiveTrackVehicleInfo info;
+  final VehicleMapTooltipData data;
 
   @override
   Widget build(BuildContext context) {
@@ -28,20 +51,20 @@ class LiveTrackTooltip extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomWidget.text(
-                '${info.vehicleId}(${info.vehicleCode})',
+                '${data.vehicleId}(${data.vehicleCode})',
                 color: AppColors.whiteColor,
                 fontSize: 11,
                 fontWeight: FontWeight.w600,
               ),
               4.h.sizeBoxFromHeight(),
-              _infoRow('${AppStrings.timeLabel} :', info.time),
-              _infoRow('${AppStrings.status} :', info.status),
-              _infoRow('${AppStrings.engine} :', info.engine),
-              _infoRow('${AppStrings.externalPower} :', info.externalPower),
-              _infoRow('${AppStrings.distance} :', info.distance),
-              _infoRow('${AppStrings.todayKm} :', info.todayKm),
+              _infoRow('${AppStrings.timeLabel} :', data.time),
+              _infoRow('${AppStrings.status} :', data.status),
+              _infoRow('${AppStrings.engine} :', data.engine),
+              _infoRow('${AppStrings.externalPower} :', data.externalPower),
+              _infoRow('${AppStrings.distance} :', data.distance),
+              _infoRow('${AppStrings.todayKm} :', data.todayKm),
               CustomWidget.text(
-                '${AppStrings.speed}: ${info.speed}',
+                '${AppStrings.speed}: ${data.speed}',
                 color: AppColors.whiteColor,
                 fontSize: 10,
                 fontWeight: FontWeight.w400,

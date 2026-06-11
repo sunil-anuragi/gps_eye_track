@@ -230,8 +230,8 @@ class AppStrings {
   static const String pwr = "PWR";
   static const String gps = "GPS";
   static const String ign = "IGN";
-  static const String on = "ON";
-  static const String off = "OFF";
+  static const String onString = "ON";
+  static const String offString = "OFF";
   static const String userNameLabel = "User Name :";
   static const String generateReports = "Generate reports";
   static const String chaseTrack = "ChaseTrack";

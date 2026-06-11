@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:gps_software/enum/map_type.dart';
+import 'package:gps_software/commonWidget/vehicle_map_tooltip.dart';
 import 'package:gps_software/screens/bottomBar/module/map/data/map_dummy_data.dart';
 import 'package:gps_software/screens/bottomBar/module/map/helper/map_vehicle_marker_icon.dart';
 import 'package:gps_software/util/base_controller.dart';
@@ -19,6 +20,8 @@ class MapViewModel extends BaseController {
   Rx<MapType> mapType = MapType.normal.obs;
   final markers = <Marker>{}.obs;
   RxString selectedAddress = MapDummyData.defaultAddress.obs;
+  RxBool showVehicleTooltip = false.obs;
+  Rxn<VehicleMapTooltipData> selectedVehicleTooltip = Rxn<VehicleMapTooltipData>();
 
   final CameraPosition initialCameraPosition = const CameraPosition(
     target: defaultLocation,
@@ -77,7 +80,7 @@ class MapViewModel extends BaseController {
 
     final updatedMarkers = MapVehicleMarkerIcon.toMarkers(
       vehicleMarkers,
-      onTap: (vehicle) => selectedAddress.value = vehicle.address,
+      onTap: onVehicleMarkerTap,
     );
     markers
       ..clear()
@@ -94,6 +97,16 @@ class MapViewModel extends BaseController {
         refreshSeconds.value--;
       }
     });
+  }
+
+  void onVehicleMarkerTap(MapVehicleMarker vehicle) {
+    selectedAddress.value = vehicle.address;
+    selectedVehicleTooltip.value = vehicle.tooltip;
+    showVehicleTooltip.value = true;
+  }
+
+  void onMapTap(LatLng position) {
+    showVehicleTooltip.value = false;
   }
 
   void onCameraMove(CameraPosition position) {}

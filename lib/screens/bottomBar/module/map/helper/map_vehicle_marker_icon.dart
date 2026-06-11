@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:gps_software/commonWidget/vehicle_map_tooltip.dart';
 import 'package:gps_software/generated/assets.dart';
 
 enum MapVehicleMarkerStatus { stop, running, offline }
@@ -25,6 +26,7 @@ class MapVehicleMarker {
   final double longitude;
   final MapVehicleMarkerStatus status;
   final String address;
+  final VehicleMapTooltipData tooltip;
   /// Clockwise degrees from north. Icon asset points up (north) at 0°.
   final double rotation;
 
@@ -34,6 +36,7 @@ class MapVehicleMarker {
     required this.longitude,
     required this.status,
     required this.address,
+    required this.tooltip,
     this.rotation = 0,
   });
 }
@@ -98,7 +101,7 @@ class MapVehicleMarkerIcon {
       rotation: vehicle.rotation,
       flat: true,
       zIndexInt: 2,
-      infoWindow: InfoWindow(title: vehicle.id),
+      infoWindow: InfoWindow.noText,
       onTap: onTap,
     );
   }

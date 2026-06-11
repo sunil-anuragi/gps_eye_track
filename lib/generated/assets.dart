@@ -86,4 +86,7 @@ class Assets {
   static const String mapMarkerCarStop = 'assets/map_marker_car_stop.png';
   static const String mapMarkerCarRunning = 'assets/map_marker_car_running.png';
   static const String mapMarkerCarOffline = 'assets/map_marker_car_offline.png';
+  static const String vehicleListCarIcon = 'assets/vehicle_list_car_icon.png';
+  static const String notificationIgnitionKeyIcon =
+      'assets/notification_ignition_key_icon.png';
 }

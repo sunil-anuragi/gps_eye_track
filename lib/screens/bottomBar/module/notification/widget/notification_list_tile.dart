@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gps_software/custom_widget.dart';
+import 'package:gps_software/generated/assets.dart';
 import 'package:gps_software/screens/bottomBar/module/notification/viewModel/notification_view_model.dart';
 import 'package:gps_software/util/app_constant.dart';
 
@@ -21,21 +22,11 @@ class NotificationListTile extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
+              Image.asset(
+                Assets.notificationIgnitionKeyIcon,
                 width: 40.r,
                 height: 40.r,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: AppColors.textGreenColor,
-                    width: 2,
-                  ),
-                ),
-                child: Icon(
-                  Icons.vpn_key_outlined,
-                  color: AppColors.textGreenColor,
-                  size: 18.r,
-                ),
+                fit: BoxFit.contain,
               ),
               12.w.sizeBoxFromWidth(),
               Expanded(

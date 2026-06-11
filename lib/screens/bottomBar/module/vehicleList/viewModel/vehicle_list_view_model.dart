@@ -18,6 +18,7 @@ import 'package:gps_software/screens/bottomBar/module/vehicleList/module/vehicle
 import 'package:gps_software/screens/bottomBar/module/vehicleList/module/vehicle_reports/view/trip_report_view.dart';
 import 'package:gps_software/screens/bottomBar/module/vehicleList/module/vehicle_reports/view/vehicle_reports_view.dart';
 import 'package:gps_software/screens/bottomBar/module/vehicleList/module/vehicle_reports/widget/vehicle_report_date_selection_dialog.dart';
+import 'package:gps_software/commonWidget/vehicle_map_tooltip.dart';
 import 'package:gps_software/screens/bottomBar/module/map/helper/map_vehicle_marker_icon.dart';
 import 'package:gps_software/screens/bottomBar/module/vehicleList/module/live_track/view/live_track_view.dart';
 import 'package:gps_software/screens/bottomBar/module/vehicleList/module/live_track/widget/fuel_cutoff_success_dialog.dart';
@@ -216,6 +217,18 @@ class LiveTrackVehicleInfo {
     required this.rotation,
     required this.markerStatus,
   });
+
+  VehicleMapTooltipData get tooltipData => VehicleMapTooltipData(
+        vehicleId: vehicleId,
+        vehicleCode: vehicleCode,
+        time: time,
+        status: status,
+        engine: engine,
+        externalPower: externalPower,
+        distance: distance,
+        todayKm: todayKm,
+        speed: speed,
+      );
 }
 
 class AlertOptionItem {
@@ -277,6 +290,7 @@ class VehicleListViewModel extends BaseController {
   RxInt liveTrackRefreshSeconds = 10.obs;
   Rx<MapType> liveTrackMapType = MapType.normal.obs;
   final liveTrackMarkers = <Marker>{}.obs;
+  RxBool showLiveTrackTooltip = false.obs;
   RxString liveTrackAddress = AppStrings.sampleLiveTrackAddress.obs;
 
   final CameraPosition liveTrackCameraPosition = const CameraPosition(
@@ -292,8 +306,8 @@ class VehicleListViewModel extends BaseController {
       vehicleCode: AppStrings.sampleVehicleCode,
       time: AppStrings.sampleLiveTrackTime,
       status: AppStrings.sampleRunningStatus,
-      engine: AppStrings.off.toUpperCase(),
-      externalPower: AppStrings.on.toUpperCase(),
+      engine: AppStrings.offString,
+      externalPower: AppStrings.onString,
       distance: AppStrings.sampleLiveDistance,
       todayKm: AppStrings.sampleTodayKm,
       speed: AppStrings.sampleLiveSpeed,
@@ -574,6 +588,7 @@ class VehicleListViewModel extends BaseController {
   void initLiveTrack() {
     liveTrackAddress.value = AppStrings.sampleLiveTrackAddress;
     liveTrackMapType.value = MapType.normal;
+    showLiveTrackTooltip.value = false;
     _loadLiveTrackMarker();
     _startLiveTrackRefreshTimer();
   }
@@ -594,8 +609,13 @@ class VehicleListViewModel extends BaseController {
         longitude: info.longitude,
         status: info.markerStatus,
         address: info.address,
+        tooltip: info.tooltipData,
         rotation: info.rotation,
       ),
+      onTap: () {
+        showLiveTrackTooltip.value = true;
+        liveTrackAddress.value = info.address;
+      },
     );
 
     liveTrackMarkers
@@ -696,6 +716,11 @@ class VehicleListViewModel extends BaseController {
   void stopLiveTrackRefresh() {
     _liveTrackRefreshTimer?.cancel();
     _liveTrackRefreshTimer = null;
+    showLiveTrackTooltip.value = false;
+  }
+
+  void onLiveTrackMapTap(LatLng position) {
+    showLiveTrackTooltip.value = false;
   }
 
   void _disposeLiveTrack() {

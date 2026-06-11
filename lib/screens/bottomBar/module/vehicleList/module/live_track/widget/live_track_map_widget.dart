@@ -14,6 +14,7 @@ class LiveTrackMapWidget extends GetView<VehicleListViewModel> {
         mapType: controller.liveTrackMapType.value,
         markers: Set<Marker>.from(controller.liveTrackMarkers),
         onMapCreated: controller.onLiveTrackMapCreated,
+        onTap: controller.onLiveTrackMapTap,
         myLocationEnabled: false,
         myLocationButtonEnabled: false,
         zoomControlsEnabled: false,
