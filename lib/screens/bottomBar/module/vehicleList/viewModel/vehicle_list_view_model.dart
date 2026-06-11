@@ -18,6 +18,7 @@ import 'package:gps_software/screens/bottomBar/module/vehicleList/module/vehicle
 import 'package:gps_software/screens/bottomBar/module/vehicleList/module/vehicle_reports/view/trip_report_view.dart';
 import 'package:gps_software/screens/bottomBar/module/vehicleList/module/vehicle_reports/view/vehicle_reports_view.dart';
 import 'package:gps_software/screens/bottomBar/module/vehicleList/module/vehicle_reports/widget/vehicle_report_date_selection_dialog.dart';
+import 'package:gps_software/screens/bottomBar/module/map/helper/map_vehicle_marker_icon.dart';
 import 'package:gps_software/screens/bottomBar/module/vehicleList/module/live_track/view/live_track_view.dart';
 import 'package:gps_software/screens/bottomBar/module/vehicleList/module/live_track/widget/fuel_cutoff_success_dialog.dart';
 import 'package:gps_software/screens/bottomBar/module/vehicleList/module/live_track/widget/geofence_confirm_dialog.dart';
@@ -196,6 +197,8 @@ class LiveTrackVehicleInfo {
   final String address;
   final double latitude;
   final double longitude;
+  final double rotation;
+  final MapVehicleMarkerStatus markerStatus;
 
   const LiveTrackVehicleInfo({
     required this.vehicleId,
@@ -210,6 +213,8 @@ class LiveTrackVehicleInfo {
     required this.address,
     required this.latitude,
     required this.longitude,
+    required this.rotation,
+    required this.markerStatus,
   });
 }
 
@@ -246,6 +251,16 @@ class VehicleListItem {
 class VehicleListViewModel extends BaseController {
   static const LatLng liveTrackDefaultLocation = LatLng(28.7041, 77.2650);
   static const double liveTrackDefaultZoom = 15;
+  static const List<double> _liveTrackRotations = [
+    0,
+    45,
+    90,
+    135,
+    180,
+    225,
+    270,
+    315,
+  ];
 
   final TextEditingController searchController = TextEditingController();
   final TextEditingController overSpeedController = TextEditingController();
@@ -261,7 +276,7 @@ class VehicleListViewModel extends BaseController {
   bool isOverSpeedDialogFromReport = false;
   RxInt liveTrackRefreshSeconds = 10.obs;
   Rx<MapType> liveTrackMapType = MapType.normal.obs;
-  Rx<Set<Marker>> liveTrackMarkers = Rx<Set<Marker>>({});
+  final liveTrackMarkers = <Marker>{}.obs;
   RxString liveTrackAddress = AppStrings.sampleLiveTrackAddress.obs;
 
   final CameraPosition liveTrackCameraPosition = const CameraPosition(
@@ -285,7 +300,15 @@ class VehicleListViewModel extends BaseController {
       address: AppStrings.sampleLiveTrackAddress,
       latitude: liveTrackDefaultLocation.latitude,
       longitude: liveTrackDefaultLocation.longitude,
+      rotation: _liveTrackMarkerRotation(vehicle.vehicleId),
+      markerStatus: mapVehicleMarkerStatusFromLabel(vehicle.status),
     );
+  }
+
+  double _liveTrackMarkerRotation(String vehicleId) {
+    return _liveTrackRotations[
+      vehicleId.hashCode.abs() % _liveTrackRotations.length
+    ];
   }
 
   RxBool receiveNotificationEnabled = false.obs;
@@ -551,21 +574,33 @@ class VehicleListViewModel extends BaseController {
   void initLiveTrack() {
     liveTrackAddress.value = AppStrings.sampleLiveTrackAddress;
     liveTrackMapType.value = MapType.normal;
-    _buildLiveTrackMarker();
+    _loadLiveTrackMarker();
     _startLiveTrackRefreshTimer();
+  }
+
+  Future<void> _loadLiveTrackMarker() async {
+    await MapVehicleMarkerIcon.load();
+    _buildLiveTrackMarker();
   }
 
   void _buildLiveTrackMarker() {
     final info = liveTrackInfo;
-    if (info == null) return;
+    if (info == null || !MapVehicleMarkerIcon.isLoaded) return;
 
-    liveTrackMarkers.value = {
-      Marker(
-        markerId: MarkerId(info.vehicleId),
-        position: LatLng(info.latitude, info.longitude),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+    final marker = MapVehicleMarkerIcon.toMarker(
+      MapVehicleMarker(
+        id: info.vehicleId,
+        latitude: info.latitude,
+        longitude: info.longitude,
+        status: info.markerStatus,
+        address: info.address,
+        rotation: info.rotation,
       ),
-    };
+    );
+
+    liveTrackMarkers
+      ..clear()
+      ..add(marker);
   }
 
   void _startLiveTrackRefreshTimer() {
@@ -582,6 +617,9 @@ class VehicleListViewModel extends BaseController {
 
   void onLiveTrackMapCreated(GoogleMapController controller) {
     liveTrackMapController = controller;
+    if (MapVehicleMarkerIcon.isLoaded) {
+      _buildLiveTrackMarker();
+    }
   }
 
   Future<void> liveTrackZoomIn() async {
@@ -599,7 +637,7 @@ class VehicleListViewModel extends BaseController {
   Future<void> goToLiveTrackVehicle() async {
     await liveTrackMapController?.animateCamera(
       CameraUpdate.newCameraPosition(liveTrackCameraPosition),
-    );
+    );  
   }
 
   void toggleLiveTrackMapType() {
@@ -857,6 +895,20 @@ class VehicleListViewModel extends BaseController {
   final RxString playbackSelectedSpeed = AppStrings.normal.obs;
   final Rx<Set<Marker>> playbackMarkers = Rx<Set<Marker>>({});
   final Rx<Set<Polyline>> playbackPolylines = Rx<Set<Polyline>>({});
+  final Rx<MapType> playbackMapType = MapType.normal.obs;
+  static const int playbackParkingIndex = 5;
+  static const Size playbackFlagIconSize = Size(50, 36);
+  static const Offset playbackStartFlagAnchor = Offset(0.04, 0.92);
+  static const Offset playbackEndFlagAnchor = Offset(0.04, 0.92);
+  static const Size playbackVehicleIconSize = Size(40, 40);
+  static const Size playbackParkingIconSize = Size(36, 48);
+  static const Offset playbackParkingAnchor = Offset(0.5, 1.0);
+  static const double playbackVehicleRotationOffset = -45;
+  BitmapDescriptor? _playbackStartMarkerIcon;
+  BitmapDescriptor? _playbackEndMarkerIcon;
+  BitmapDescriptor? _playbackVehicleMarkerIcon;
+  BitmapDescriptor? _playbackParkingMarkerIcon;
+  bool _playbackMarkerIconsLoaded = false;
 
   // Current playback info (updated as vehicle moves)
   final RxString playbackSpeed = '0.0 Km/h'.obs;
@@ -899,24 +951,90 @@ class VehicleListViewModel extends BaseController {
     return R * c;
   }
 
-  /// Calculate bearing between two LatLng points (in degrees)
-  double _bearing(LatLng a, LatLng b) {
-    final dLon = (b.longitude - a.longitude) * pi / 180;
-    final lat1 = a.latitude * pi / 180;
-    final lat2 = b.latitude * pi / 180;
-    final y = sin(dLon) * cos(lat2);
-    final x = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(dLon);
-    return (atan2(y, x) * 180 / pi + 360) % 360;
-  }
-
   /// Initialise playback state when entering the playback screen
   void initPlayback() {
     playbackCurrentIndex.value = 0;
     playbackIsPlaying.value = false;
     playbackSelectedSpeed.value = AppStrings.normal;
+    playbackMapType.value = MapType.normal;
+    playbackAddress.value = AppStrings.sampleLiveTrackAddress;
+    _loadPlaybackData();
+  }
+
+  Future<void> _loadPlaybackData() async {
+    await _loadPlaybackMarkerIcons();
     _updatePlaybackMarkers();
     _updatePlaybackPolylines();
     _updatePlaybackInfo();
+  }
+
+  Future<void> _loadPlaybackMarkerIcons() async {
+    if (_playbackMarkerIconsLoaded) return;
+
+    _playbackStartMarkerIcon = await BitmapDescriptor.asset(
+      ImageConfiguration(size: playbackFlagIconSize),
+      Assets.playbackStartIcon,
+    );
+    _playbackEndMarkerIcon = await BitmapDescriptor.asset(
+      ImageConfiguration(size: playbackFlagIconSize),
+      Assets.playbackEndIcon,
+    );
+    _playbackVehicleMarkerIcon = await BitmapDescriptor.asset(
+      ImageConfiguration(size: playbackVehicleIconSize),
+      Assets.playbackVehicleIcon,
+    );
+    _playbackParkingMarkerIcon = await BitmapDescriptor.asset(
+      ImageConfiguration(size: playbackParkingIconSize),
+      Assets.playbackParkingIcon,
+    );
+    _playbackMarkerIconsLoaded = true;
+  }
+
+  String get playbackSpeedLabel {
+    switch (playbackSelectedSpeed.value) {
+      case AppStrings.slow:
+        return '0.5X';
+      case AppStrings.normal:
+        return AppStrings.speed1x;
+      case AppStrings.fastSpeed:
+        return '2X';
+      case AppStrings.veryFast:
+        return '4X';
+      default:
+        return AppStrings.speed1x;
+    }
+  }
+
+  void onPlaybackSeek(int index) {
+    final maxIndex = playbackRoute.length - 1;
+    playbackCurrentIndex.value = index.clamp(0, maxIndex);
+    _updatePlaybackMarkers();
+    _updatePlaybackPolylines();
+    _updatePlaybackInfo();
+    playbackMapController?.animateCamera(
+      CameraUpdate.newLatLng(playbackRoute[playbackCurrentIndex.value]),
+    );
+  }
+
+  void togglePlaybackMapType() {
+    const types = [
+      MapType.normal,
+      MapType.satellite,
+      MapType.terrain,
+      MapType.hybrid,
+    ];
+    final currentIndex = types.indexOf(playbackMapType.value);
+    playbackMapType.value = types[(currentIndex + 1) % types.length];
+  }
+
+  Future<void> playbackZoomIn() async {
+    final zoom = await playbackMapController?.getZoomLevel() ?? 14;
+    await playbackMapController?.animateCamera(CameraUpdate.zoomTo(zoom + 1));
+  }
+
+  Future<void> playbackZoomOut() async {
+    final zoom = await playbackMapController?.getZoomLevel() ?? 14;
+    await playbackMapController?.animateCamera(CameraUpdate.zoomTo(zoom - 1));
   }
 
   void onPlaybackMapCreated(GoogleMapController controller) {
@@ -948,47 +1066,73 @@ class VehicleListViewModel extends BaseController {
     );
   }
 
+  double _bearing(LatLng a, LatLng b) {
+    final dLon = (b.longitude - a.longitude) * pi / 180;
+    final lat1 = a.latitude * pi / 180;
+    final lat2 = b.latitude * pi / 180;
+    final y = sin(dLon) * cos(lat2);
+    final x = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(dLon);
+    return (atan2(y, x) * 180 / pi + 360) % 360;
+  }
+
   void _updatePlaybackMarkers() {
-    final currentPos = playbackRoute[playbackCurrentIndex.value];
+    final idx = playbackCurrentIndex.value;
+    final currentPos = playbackRoute[idx];
     final startPos = playbackRoute.first;
     final endPos = playbackRoute.last;
 
-    // Calculate bearing for vehicle rotation
     double rotation = 0;
-    final idx = playbackCurrentIndex.value;
     if (idx < playbackRoute.length - 1) {
       rotation = _bearing(playbackRoute[idx], playbackRoute[idx + 1]);
     } else if (idx > 0) {
       rotation = _bearing(playbackRoute[idx - 1], playbackRoute[idx]);
     }
+    rotation =
+        (rotation + playbackVehicleRotationOffset + 360) % 360;
+
+    final startIcon = _playbackStartMarkerIcon ??
+        BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen);
+    final endIcon = _playbackEndMarkerIcon ??
+        BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed);
+    final vehicleIcon = _playbackVehicleMarkerIcon ??
+        BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen);
+    final parkingIcon = _playbackParkingMarkerIcon ??
+        BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange);
 
     final markers = <Marker>{
-      // Start marker (green)
       Marker(
         markerId: const MarkerId('playback_start'),
         position: startPos,
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
-        infoWindow: const InfoWindow(title: 'Start'),
-        anchor: const Offset(0.5, 1.0),
+        icon: startIcon,
+        infoWindow: InfoWindow(title: AppStrings.startPlayback),
+        anchor: playbackStartFlagAnchor,
+        zIndexInt: 2,
       ),
-      // End marker (red)
       Marker(
         markerId: const MarkerId('playback_end'),
         position: endPos,
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-        infoWindow: const InfoWindow(title: 'End'),
-        anchor: const Offset(0.5, 1.0),
+        icon: endIcon,
+        infoWindow: InfoWindow(title: AppStrings.end.toUpperCase()),
+        anchor: playbackEndFlagAnchor,
+        zIndexInt: 2,
       ),
-      // Vehicle marker (blue)
+      if (playbackParkingIndex < playbackRoute.length)
+        Marker(
+          markerId: const MarkerId('playback_parking'),
+          position: playbackRoute[playbackParkingIndex],
+          icon: parkingIcon,
+          infoWindow: InfoWindow(title: AppStrings.parking),
+          anchor: playbackParkingAnchor,
+          zIndexInt: 3,
+        ),
       Marker(
         markerId: const MarkerId('playback_vehicle'),
         position: currentPos,
-        icon:
-            BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+        icon: vehicleIcon,
         rotation: rotation,
         anchor: const Offset(0.5, 0.5),
         flat: true,
-        zIndex: 10,
+        zIndexInt: 10,
       ),
     };
 
@@ -996,29 +1140,14 @@ class VehicleListViewModel extends BaseController {
   }
 
   void _updatePlaybackPolylines() {
-    final idx = playbackCurrentIndex.value;
-
-    final polylines = <Polyline>{
-      // Travelled path (blue)
-      if (idx > 0)
-        Polyline(
-          polylineId: const PolylineId('playback_travelled'),
-          points: playbackRoute.sublist(0, idx + 1),
-          color: const Color(0xFF1565C0),
-          width: 5,
-        ),
-      // Remaining path (grey)
-      if (idx < playbackRoute.length - 1)
-        Polyline(
-          polylineId: const PolylineId('playback_remaining'),
-          points: playbackRoute.sublist(idx),
-          color: const Color(0xFF9E9E9E),
-          width: 4,
-          patterns: [PatternItem.dash(20), PatternItem.gap(10)],
-        ),
+    playbackPolylines.value = {
+      Polyline(
+        polylineId: const PolylineId('playback_route'),
+        points: playbackRoute,
+        color: AppColors.playbackRouteColor,
+        width: 5,
+      ),
     };
-
-    playbackPolylines.value = polylines;
   }
 
   void _updatePlaybackInfo() {
@@ -1054,13 +1183,13 @@ class VehicleListViewModel extends BaseController {
   /// Duration in milliseconds between steps depending on the speed scale
   int get _playbackIntervalMs {
     switch (playbackSelectedSpeed.value) {
-      case 'Slow':
+      case AppStrings.slow:
         return 2000;
-      case 'Normal':
+      case AppStrings.normal:
         return 1000;
-      case 'Fast':
+      case AppStrings.fastSpeed:
         return 500;
-      case 'Very Fast':
+      case AppStrings.veryFast:
         return 250;
       default:
         return 1000;

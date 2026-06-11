@@ -8,11 +8,11 @@ class MapGoogleMapWidget extends GetView<MapViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      return GoogleMap(
+    return Obx(
+      () => GoogleMap(
         initialCameraPosition: controller.initialCameraPosition,
         mapType: controller.mapType.value,
-        markers: controller.markers.value,
+        markers: Set<Marker>.from(controller.markers),
         onMapCreated: controller.onMapCreated,
         onCameraMove: controller.onCameraMove,
         myLocationEnabled: false,
@@ -22,7 +22,7 @@ class MapGoogleMapWidget extends GetView<MapViewModel> {
         mapToolbarEnabled: false,
         buildingsEnabled: true,
         trafficEnabled: false,
-      );
-    });
+      ),
+    );
   }
 }

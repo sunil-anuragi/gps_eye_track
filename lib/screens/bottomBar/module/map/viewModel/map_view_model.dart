@@ -1,28 +1,12 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:gps_software/enum/map_type.dart';
-import 'package:gps_software/util/app_constant.dart';
+import 'package:gps_software/screens/bottomBar/module/map/data/map_dummy_data.dart';
+import 'package:gps_software/screens/bottomBar/module/map/helper/map_vehicle_marker_icon.dart';
 import 'package:gps_software/util/base_controller.dart';
 import 'package:gps_software/util/user_details.dart';
-
-class MapVehicleMarker {
-  final String id;
-  final double latitude;
-  final double longitude;
-  final double hue;
-  final String address;
-
-  const MapVehicleMarker({
-    required this.id,
-    required this.latitude,
-    required this.longitude,
-    required this.hue,
-    required this.address,
-  });
-}
 
 class MapViewModel extends BaseController {
   static const LatLng defaultLocation = LatLng(28.7024, 77.2695);
@@ -33,53 +17,21 @@ class MapViewModel extends BaseController {
 
   RxInt refreshSeconds = 10.obs;
   Rx<MapType> mapType = MapType.normal.obs;
-  Rx<Set<Marker>> markers = Rx<Set<Marker>>({});
-  RxString selectedAddress =
-      'C6/233 Bhagwan Shree Pashuram Rd, Block C, Yamuna Vihar, Shahdara, New Delhi, Delhi 110053, India'
-          .obs;
+  final markers = <Marker>{}.obs;
+  RxString selectedAddress = MapDummyData.defaultAddress.obs;
 
   final CameraPosition initialCameraPosition = const CameraPosition(
     target: defaultLocation,
     zoom: defaultZoom,
   );
 
-  final List<MapVehicleMarker> vehicleMarkers = const [
-    MapVehicleMarker(
-      id: 'DL2RQ-3478',
-      latitude: 28.7041,
-      longitude: 77.2650,
-      hue: BitmapDescriptor.hueGreen,
-      address:
-          'C6/233 Bhagwan Shree Pashuram Rd, Block C, Yamuna Vihar, Shahdara, New Delhi, Delhi 110053, India',
-    ),
-    MapVehicleMarker(
-      id: 'DL6RQ-7562',
-      latitude: 28.6995,
-      longitude: 77.2720,
-      hue: BitmapDescriptor.hueAzure,
-      address: 'Yamuna Vihar, Shahdara, New Delhi, Delhi 110053, India',
-    ),
-    MapVehicleMarker(
-      id: 'DL2RAA2389',
-      latitude: 28.7060,
-      longitude: 77.2680,
-      hue: BitmapDescriptor.hueRed,
-      address: 'Bhajanpura, Shahdara, New Delhi, Delhi 110053, India',
-    ),
-    MapVehicleMarker(
-      id: 'ACUTE140',
-      latitude: 28.7005,
-      longitude: 77.2640,
-      hue: BitmapDescriptor.hueOrange,
-      address: 'Maujpur, Shahdara, New Delhi, Delhi 110053, India',
-    ),
-  ];
+  List<MapVehicleMarker> get vehicleMarkers => MapDummyData.vehicles;
 
   @override
   void onInit() {
     super.onInit();
     _loadMapType();
-    _buildMarkers();
+    _loadVehicleMarkers();
     _startRefreshTimer();
   }
 
@@ -108,18 +60,28 @@ class MapViewModel extends BaseController {
     }
   }
 
+  Future<void> _loadVehicleMarkers() async {
+    await MapVehicleMarkerIcon.load();
+    _buildMarkers();
+  }
+
+  void onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+    if (MapVehicleMarkerIcon.isLoaded) {
+      _buildMarkers();
+    }
+  }
+
   void _buildMarkers() {
-    markers.value = vehicleMarkers
-        .map(
-          (vehicle) => Marker(
-            markerId: MarkerId(vehicle.id),
-            position: LatLng(vehicle.latitude, vehicle.longitude),
-            icon: BitmapDescriptor.defaultMarkerWithHue(vehicle.hue),
-            infoWindow: InfoWindow(title: vehicle.id),
-            onTap: () => selectedAddress.value = vehicle.address,
-          ),
-        )
-        .toSet();
+    if (!MapVehicleMarkerIcon.isLoaded) return;
+
+    final updatedMarkers = MapVehicleMarkerIcon.toMarkers(
+      vehicleMarkers,
+      onTap: (vehicle) => selectedAddress.value = vehicle.address,
+    );
+    markers
+      ..clear()
+      ..addAll(updatedMarkers);
   }
 
   void _startRefreshTimer() {
@@ -132,10 +94,6 @@ class MapViewModel extends BaseController {
         refreshSeconds.value--;
       }
     });
-  }
-
-  void onMapCreated(GoogleMapController controller) {
-    mapController = controller;
   }
 
   void onCameraMove(CameraPosition position) {}

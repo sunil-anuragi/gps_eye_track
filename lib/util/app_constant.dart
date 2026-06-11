@@ -84,6 +84,8 @@ class AppColors {
   static const Color playbackProgressActive = Color(0xff3F51B5);
   static const Color playbackPlayBtnColor = Color(0xff3F51B5);
   static const Color playbackTimelineBg = Color(0xffF5F5F5);
+  static const Color playbackRouteColor = Color(0xff05B541);
+  static const Color playbackParkingColor = Color(0xffFF9900);
 
   static MaterialColor primaryColorShades = MaterialColor(
     primaryColor.value,

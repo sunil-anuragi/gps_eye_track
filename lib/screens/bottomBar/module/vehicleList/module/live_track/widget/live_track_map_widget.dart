@@ -12,7 +12,7 @@ class LiveTrackMapWidget extends GetView<VehicleListViewModel> {
       return GoogleMap(
         initialCameraPosition: controller.liveTrackCameraPosition,
         mapType: controller.liveTrackMapType.value,
-        markers: controller.liveTrackMarkers.value,
+        markers: Set<Marker>.from(controller.liveTrackMarkers),
         onMapCreated: controller.onLiveTrackMapCreated,
         myLocationEnabled: false,
         myLocationButtonEnabled: false,

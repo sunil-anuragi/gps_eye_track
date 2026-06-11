@@ -66,4 +66,24 @@ class Assets {
   static const String fuelCutoffSuccessIcon = 'assets/fuel_cutoff_success_icon.png';
   static const String geofenceConfirmWarningIcon =
       'assets/geofence_confirm_warning_icon.png';
+  static const String playbackStartIcon = 'assets/playback_start_icon.png';
+  static const String playbackEndIcon = 'assets/playback_end_icon.png';
+  static const String playbackCarIcon = 'assets/playback_car_icon.png';
+  static const String playbackTimerIcon = 'assets/playback_timer_icon.png';
+  static const String playbackForwardIcon = 'assets/playback_forward_icon.png';
+  static const String playbackVehicleIcon = 'assets/playback_vehicle_icon.png';
+  static const String playbackParkingIcon = 'assets/playback_parking_icon.png';
+  static const String mapTrafficIcon = 'assets/map_traffic_icon.png';
+  static const String mapLayersIcon = 'assets/map_layers_icon.png';
+  static const String mapTitleIcon = 'assets/map_title_icon.png';
+  static const String mapGeofenceIcon = 'assets/map_geofence_icon.png';
+  static const String mapLocationIcon = 'assets/map_location_icon.png';
+  static const String mapTerminalIcon = 'assets/map_terminal_icon.png';
+  static const String mapRouteIcon = 'assets/map_route_icon.png';
+  static const String mapMyLocationIcon = 'assets/map_my_location_icon.png';
+  static const String mapZoomInIcon = 'assets/map_zoom_in_icon.png';
+  static const String mapZoomOutIcon = 'assets/map_zoom_out_icon.png';
+  static const String mapMarkerCarStop = 'assets/map_marker_car_stop.png';
+  static const String mapMarkerCarRunning = 'assets/map_marker_car_running.png';
+  static const String mapMarkerCarOffline = 'assets/map_marker_car_offline.png';
 }

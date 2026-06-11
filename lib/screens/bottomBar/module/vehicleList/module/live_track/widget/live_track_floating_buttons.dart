@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:gps_software/commonWidget/map_floating_action_button.dart';
+import 'package:gps_software/generated/assets.dart';
 import 'package:gps_software/screens/bottomBar/module/vehicleList/viewModel/vehicle_list_view_model.dart';
 import 'package:gps_software/util/app_constant.dart';
 
@@ -16,22 +18,28 @@ class LiveTrackFloatingButtons extends GetView<VehicleListViewModel> {
           top: 60.h,
           child: Column(
             children: [
-              _mapButton(Icons.traffic),
+              MapFloatingActionButton(iconAsset: Assets.mapTrafficIcon,iconSize: 50),
               8.h.sizeBoxFromHeight(),
-              _mapButton(Icons.layers, onTap: controller.toggleLiveTrackMapType),
-              8.h.sizeBoxFromHeight(),
-              _mapButton(Icons.fence),
-              8.h.sizeBoxFromHeight(),
-              _mapButton(
-                Icons.directions_car_filled_outlined,
-                onTap: controller.showImmobilizeDialog,
+              MapFloatingActionButton(
+                iconAsset: Assets.mapLayersIcon,
+                onTap: controller.toggleLiveTrackMapType,
+                iconSize: 50,
               ),
               8.h.sizeBoxFromHeight(),
-              _mapButton(Icons.terminal),
+              MapFloatingActionButton(iconAsset: Assets.mapGeofenceIcon,iconSize: 50),
               8.h.sizeBoxFromHeight(),
-              _mapButton(
-                Icons.alt_route,
+              MapFloatingActionButton(
+                iconAsset: Assets.mapLocationIcon,
+                onTap: controller.showImmobilizeDialog,
+                iconSize: 50,
+              ),
+              8.h.sizeBoxFromHeight(),
+              MapFloatingActionButton(iconAsset: Assets.mapTerminalIcon,iconSize: 50),
+              8.h.sizeBoxFromHeight(),
+              MapFloatingActionButton(
+                iconAsset: Assets.mapRouteIcon,
                 onTap: controller.showGeofenceConfirmDialog,
+                iconSize: 50,
               ),
             ],
           ),
@@ -41,33 +49,27 @@ class LiveTrackFloatingButtons extends GetView<VehicleListViewModel> {
           bottom: 80.h,
           child: Column(
             children: [
-              _mapButton(
-                Icons.my_location,
+              MapFloatingActionButton(
+                iconAsset: Assets.mapMyLocationIcon,
                 onTap: controller.goToLiveTrackVehicle,
+                iconSize: 50,
               ),
               8.h.sizeBoxFromHeight(),
-              _mapButton(Icons.add, onTap: controller.liveTrackZoomIn),
+              MapFloatingActionButton(
+                iconAsset: Assets.mapZoomInIcon,
+                onTap: controller.liveTrackZoomIn,
+                iconSize: 50,
+              ),
               8.h.sizeBoxFromHeight(),
-              _mapButton(Icons.remove, onTap: controller.liveTrackZoomOut),
+              MapFloatingActionButton(
+                iconAsset: Assets.mapZoomOutIcon,
+                onTap: controller.liveTrackZoomOut,
+                iconSize: 50,
+              ),
             ],
           ),
         ),
       ],
-    );
-  }
-
-  Widget _mapButton(IconData icon, {VoidCallback? onTap}) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        width: 36.r,
-        height: 36.r,
-        decoration: BoxDecoration(
-          color: AppColors.mapOverlayColor,
-          borderRadius: BorderRadius.circular(4.r),
-        ),
-        child: Icon(icon, color: AppColors.whiteColor, size: 18.r),
-      ),
     );
   }
 }
