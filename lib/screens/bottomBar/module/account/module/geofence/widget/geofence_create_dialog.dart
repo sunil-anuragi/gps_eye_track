@@ -50,14 +50,14 @@ class GeofenceCreateDialog extends GetView<AccountViewModel> {
                   controller: controller.geofenceNameController,
                   style: TextStyle(
                     fontSize: 14.sp,
-                    fontFamily: 'Poppins',
+                    fontFamily: 'Dmsans',
                     color: AppColors.blackColor,
                   ),
                   decoration: InputDecoration(
                     hintText: AppStrings.enterName.tr,
                     hintStyle: TextStyle(
                       fontSize: 14.sp,
-                      fontFamily: 'Poppins',
+                      fontFamily: 'Dmsans',
                       color: AppColors.grayColor,
                     ),
                     filled: true,

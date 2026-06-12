@@ -34,7 +34,7 @@ class PasswordUnderlineField extends StatelessWidget {
           obscureText: !isVisible,
           style: TextStyle(
             fontSize: 14.sp,
-            fontFamily: 'Poppins',
+            fontFamily: 'Dmsans',
             color: AppColors.textFieldTextColor,
             letterSpacing: 2,
           ),
@@ -42,7 +42,7 @@ class PasswordUnderlineField extends StatelessWidget {
             hintText: AuthStrings.passwordHint,
             hintStyle: TextStyle(
               fontSize: 14.sp,
-              fontFamily: 'Poppins',
+              fontFamily: 'Dmsans',
               color: AppColors.grayColor,
               letterSpacing: 2,
             ),

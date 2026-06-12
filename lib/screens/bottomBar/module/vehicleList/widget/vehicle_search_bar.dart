@@ -165,7 +165,7 @@ class _VehicleSearchBarState extends State<VehicleSearchBar>
                             onSubmitted: (_) => _deactivateSearch(),
                             style: TextStyle(
                               fontSize: 14.sp,
-                              fontFamily: 'Poppins',
+                              fontFamily: 'Dmsans',
                               color: AppColors.blackColor,
                               height: 1.2,
                             ),
@@ -173,7 +173,7 @@ class _VehicleSearchBarState extends State<VehicleSearchBar>
                               hintText: AppStrings.searchPlaceholder.tr,
                               hintStyle: TextStyle(
                                 fontSize: 14.sp,
-                                fontFamily: 'Poppins',
+                                fontFamily: 'Dmsans',
                                 color: AppColors.grayColor,
                                 height: 1.2,
                               ),

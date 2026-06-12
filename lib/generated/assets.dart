@@ -89,4 +89,9 @@ class Assets {
   static const String vehicleListCarIcon = 'assets/vehicle_list_car_icon.png';
   static const String notificationIgnitionKeyIcon =
       'assets/notification_ignition_key_icon.png';
+  static const String geofenceSaveIcon = 'assets/geofence_save_icon.png';
+  static const String geofenceClearIcon = 'assets/geofence_clear_icon.png';
+  static const String geofencePolygonIcon = 'assets/geofence_polygon_icon.png';
+  static const String geofenceMyLocationIcon =
+      'assets/geofence_my_location_icon.png';
 }

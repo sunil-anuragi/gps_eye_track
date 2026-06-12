@@ -26,6 +26,8 @@ class LiveTrackFloatingButtons extends GetView<VehicleListViewModel> {
                 iconSize: 50,
               ),
               8.h.sizeBoxFromHeight(),
+              MapFloatingActionButton(iconAsset: Assets.mapTitleIcon,iconSize: 50 ),
+              8.h.sizeBoxFromHeight(),
               MapFloatingActionButton(iconAsset: Assets.mapGeofenceIcon,iconSize: 50),
               8.h.sizeBoxFromHeight(),
               MapFloatingActionButton(

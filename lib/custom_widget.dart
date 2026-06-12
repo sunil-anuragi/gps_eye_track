@@ -36,7 +36,7 @@ class CustomWidget {
       maxLines: maxLine,
       style: TextStyle(
           // fontFamily: fontFamily ?? null,
-          fontFamily: 'Poppins',
+          fontFamily: 'Dmsans',
           decoration: decoration,
           color: color,
           fontSize: fontSize.sp,
@@ -163,7 +163,7 @@ class CustomWidget {
       style: TextStyle(
           fontSize: 14.0.sp,
           letterSpacing: 0.5,
-          fontFamily: 'Poppins',
+          fontFamily: 'Dmsans',
           fontWeight: FontWeight.w400,
           color: AppColors.textFieldTextColor),
       decoration: InputDecoration(
@@ -195,14 +195,14 @@ class CustomWidget {
         labelStyle: TextStyle(
             fontSize: 12.0.sp,
             letterSpacing: 0.5,
-            fontFamily: 'Poppins',
+            fontFamily: 'Dmsans',
             fontWeight: FontWeight.w500,
             color: AppColors.blackColor),
         hintText: hintText.tr,
         hintStyle: TextStyle(
             fontSize: 14.0.sp,
             letterSpacing: 0.5,
-            fontFamily: 'Poppins',
+            fontFamily: 'Dmsans',
             fontWeight: FontWeight.w400,
             color: AppColors.grayColor),
         contentPadding: EdgeInsets.only(top: 12.h, bottom: 12.h, left: 16.h),
@@ -224,7 +224,7 @@ class CustomWidget {
         baseStyle: TextStyle(
             fontSize: 14.0.sp,
             letterSpacing: 0.5,
-            fontFamily: 'Poppins',
+            fontFamily: 'Dmsans',
             fontWeight: FontWeight.w400,
             color: AppColors.textFieldTextColor),
         dropdownSearchDecoration: InputDecoration(
@@ -236,13 +236,13 @@ class CustomWidget {
           hintStyle: TextStyle(
               fontSize: 14.0.sp,
               letterSpacing: 0.5,
-              fontFamily: 'Poppins',
+              fontFamily: 'Dmsans',
               fontWeight: FontWeight.w400,
               color: AppColors.grayColor),
           labelStyle: TextStyle(
               fontSize: 12.0.sp,
               letterSpacing: 0.5,
-              fontFamily: 'Poppins',
+              fontFamily: 'Dmsans',
               fontWeight: FontWeight.w500,
               color: AppColors.blackColor),
         ),

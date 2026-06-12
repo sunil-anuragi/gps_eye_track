@@ -43,7 +43,7 @@ class OverSpeedDialog extends GetView<VehicleListViewModel> {
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 style: TextStyle(
-                  fontFamily: 'Poppins',
+                  fontFamily: 'Dmsans',
                   fontSize: 14.sp,
                   color: AppColors.blackColor,
                 ),

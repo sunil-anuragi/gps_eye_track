@@ -49,6 +49,11 @@ dev_dependencies:
   # flutter_launcher_icons: ^0.14.4
   change_app_package_name: ^1.1.0
 
+fonts:
+  - family: Dmsans
+    fonts:
+      - asset: fonts/
+        
 # flutter_launcher_icons:
 #   android: "launcher_icon"
 #   ios: true
@@ -60,7 +65,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^5.0.0
+flutter_lints: ^5.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

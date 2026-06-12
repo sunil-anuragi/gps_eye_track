@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:gps_software/generated/assets.dart';
 import 'package:gps_software/screens/bottomBar/module/account/module/geofence/widget/geofence_circular_button.dart';
 import 'package:gps_software/screens/bottomBar/module/account/viewModel/account_view_model.dart';
 import 'package:gps_software/util/app_constant.dart';
@@ -18,18 +19,18 @@ class GeofenceMapControls extends GetView<AccountViewModel> {
           child: Column(
             children: [
               GeofenceCircularButton(
-                icon: Icons.my_location,
+                iconAsset: Assets.geofenceMyLocationIcon,
                 color: AppColors.geofenceBlueColor,
                 onTap: controller.goToGeofenceCenter,
               ),
               10.h.sizeBoxFromHeight(),
               GeofenceCircularButton(
-                icon: Icons.crop_square,
+                iconAsset: Assets.geofencePolygonIcon,
                 onTap: controller.onGeofencePolygonMode,
               ),
               10.h.sizeBoxFromHeight(),
               GeofenceCircularButton(
-                icon: Icons.close,
+                iconAsset: Assets.geofenceClearIcon,
                 onTap: controller.onClearGeofence,
               ),
             ],
@@ -39,9 +40,9 @@ class GeofenceMapControls extends GetView<AccountViewModel> {
           right: 12.w,
           top: 16.h,
           child: GeofenceCircularButton(
-            icon: Icons.save_outlined,
-            label: AppStrings.saveUpper,
+            iconAsset: Assets.geofenceSaveIcon,
             size: 52,
+            iconSize: 25,
             onTap: controller.onGeofenceSaveTap,
           ),
         ),

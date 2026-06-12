@@ -6,21 +6,27 @@ import 'package:gps_software/util/app_constant.dart';
 class GeofenceCircularButton extends StatelessWidget {
   const GeofenceCircularButton({
     super.key,
-    required this.icon,
+    this.icon,
+    this.iconAsset,
     this.label,
     this.color = AppColors.primaryColor,
     this.onTap,
     this.size = 44,
-  });
+    this.iconSize,
+  }) : assert(icon != null || iconAsset != null);
 
-  final IconData icon;
+  final IconData? icon;
+  final String? iconAsset;
   final String? label;
   final Color color;
   final VoidCallback? onTap;
   final double size;
+  final double? iconSize;
 
   @override
   Widget build(BuildContext context) {
+    final assetSize = iconSize ?? size * 0.55;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -40,7 +46,15 @@ class GeofenceCircularButton extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: AppColors.whiteColor, size: 20.r),
+            if (iconAsset != null)
+              Image.asset(
+                iconAsset!,
+                width: assetSize.r,
+                height: assetSize.r,
+                fit: BoxFit.contain,
+              )
+            else
+              Icon(icon, color: AppColors.whiteColor, size: 20.r),
             if (label != null) ...[
               2.h.sizeBoxFromHeight(),
               CustomWidget.text(

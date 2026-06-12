@@ -43,14 +43,14 @@ class ReportDialogSearchBar extends StatelessWidget {
               controller: controller,
               onChanged: onChanged,
               style: TextStyle(
-                fontFamily: 'Poppins',
+                fontFamily: 'Dmsans',
                 fontSize: 13.sp,
                 color: AppColors.blackColor,
               ),
               decoration: InputDecoration(
                 hintText: AppStrings.searchPlaceholder,
                 hintStyle: TextStyle(
-                  fontFamily: 'Poppins',
+                  fontFamily: 'Dmsans',
                   fontSize: 13.sp,
                   color: AppColors.grayColor,
                 ),

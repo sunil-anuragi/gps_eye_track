@@ -67,14 +67,14 @@ class ImmobilizeDialog extends GetView<VehicleListViewModel> {
                     controller: controller.immobilizePasswordController,
                     obscureText: true,
                     style: TextStyle(
-                      fontFamily: 'Poppins',
+                      fontFamily: 'Dmsans',
                       fontSize: 13.sp,
                       color: AppColors.blackColor,
                     ),
                     decoration: InputDecoration(
                       hintText: AppStrings.requiredLoginPassword,
                       hintStyle: TextStyle(
-                        fontFamily: 'Poppins',
+                        fontFamily: 'Dmsans',
                         fontSize: 12.sp,
                         color: AppColors.iconGrayColor,
                       ),
