@@ -49,11 +49,7 @@ dev_dependencies:
   # flutter_launcher_icons: ^0.14.4
   change_app_package_name: ^1.1.0
 
-fonts:
-  - family: Dmsans
-    fonts:
-      - asset: fonts/
-        
+
 # flutter_launcher_icons:
 #   android: "launcher_icon"
 #   ios: true
@@ -77,7 +73,16 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
+  
+  fonts:
+  - family: Dmsans
+    fonts:
+      - asset: assets/fonts/DMSans-Regular.ttf
+        weight: 400
+      - asset: assets/fonts/DMSans-Medium.ttf
+        weight: 500
+      - asset: assets/fonts/DMSans-Bold.ttf
+        weight: 700
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/

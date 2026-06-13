@@ -17,22 +17,10 @@ class ContactInfoCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(10.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.06),
+            color: AppColors.blackColor.withValues(alpha: 0.25),
             blurRadius: 4,
-            offset: const Offset(0, 2),
+            offset: const Offset(0, 4),
             spreadRadius: 0,
-          ),
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.10),
-            blurRadius: 12,
-            offset: const Offset(0, 6),
-            spreadRadius: 1,
-          ),
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-            spreadRadius: 2,
           ),
         ],
       ),
@@ -41,8 +29,8 @@ class ContactInfoCard extends StatelessWidget {
         children: [
           CustomWidget.text(
             AppStrings.contactInformation,
-            fontSize: 15,
-            fontWeight: FontWeight.bold,
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
             color: AppColors.blackColor,
           ),
           12.h.sizeBoxFromHeight(),
@@ -51,7 +39,7 @@ class ContactInfoCard extends StatelessWidget {
             fontSize: 13,
             color: AppColors.blackColor,
           ),
-          8.h.sizeBoxFromHeight(),
+          3.h.sizeBoxFromHeight(),
           CustomWidget.text(
             '${AppStrings.email} : ${AppStrings.supportEmail}',
             fontSize: 13,

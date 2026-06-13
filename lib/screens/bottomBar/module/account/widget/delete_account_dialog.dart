@@ -25,20 +25,20 @@ class DeleteAccountDialog extends GetView<AccountViewModel> {
           children: [
             CustomWidget.text(
               AppStrings.deleteAccount,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
               color: AppColors.blackColor,
               textAlign: TextAlign.center,
             ),
-            16.h.sizeBoxFromHeight(),
+            5.h.sizeBoxFromHeight(),
             CustomWidget.text(
               AppStrings.deleteAccountMessage,
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
               color: AppColors.subtitleColor,
               textAlign: TextAlign.center,
             ),
-            28.h.sizeBoxFromHeight(),
+            10.h.sizeBoxFromHeight(),
             Row(
               children: [
                 Expanded(
@@ -85,7 +85,7 @@ class DeleteAccountDialog extends GetView<AccountViewModel> {
           child: CustomWidget.text(
             label,
             fontSize: 14,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w400,
             color: AppColors.whiteColor,
           ),
         ),
