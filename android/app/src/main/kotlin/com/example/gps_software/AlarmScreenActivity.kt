@@ -1,4 +1,4 @@
-package com.gpssoftware
+package com.gpstrackeye
 import android.media.MediaPlayer
 import android.app.KeyguardManager
 import android.os.Build

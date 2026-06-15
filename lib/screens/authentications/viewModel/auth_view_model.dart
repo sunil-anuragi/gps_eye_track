@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:gps_software/screens/bottomBar/view/bottom_bar_view.dart';
 import 'package:gps_software/screens/authentications/view/reset_password_view.dart';
 import 'package:gps_software/screens/authentications/widget/congratulations_dialog.dart';
 import 'package:gps_software/util/base_controller.dart';
@@ -36,7 +35,7 @@ class AuthViewModel extends BaseController {
     // Clear fields
     accountController.clear();
     passwordController.clear();
-    Get.offAllNamed(BottomBarView.bottomBarView);
+    // Get.offAllNamed(BottomBarView.bottomBarView);
   }
 
   void continueForgotPassword() {

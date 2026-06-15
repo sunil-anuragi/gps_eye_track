@@ -16,7 +16,6 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
 import 'package:gps_software/api/api_service.dart';
 import 'package:gps_software/routes/pages.dart';
-import 'package:gps_software/screens/bottomBar/model/all_trip_model.dart';
 import 'package:gps_software/services/firebase_notification.dart';
 import 'package:gps_software/translations/lang.dart';
 import 'package:gps_software/util/app_constant.dart';
@@ -27,6 +26,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sound_mode/sound_mode.dart';
 import 'package:sound_mode/utils/ringer_mode_statuses.dart';
+
+import 'screens/model/all_trip_model.dart';
 
 String language = 'en';
 
@@ -410,8 +411,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _checkIntent() async {
-    const MethodChannel channel =
-        MethodChannel('com.gpssoftware/alert');
+    const MethodChannel channel = MethodChannel('com.gpstrackeye/alert');
     try {
       final result = await channel.invokeMethod('getSafeAlert');
       print("resy;ut" + result.toString());

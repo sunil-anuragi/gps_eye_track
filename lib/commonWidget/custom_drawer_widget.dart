@@ -3,8 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:gps_software/custom_widget.dart';
 import 'package:gps_software/generated/assets.dart';
-import 'package:gps_software/screens/bottomBar/viewModel/bottom_bar_view_model.dart';
 import 'package:gps_software/util/app_constant.dart';
+
+import '../screens/viewModel/bottom_bar_view_model.dart';
 
 class CustomDrawerWidget extends GetView<BottomBarViewModel> {
   const CustomDrawerWidget({

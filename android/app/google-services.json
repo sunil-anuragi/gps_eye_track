@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "1038227761835",
-    "project_id": "gps-software-c3a67",
-    "storage_bucket": "gps-software-c3a67.firebasestorage.app"
+    "project_number": "400593580738",
+    "project_id": "gps-track-eye-8d0de",
+    "storage_bucket": "gps-track-eye-8d0de.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1038227761835:android:113b85c44e2e7200fe25ee",
+        "mobilesdk_app_id": "1:400593580738:android:572d809c63bbbc8625815b",
         "android_client_info": {
-          "package_name": "com.gpssoftware"
+          "package_name": "com.gpstrackeye"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBaT30FOLlgCgeHa6cPcMhYZZzK36LtQ2Q"
+          "current_key": "AIzaSyANeCOBBMzH0dZ96aW7T5KfRxgYnZUzTho"
         }
       ],
       "services": {
