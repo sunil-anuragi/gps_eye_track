@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:gps_software/screens/authentications/bindings/auth_binding.dart';
 import 'package:gps_software/screens/authentications/view/sign_in_view.dart';
-import 'package:gps_software/screens/authentications/view/forget_password_view.dart';
-import 'package:gps_software/screens/authentications/view/reset_password_view.dart';
+import 'package:gps_software/screens/dashboard/view/dashboard_view.dart';
+
 import 'package:gps_software/screens/splash/bindings/splash_binding.dart';
 import 'package:gps_software/screens/splash/view/splash_view.dart';
 
@@ -24,15 +24,8 @@ class AppPages {
         binding: AuthBinding(),
         transition: transition),
     GetPage(
-        name: ForgetPasswordView.forgetPasswordView,
-        page: () => const ForgetPasswordView(),
-        binding: AuthBinding(),
+        name: DashboardView.dashboardView,
+        page: () => const DashboardView(),
         transition: transition),
-    GetPage(
-        name: ResetPasswordView.resetPasswordView,
-        page: () => const ResetPasswordView(),
-        binding: AuthBinding(),
-        transition: transition),
- 
   ];
 }

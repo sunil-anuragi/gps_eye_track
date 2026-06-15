@@ -12,7 +12,8 @@ dependencies:
     sdk: flutter
   get: ^4.6.6
   flutter_screenutil: ^5.9.0
-  syncfusion_flutter_datepicker: ^29.1.35
+  syncfusion_flutter_charts: 
+  syncfusion_flutter_datepicker: ^33.2.12
   dio: ^5.3.2
   shared_preferences: ^2.2.1
   package_info_plus: ^8.0.2
@@ -37,7 +38,7 @@ dependencies:
   flutter_downloader: ^1.11.8
   in_app_review: ^2.0.11
   flutter_svg: ^2.2.2
-
+  
 dependency_overrides:
   intl: ^0.18.1
   google_maps_flutter_platform_interface: <2.15.0

@@ -3,7 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:gps_software/enum/vehicle_status.dart';
 
 class AppColors {
-  static const Color primaryColor = Color(0xff404040);
+  static const Color primaryColor = Color(0xff174171);
   static const Color primary2Color = Color(0xff635571);
   static const Color whiteColor = Colors.white;
   static const Color blackColor = Color(0xff18111F);
@@ -215,6 +215,8 @@ extension SizeBoxWidget on double {
 }
 
 class AppStrings {
+
+  static const String appName = "GpsTrack Eye";
   static const String appTitle = "Sangeetbhati";
   static const String me = "Me";
   static const String map = "Map";
@@ -422,30 +424,13 @@ class AppStrings {
 
 class AuthStrings {
   static const String gpsSoftware = "GPS Software";
-  static const String signIn = "Sign In";
-  static const String account = "Account";
+
+  static const String username = "User Name";
   static const String password = "Password";
+  static const String welcometext = "Welcome to\nGps Track Eye";
   static const String passwordHint = "********";
-  static const String rememberMe = "Remember me";
-  static const String forgetPasswordLink = "Forget Password?";
   static const String login = "Login";
-
-  static const String forgetPasswordTitle = "Forget Password";
-  static const String forgetPasswordSubtitle =
-      "Enter your user account to reset password";
-  static const String enterUserId = "Enter your user id";
-  static const String continueBtn = "Continue";
-
-  static const String resetPasswordTitle = "Reset Password";
-  static const String resetPasswordSubtitle = "Select option to reset password";
-  static const String registerEmail =
-      "Register Email Id: ac***********@gmail.com";
-  static const String registerMobile = "Register Mobile No: **********7078";
-
-  static const String congratulations = "Congratulations";
-  static const String successSubtitle =
-      "Awesome, you've successfully password send";
-  static const String goToLogin = "Go To Login";
+  static const String delear = "Delear";
 }
 
 class MQTT {

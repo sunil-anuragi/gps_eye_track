@@ -5,14 +5,12 @@ import 'package:get/get.dart';
 import 'package:gps_software/screens/authentications/viewModel/auth_view_model.dart';
 import 'package:gps_software/util/app_constant.dart';
 
+import '../../../custom_widget.dart';
+
 class SignInView extends GetView<AuthViewModel> {
   static const signInView = '/signInView';
 
   const SignInView({Key? key}) : super(key: key);
-
-  static const Color _brandBlue = Color(0xff18548f);
-  static const Color _fieldGray = Color(0xff6e6e6e);
-  static const Color _borderGray = Color(0xffd6d6d6);
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +20,12 @@ class SignInView extends GetView<AuthViewModel> {
       builder: (logic) {
         return AnnotatedRegion<SystemUiOverlayStyle>(
           value: const SystemUiOverlayStyle(
-            statusBarColor: _brandBlue,
+            statusBarColor: AppColors.primaryColor,
             statusBarIconBrightness: Brightness.light,
             statusBarBrightness: Brightness.dark,
           ),
           child: Scaffold(
-            backgroundColor: _brandBlue,
+            backgroundColor: AppColors.primaryColor,
             body: SafeArea(
               bottom: false,
               child: LayoutBuilder(
@@ -46,15 +44,8 @@ class SignInView extends GetView<AuthViewModel> {
                         child: Stack(
                           children: [
                             Positioned(
-                              top: 0,
-                              left: 0,
-                              right: 0,
-                              height: sheetTop + 34.h,
-                              child: Container(color: _brandBlue),
-                            ),
-                            Positioned(
                               top: (sheetTop - 148.h)
-                                  .clamp(300.h, 470.h)
+                                  .clamp(400.h, 470.h)
                                   .toDouble(),
                               left: 30.w,
                               right: 30.w,
@@ -97,8 +88,8 @@ class _LogoBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        width: 174.w,
-        height: 174.w,
+        width: 160.w,
+        height: 160.w,
         decoration: const BoxDecoration(
           color: AppColors.whiteColor,
           shape: BoxShape.circle,
@@ -113,7 +104,7 @@ class _LogoBadge extends StatelessWidget {
                 height: 39.w,
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: SignInView._brandBlue,
+                    color: AppColors.primaryColor,
                     width: 1.7.w,
                   ),
                   borderRadius: BorderRadius.circular(11.r),
@@ -122,22 +113,18 @@ class _LogoBadge extends StatelessWidget {
                   angle: -0.785398,
                   child: Icon(
                     Icons.gps_fixed,
-                    color: SignInView._brandBlue,
+                    color: AppColors.primaryColor,
                     size: 28.w,
                   ),
                 ),
               ),
             ),
             SizedBox(height: 22.h),
-            Text(
-              'GpsTrack Eye',
-              style: TextStyle(
-                color: SignInView._brandBlue,
-                fontFamily: 'Dmsans',
-                fontSize: 19.sp,
-                fontWeight: FontWeight.w700,
-                letterSpacing: 0,
-              ),
+            CustomWidget.text(
+              AppStrings.appName,
+              color: AppColors.primaryColor,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
             ),
           ],
         ),
@@ -151,16 +138,11 @@ class _WelcomeTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      'Welcome to\nGps Track Eye',
-      style: TextStyle(
-        color: AppColors.whiteColor,
-        fontFamily: 'Dmsans',
-        fontSize: 26.sp,
-        fontWeight: FontWeight.w700,
-        height: 1.4,
-        letterSpacing: 0,
-      ),
+    return CustomWidget.text(
+      AuthStrings.welcometext,
+      color: Colors.white,
+      fontSize: 18,
+      fontWeight: FontWeight.w600,
     );
   }
 }
@@ -185,190 +167,95 @@ class _LoginSheet extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _AuthTextField(
+            CustomWidget.customTextFormField(
+              hintText: AuthStrings.username,
+              labelText: AuthStrings.username,
               controller: controller.accountController,
-              hintText: 'User Name',
-              prefixIcon: Icons.person,
-            ),
-            SizedBox(height: 17.h),
-            Obx(
-              () => _AuthTextField(
-                controller: controller.passwordController,
-                hintText: 'Enter Password',
-                prefixIcon: Icons.lock,
-                obscureText: controller.obscurePassword.value,
-                suffixIcon: controller.obscurePassword.value
-                    ? Icons.visibility_off
-                    : Icons.visibility,
-                onSuffixTap: controller.toggleObscurePassword,
+              isPrefixShow: true,
+              prefixIcon: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                child: Icon(
+                  Icons.person_outline,
+                  size: 22.w,
+                  color: AppColors.black87,
+                ),
               ),
             ),
-            SizedBox(height: 20.h),
-            Row(
-              children: [
-                Obx(
-                  () => SizedBox(
-                    width: 28.w,
-                    height: 28.w,
-                    child: Checkbox(
-                      value: controller.rememberMe.value,
-                      onChanged: controller.toggleRememberMe,
-                      activeColor: SignInView._brandBlue,
-                      checkColor: AppColors.whiteColor,
-                      side: BorderSide(
-                        color: SignInView._brandBlue,
-                        width: 2.w,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(2.r),
-                      ),
-                    ),
+            16.h.sizeBoxFromHeight(),
+            Obx(
+              () => CustomWidget.customTextFormField(
+                hintText: AuthStrings.passwordHint,
+                labelText: AuthStrings.password,
+                controller: controller.passwordController,
+                obscureText: controller.obscurePassword.value,
+                isPrefixShow: true,
+                prefixIcon: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12.w),
+                  child: Icon(
+                    Icons.lock_outline,
+                    size: 22.w,
+                    color: AppColors.black87,
                   ),
                 ),
-                SizedBox(width: 16.w),
-                GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () =>
-                      controller.toggleRememberMe(!controller.rememberMe.value),
-                  child: Text(
-                    'Dealer',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'Dmsans',
-                      fontSize: 19.sp,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 0,
-                    ),
+                isSufixShow: true,
+                suffixIcon: GestureDetector(
+                  onTap: controller.toggleObscurePassword,
+                  child: Icon(
+                    controller.obscurePassword.value
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined,
+                    size: 22.w,
+                    color: AppColors.black54,
                   ),
+                ),
+              ),
+            ),
+            16.h.sizeBoxFromHeight(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Obx(
+                      () => SizedBox(
+                        width: 24.w,
+                        height: 24.h,
+                        child: Checkbox(
+                          value: controller.rememberMe.value,
+                          onChanged: controller.toggleRememberMe,
+                          activeColor: AppColors.primaryColor,
+                          checkColor: Colors.white,
+                        ),
+                      ),
+                    ),
+                    8.w.sizeBoxFromWidth(),
+                    GestureDetector(
+                      onTap: () => controller
+                          .toggleRememberMe(!controller.rememberMe.value),
+                      child: CustomWidget.text(
+                        AuthStrings.delear,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.black87,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-            SizedBox(height: 61.h),
-            DecoratedBox(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4.r),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.20),
-                    offset: Offset(0, 3.h),
-                    blurRadius: 6.r,
-                  ),
-                ],
-              ),
-              child: SizedBox(
-                height: 53.h,
-                child: ElevatedButton(
-                  onPressed: controller.login,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: SignInView._brandBlue,
-                    foregroundColor: AppColors.whiteColor,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4.r),
-                    ),
-                  ),
-                  child: Text(
-                    AuthStrings.login.toUpperCase(),
-                    style: TextStyle(
-                      fontFamily: 'Dmsans',
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 1.4,
-                    ),
-                  ),
-                ),
+            10.h.sizeBoxFromHeight(),
+            Center(
+              child: CustomWidget.customButton(
+                callBack: controller.login,
+                btnText: AuthStrings.login,
+                borderRadius: 5.0,
+                textSize: 15,
+                color: AppColors.primaryColor,
+                width: double.infinity,
+                height: 35,
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _AuthTextField extends StatelessWidget {
-  const _AuthTextField({
-    required this.controller,
-    required this.hintText,
-    required this.prefixIcon,
-    this.obscureText = false,
-    this.suffixIcon,
-    this.onSuffixTap,
-  });
-
-  final TextEditingController controller;
-  final String hintText;
-  final IconData prefixIcon;
-  final bool obscureText;
-  final IconData? suffixIcon;
-  final VoidCallback? onSuffixTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 58.h,
-      child: TextFormField(
-        controller: controller,
-        obscureText: obscureText,
-        cursorColor: SignInView._brandBlue,
-        textInputAction:
-            suffixIcon == null ? TextInputAction.next : TextInputAction.done,
-        style: TextStyle(
-          color: SignInView._fieldGray,
-          fontFamily: 'Dmsans',
-          fontSize: 22.sp,
-          fontWeight: FontWeight.w400,
-          letterSpacing: 0,
-        ),
-        decoration: InputDecoration(
-          filled: true,
-          fillColor: AppColors.whiteColor,
-          hintText: hintText,
-          hintStyle: TextStyle(
-            color: SignInView._fieldGray,
-            fontFamily: 'Dmsans',
-            fontSize: 22.sp,
-            fontWeight: FontWeight.w400,
-            letterSpacing: 0,
-          ),
-          prefixIcon: Icon(
-            prefixIcon,
-            color: SignInView._fieldGray,
-            size: 27.w,
-          ),
-          prefixIconConstraints: BoxConstraints(
-            minWidth: 78.w,
-            minHeight: 58.h,
-          ),
-          suffixIcon: suffixIcon == null
-              ? null
-              : IconButton(
-                  onPressed: onSuffixTap,
-                  icon: Icon(
-                    suffixIcon,
-                    color: SignInView._fieldGray,
-                    size: 31.w,
-                  ),
-                ),
-          contentPadding: EdgeInsets.only(
-            top: 15.h,
-            bottom: 15.h,
-            right: 18.w,
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8.r),
-            borderSide: BorderSide(
-              color: SignInView._borderGray,
-              width: 1.5.w,
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8.r),
-            borderSide: BorderSide(
-              color: SignInView._brandBlue,
-              width: 1.6.w,
-            ),
-          ),
         ),
       ),
     );
