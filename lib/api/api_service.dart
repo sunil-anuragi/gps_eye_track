@@ -12,8 +12,10 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'logging_dio_interceptor.dart';
 
 PackageInfo? packageInfo;
+ApiService apiService = ApiService();
 
 class ApiService {
+  
   static final Dio _dio = Dio();
   String? packageName;
 
@@ -231,8 +233,7 @@ class ApiService {
 
   void printCurlCommand(Uri url, Map<String, dynamic> headers) {
     String curlCommand = "curl -X GET '$url'";
-
-    if (headers != null && headers.isNotEmpty) {
+    if (headers.isNotEmpty) {
       headers.forEach((key, value) {
         curlCommand += " -H '$key: $value'";
       });
@@ -331,4 +332,4 @@ class ApiService {
   }
 }
 
-ApiService apiService = ApiService();
+
