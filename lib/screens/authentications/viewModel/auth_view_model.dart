@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 // import 'package:gps_software/screens/authentications/widget/congratulations_dialog.dart';
 import 'package:gps_software/util/base_controller.dart';
 
+import '../../dashboard/view/dashboard_view.dart';
+
 class AuthViewModel extends BaseController {
   // Sign In text controllers
   final accountController = TextEditingController();
@@ -35,7 +37,7 @@ class AuthViewModel extends BaseController {
     // Clear fields
     accountController.clear();
     passwordController.clear();
-    // Get.offAllNamed(BottomBarView.bottomBarView);
+    Get.offAllNamed(DashboardView.dashboardView);
   }
 
   void continueForgotPassword() {
