@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
 import 'package:gps_software/screens/authentications/bindings/auth_binding.dart';
 import 'package:gps_software/screens/authentications/view/sign_in_view.dart';
+import 'package:gps_software/screens/dashboard/bindings/dashboard_binding.dart';
 import 'package:gps_software/screens/dashboard/view/dashboard_view.dart';
+import 'package:gps_software/screens/dashboard/view/dashboard_vehicle_list_view.dart';
 
 import 'package:gps_software/screens/splash/bindings/splash_binding.dart';
 import 'package:gps_software/screens/splash/view/splash_view.dart';
@@ -26,6 +28,12 @@ class AppPages {
     GetPage(
         name: DashboardView.dashboardView,
         page: () => const DashboardView(),
+        binding: DashboardBinding(),
+        transition: transition),
+    GetPage(
+        name: DashboardVehicleListView.dashboardVehicleListView,
+        page: () => const DashboardVehicleListView(),
+        binding: DashboardBinding(),
         transition: transition),
   ];
 }

@@ -17,15 +17,14 @@ class DashboardVehicleChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 372.h,
+      height: 270.h,
       child: SfCircularChart(
         margin: EdgeInsets.zero,
         annotations: [
           CircularChartAnnotation(
-            radius: '0%', 
             widget: Container(
-              width: 145.w,
-              height: 145.w,
+              width: 120.w,
+              height: 120.w,
               decoration: const BoxDecoration(
                 color: Color(0xffd6dbde),
                 shape: BoxShape.circle,
@@ -36,14 +35,14 @@ class DashboardVehicleChart extends StatelessWidget {
                   CustomWidget.text(
                     '150',
                     color: Colors.black,
-                    fontSize: 21,
+                    fontSize: 16,
                     fontWeight: FontWeight.w400,
                     letterSpacing: 0,
                   ),
                   CustomWidget.text(
                     'Vehicles',
                     color: Colors.black,
-                    fontSize: 21,
+                    fontSize: 13,
                     fontWeight: FontWeight.w400,
                     letterSpacing: 0,
                   ),
@@ -59,8 +58,8 @@ class DashboardVehicleChart extends StatelessWidget {
             yValueMapper: (segment, _) => segment.value,
             pointColorMapper: (segment, _) => segment.color,
             dataLabelMapper: (segment, _) => segment.value.toString(),
-            radius: '96%',
-            innerRadius: '52%',
+            radius: '95%',
+            innerRadius: '55%',
             cornerStyle: CornerStyle.bothFlat,
             dataLabelSettings: DataLabelSettings(
               isVisible: true,
@@ -68,7 +67,7 @@ class DashboardVehicleChart extends StatelessWidget {
               textStyle: TextStyle(
                 color: AppColors.whiteColor,
                 fontFamily: 'Dmsans',
-                fontSize: 16.sp,
+                fontSize: 12.sp,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 0,
               ),

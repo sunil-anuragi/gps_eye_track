@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:gps_software/custom_widget.dart';
 import 'package:gps_software/generated/assets.dart';
 import 'package:gps_software/util/app_constant.dart';
@@ -89,16 +90,16 @@ class DashboardStatusGrid extends StatelessWidget {
           top: Radius.circular(27.r),
         ),
       ),
-      padding: EdgeInsets.fromLTRB(15.w, 34.h, 15.w, 27.h),
+      padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
       child: GridView.builder(
         itemCount: cards.length,
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          mainAxisSpacing: 12.h,
+          mainAxisSpacing: 8.h,
           crossAxisSpacing: 8.w,
-          childAspectRatio: 1.95,
+          childAspectRatio: 2.3,
         ),
         itemBuilder: (context, index) => cards[index],
       ),
@@ -128,59 +129,64 @@ class DashboardStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(6.r),
-      child: Container(
-        color: AppColors.whiteColor,
-        child: Column(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(13.w, 9.h, 9.w, 4.h),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CustomWidget.text(
-                            title,
-                            color: titleColor,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w700,
-                            letterSpacing: 0,
-                            maxLine: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          SizedBox(height: 4.h),
-                          CustomWidget.text(
-                            value,
-                            color: valueColor,
-                            fontSize: 25,
-                            fontWeight: FontWeight.w700,
-                            letterSpacing: 0,
-                            maxLine: 1,
-                          ),
-                        ],
+    return GestureDetector(
+      onTap: () {
+        Get.toNamed('/dashboardVehicleListView');
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(6.r),
+        child: Container(
+          color: AppColors.whiteColor,
+          child: Column(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(10.w, 8.h, 8.w, 4.h),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CustomWidget.text(
+                              title,
+                              color: titleColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: 0,
+                              maxLine: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            SizedBox(height: 3.h),
+                            CustomWidget.text(
+                              value,
+                              color: valueColor,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: 0,
+                              maxLine: 1,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    if (imagePath != null) ...[
-                      SizedBox(width: 6.w),
-                      _VehicleStatusImage(
-                        imagePath: imagePath!,
-                        tint: imageTint,
-                      ),
+                      if (imagePath != null) ...[
+                        SizedBox(width: 4.w),
+                        _VehicleStatusImage(
+                          imagePath: imagePath!,
+                          tint: imageTint,
+                        ),
+                      ],
                     ],
-                  ],
+                  ),
                 ),
               ),
-            ),
-            Container(
-              height: 12.h,
-              color: barColor,
-            ),
-          ],
+              Container(
+                height: 6.h,
+                color: barColor,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -200,8 +206,8 @@ class _VehicleStatusImage extends StatelessWidget {
   Widget build(BuildContext context) {
     final image = Image.asset(
       imagePath,
-      width: 58.w,
-      height: 48.h,
+      width: 38.w,
+      height: 32.h,
       fit: BoxFit.contain,
       color: tint,
       colorBlendMode: tint == null ? null : BlendMode.srcATop,

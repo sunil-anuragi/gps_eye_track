@@ -9,10 +9,8 @@ class DashboardLogoMark extends StatelessWidget {
     required this.size,
     this.showTitle = true,
   });
-
   final double size;
   final bool showTitle;
-
   static const Color brandBlue = Color(0xff18548f);
 
   @override
