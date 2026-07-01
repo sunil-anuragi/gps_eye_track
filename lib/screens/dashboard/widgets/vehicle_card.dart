@@ -90,22 +90,25 @@ class VehicleCard extends StatelessWidget {
 
           // Body Row
           Padding(
-            padding: EdgeInsets.fromLTRB(12.w, 8.h, 12.w, 8.h),
+            padding: EdgeInsets.fromLTRB(12.w, 8.h, 0.w, 0.h),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Left Column: Vehicle Image, Speed & Expiry
                 SizedBox(
                   width: 100.w,
                   child: Column(
                     children: [
-                      Image.asset(
-                        getVehicleImage(vehicleType, VehicleStatus.moving),
-                        width: 75.w,
-                        height: 50.h,
-                        fit: BoxFit.contain,
+                      Icon(
+                        Icons.car_crash_outlined,
+                        size: 50.w,
                       ),
-                      SizedBox(height: 4.h),
+                      // Image.asset(
+                      //   getVehicleImage(vehicleType, VehicleStatus.moving),
+                      //   width: 75.w,
+                      //   height: 50.h,
+                      //   fit: BoxFit.contain,
+                      // ),
+
                       CustomWidget.text(
                         speed,
                         color: AppColors.blackColor,
@@ -139,6 +142,7 @@ class VehicleCard extends StatelessWidget {
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -229,50 +233,50 @@ class VehicleCard extends StatelessWidget {
                           _buildIndicator(Icons.bolt, 'PWR'),
                         ],
                       ),
+                      GestureDetector(
+                        onTap: onLoadAddress,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 6.h, horizontal: 20.w),
+                          decoration: BoxDecoration(
+                            color:
+                                const Color(0xff18548f).withValues(alpha: 0.08),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20.r),
+                              bottomRight: Radius.circular(8.r),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                padding: EdgeInsets.all(2.r),
+                                decoration: const BoxDecoration(
+                                  color: AppColors.whiteColor,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  Icons.location_on,
+                                  color: AppColors.logoutRedColor,
+                                  size: 12.r,
+                                ),
+                              ),
+                              SizedBox(width: 6.w),
+                              CustomWidget.text(
+                                'Click here to load Address',
+                                color: const Color(0xff18548f),
+                                fontSize: 11,
+                                fontWeight: FontWeight.w600,
+                                letterSpacing: 0,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ],
-            ),
-          ),
-
-          // Address Loader Bar
-          GestureDetector(
-            onTap: onLoadAddress,
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 6.h),
-              decoration: BoxDecoration(
-                color: const Color(0xff18548f).withValues(alpha: 0.08),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20.r),
-                  bottomRight: Radius.circular(8.r),
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(2.r),
-                    decoration: const BoxDecoration(
-                      color: AppColors.whiteColor,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.location_on,
-                      color: AppColors.logoutRedColor,
-                      size: 12.r,
-                    ),
-                  ),
-                  SizedBox(width: 6.w),
-                  CustomWidget.text(
-                    'Click here to load Address',
-                    color: const Color(0xff18548f),
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 0,
-                  ),
-                ],
-              ),
             ),
           ),
         ],
