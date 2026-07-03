@@ -48,11 +48,14 @@ class Assets {
   static const String vehicleMenuDetail = 'assets/vehicle_menu_detail.png';
   static const String vehicleMenuCommand = 'assets/vehicle_menu_command.png';
   static const String vehicleMenuAlert = 'assets/vehicle_menu_alert.png';
-  static const String vehicleMenuManagement = 'assets/vehicle_menu_management.png';
+  static const String vehicleMenuManagement =
+      'assets/vehicle_menu_management.png';
   static const String vehicleMenuShare = 'assets/vehicle_menu_share.png';
-  static const String vehicleMenuOverspeed = 'assets/vehicle_menu_overspeed.png';
+  static const String vehicleMenuOverspeed =
+      'assets/vehicle_menu_overspeed.png';
   static const String vehicleMenuReports = 'assets/vehicle_menu_reports.png';
-  static const String vehicleDetailCarIcon = 'assets/vehicle_detail_car_icon.png';
+  static const String vehicleDetailCarIcon =
+      'assets/vehicle_detail_car_icon.png';
   static const String reportDistance = 'assets/report_distance.png';
   static const String reportStop = 'assets/report_stop.png';
   static const String reportIdle = 'assets/report_idle.png';
@@ -63,7 +66,8 @@ class Assets {
   static const String reportDownloadIcon = 'assets/report_download_icon.png';
   static const String reportCalendarIcon = 'assets/report_calendar_icon.png';
   static const String immobilizeCarIcon = 'assets/immobilize_car_icon.png';
-  static const String fuelCutoffSuccessIcon = 'assets/fuel_cutoff_success_icon.png';
+  static const String fuelCutoffSuccessIcon =
+      'assets/fuel_cutoff_success_icon.png';
   static const String geofenceConfirmWarningIcon =
       'assets/geofence_confirm_warning_icon.png';
   static const String playbackStartIcon = 'assets/playback_start_icon.png';
@@ -87,6 +91,8 @@ class Assets {
   static const String mapMarkerCarRunning = 'assets/map_marker_car_running.png';
   static const String mapMarkerCarOffline = 'assets/map_marker_car_offline.png';
   static const String vehicleListCarIcon = 'assets/vehicle_list_car_icon.png';
+  static const String carImage = 'assets/carImge.png';
+  static const String icSpeed = 'assets/speed.png';
   static const String notificationIgnitionKeyIcon =
       'assets/notification_ignition_key_icon.png';
   static const String geofenceSaveIcon = 'assets/geofence_save_icon.png';

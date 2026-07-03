@@ -6,6 +6,7 @@ import 'package:gps_software/custom_widget.dart';
 import 'package:gps_software/screens/dashboard/widgets/dashboard_logo_mark.dart';
 import 'package:gps_software/screens/dashboard/widgets/vehicle_card.dart';
 import 'package:gps_software/util/app_constant.dart';
+import 'package:gps_software/screens/dashboard/view/vehicle_menu_view.dart';
 
 class DashboardVehicleListView extends StatelessWidget {
   static const dashboardVehicleListView = '/dashboardVehicleListView';
@@ -109,7 +110,7 @@ class DashboardVehicleListView extends StatelessWidget {
               ),
             ),
           ),
-          
+
           // Scrollable Vehicle List
           Expanded(
             child: ListView.builder(
@@ -117,27 +118,35 @@ class DashboardVehicleListView extends StatelessWidget {
               padding: EdgeInsets.only(bottom: 80.h),
               itemBuilder: (context, index) {
                 final v = vehicles[index];
-                return VehicleCard(
-                  vehicleNo: v['vehicleNo'] as String,
-                  vehicleType: v['vehicleType'] as String,
-                  todayKm: v['todayKm'] as String,
-                  speed: v['speed'] as String,
-                  status: v['status'] as String,
-                  lastUpdate: v['lastUpdate'] as String,
-                  odo: v['odo'] as String,
-                  expiryDate: v['expiryDate'] as String,
-                  isExpired: v['isExpired'] as bool,
-                  speedLimit: v['speedLimit'] as String,
-                  onLoadAddress: () {
-                    Get.snackbar(
-                      'Address',
-                      'Loading address for ${v['vehicleNo']}...',
-                      snackPosition: SnackPosition.BOTTOM,
-                      backgroundColor: const Color(0xff18548f),
-                      colorText: AppColors.whiteColor,
-                      duration: const Duration(seconds: 2),
+                return GestureDetector(
+                  onTap: () {
+                    Get.toNamed(
+                      VehicleMenuView.vehicleMenuView,
+                      arguments: v,
                     );
                   },
+                  child: VehicleCard(
+                    vehicleNo: v['vehicleNo'] as String,
+                    vehicleType: v['vehicleType'] as String,
+                    todayKm: v['todayKm'] as String,
+                    speed: v['speed'] as String,
+                    status: v['status'] as String,
+                    lastUpdate: v['lastUpdate'] as String,
+                    odo: v['odo'] as String,
+                    expiryDate: v['expiryDate'] as String,
+                    isExpired: v['isExpired'] as bool,
+                    speedLimit: v['speedLimit'] as String,
+                    onLoadAddress: () {
+                      Get.snackbar(
+                        'Address',
+                        'Loading address for ${v['vehicleNo']}...',
+                        snackPosition: SnackPosition.BOTTOM,
+                        backgroundColor: const Color(0xff18548f),
+                        colorText: AppColors.whiteColor,
+                        duration: const Duration(seconds: 2),
+                      );
+                    },
+                  ),
                 );
               },
             ),

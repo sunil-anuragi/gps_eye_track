@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gps_software/custom_widget.dart';
-import 'package:gps_software/enum/vehicle_status.dart';
 import 'package:gps_software/util/app_constant.dart';
-import 'package:gps_software/util/get_vehicle_image.dart';
 
 class VehicleCard extends StatelessWidget {
   const VehicleCard({

@@ -13,7 +13,7 @@ dependencies:
   get: ^4.6.6
   flutter_screenutil: ^5.9.0
   syncfusion_flutter_charts: 
-  syncfusion_flutter_datepicker: ^33.2.12
+  syncfusion_flutter_datepicker: ^31.1.19
   dio: ^5.3.2
   shared_preferences: ^2.2.1
   package_info_plus: ^8.0.2
