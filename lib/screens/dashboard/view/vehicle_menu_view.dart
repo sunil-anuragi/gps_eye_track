@@ -201,7 +201,8 @@ class VehicleMenuView extends StatelessWidget {
                               children: [
                                 Image.asset(
                                   Assets.icSpeed,
-                                  fit: BoxFit.cover,
+                                  fit: BoxFit.fill,
+                                  height: 50,
                                 ),
                                 SizedBox(width: 8.w),
                                 Column(
