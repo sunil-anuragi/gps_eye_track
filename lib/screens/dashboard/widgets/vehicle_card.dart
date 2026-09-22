@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gps_software/custom_widget.dart';
+import 'package:gps_software/screens/dashboard/widgets/dashboard_logo_mark.dart';
 import 'package:gps_software/util/app_constant.dart';
 
 class VehicleCard extends StatelessWidget {
@@ -31,253 +32,314 @@ class VehicleCard extends StatelessWidget {
   final String speedLimit;
   final VoidCallback? onLoadAddress;
 
+  static const Color _addressBgColor = Color(0xffdde5f0);
+  static final Color _lineColor = Colors.grey.shade300;
+
+  String get _typeLabel => vehicleType.isEmpty
+      ? vehicleType
+      : vehicleType[0].toUpperCase() + vehicleType.substring(1).toLowerCase();
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 14.w, vertical: 6.h),
+      margin: EdgeInsets.symmetric(horizontal: 14.w, vertical: 8.h),
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: AppColors.whiteColor,
-        borderRadius: BorderRadius.circular(8.r),
+        borderRadius: BorderRadius.circular(6.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
-            spreadRadius: 1,
-            blurRadius: 4,
-            offset: const Offset(0, 2),
+            color: Colors.black.withValues(alpha: 0.12),
+            blurRadius: 6,
+            offset: const Offset(0, 3),
           ),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Header Row
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // Vehicle Tag
-              Container(
-                padding: EdgeInsets.fromLTRB(12.w, 6.h, 16.w, 6.h),
-                decoration: BoxDecoration(
-                  color: const Color(0xff18548f),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8.r),
-                    bottomRight: Radius.circular(16.r),
-                  ),
-                ),
-                child: CustomWidget.text(
-                  '$vehicleNo | ${vehicleType.toUpperCase()}',
-                  color: AppColors.whiteColor,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: 0,
-                ),
-              ),
-              // Today's Distance
-              Padding(
-                padding: EdgeInsets.only(right: 12.w),
-                child: CustomWidget.text(
-                  'Today - $todayKm',
-                  color: AppColors.blackColor,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0,
-                ),
-              ),
-            ],
-          ),
-
-          // Body Row
-          Padding(
-            padding: EdgeInsets.fromLTRB(12.w, 8.h, 0.w, 0.h),
+          _buildHeader(),
+          IntrinsicHeight(
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SizedBox(
-                  width: 100.w,
-                  child: Column(
-                    children: [
-                      Icon(
-                        Icons.car_crash_outlined,
-                        size: 50.w,
-                      ),
-                      // Image.asset(
-                      //   getVehicleImage(vehicleType, VehicleStatus.moving),
-                      //   width: 75.w,
-                      //   height: 50.h,
-                      //   fit: BoxFit.contain,
-                      // ),
-
-                      CustomWidget.text(
-                        speed,
-                        color: AppColors.blackColor,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: 2.h),
-                      CustomWidget.text(
-                        isExpired ? 'Expired' : 'Active',
-                        color: isExpired
-                            ? AppColors.logoutRedColor
-                            : AppColors.runningColor,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w700,
-                        textAlign: TextAlign.center,
-                      ),
-                      CustomWidget.text(
-                        expiryDate,
-                        color: AppColors.grayColor,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w500,
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(width: 8.w),
-
-                // Right Column: Last Update, Status, Odo, Speed Limit & Indicators
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Speed Limit Sign
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 4.w, vertical: 2.h),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Colors.grey.shade400, width: 1.r),
-                              borderRadius: BorderRadius.circular(4.r),
-                            ),
-                            child: Column(
-                              children: [
-                                CustomWidget.text(
-                                  'SPEED\nLIMIT',
-                                  fontSize: 6,
-                                  fontWeight: FontWeight.w700,
-                                  color: AppColors.blackColor,
-                                  textAlign: TextAlign.center,
-                                  letterSpacing: 0,
-                                ),
-                                CustomWidget.text(
-                                  speedLimit,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w900,
-                                  color: AppColors.blackColor,
-                                  textAlign: TextAlign.center,
-                                  letterSpacing: 0,
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(width: 8.w),
-
-                          // Vehicle text details
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                CustomWidget.text(
-                                  'Last Update : $lastUpdate',
-                                  color: AppColors.logoutRedColor,
-                                  fontSize: 10.5,
-                                  fontWeight: FontWeight.w500,
-                                  letterSpacing: 0,
-                                  maxLine: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                SizedBox(height: 2.h),
-                                CustomWidget.text(
-                                  status,
-                                  color: AppColors.runningColor,
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w700,
-                                  letterSpacing: 0,
-                                  maxLine: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                SizedBox(height: 2.h),
-                                CustomWidget.text(
-                                  'ODO : $odo',
-                                  color: AppColors.blackColor,
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w500,
-                                  letterSpacing: 0,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      SizedBox(height: 8.h),
-
-                      // Indicators Row
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          _buildIndicator(Icons.satellite_alt_outlined, 'GPS'),
-                          SizedBox(width: 14.w),
-                          _buildIndicator(
-                              Icons.battery_charging_full_outlined, '100%'),
-                          SizedBox(width: 14.w),
-                          _buildIndicator(Icons.key, 'IGN'),
-                          SizedBox(width: 14.w),
-                          _buildIndicator(Icons.bolt, 'PWR'),
-                        ],
-                      ),
-                      GestureDetector(
-                        onTap: onLoadAddress,
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 6.h, horizontal: 20.w),
-                          decoration: BoxDecoration(
-                            color:
-                                const Color(0xff18548f).withValues(alpha: 0.08),
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20.r),
-                              bottomRight: Radius.circular(8.r),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(2.r),
-                                decoration: const BoxDecoration(
-                                  color: AppColors.whiteColor,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Icon(
-                                  Icons.location_on,
-                                  color: AppColors.logoutRedColor,
-                                  size: 12.r,
-                                ),
-                              ),
-                              SizedBox(width: 6.w),
-                              CustomWidget.text(
-                                'Click here to load Address',
-                                color: const Color(0xff18548f),
-                                fontSize: 11,
-                                fontWeight: FontWeight.w600,
-                                letterSpacing: 0,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                _buildLeftSection(),
+                Expanded(child: _buildRightSection()),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  // Header: vehicle tag (≈62% width) + today's distance on a single line
+  Widget _buildHeader() {
+    return SizedBox(
+      height: 32.h,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            flex: 62,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              alignment: Alignment.centerLeft,
+              decoration: BoxDecoration(
+                color: DashboardLogoMark.brandBlue,
+                borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(22.r),
+                ),
+              ),
+              child: _oneLine(
+                CustomWidget.text(
+                  '$vehicleNo | $_typeLabel',
+                  color: AppColors.whiteColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0,
+                  maxLine: 1,
+                ),
+                alignment: Alignment.centerLeft,
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 38,
+            child: Padding(
+              padding: EdgeInsets.only(left: 6.w, right: 10.w),
+              child: _oneLine(
+                CustomWidget.text(
+                  'Today - $todayKm',
+                  color: AppColors.blackColor,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                  letterSpacing: 0,
+                  maxLine: 1,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Left: vehicle image, speed, expiry
+  Widget _buildLeftSection() {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(10.w, 10.h, 0, 6.h),
+      child: SizedBox(
+        width: 92.w,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Icon(
+                    Icons.directions_car_filled,
+                    color: AppColors.runningColor,
+                    size: 46.r,
+                  ),
+                  // Image.asset(
+                  //   getVehicleImage(vehicleType, VehicleStatus.moving),
+                  //   height: 46.h,
+                  //   fit: BoxFit.contain,
+                  // ),
+                ),
+                Container(width: 1, height: 44.h, color: _lineColor),
+              ],
+            ),
+            SizedBox(height: 6.h),
+            CustomWidget.text(
+              speed,
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              letterSpacing: 0,
+              maxLine: 1,
+            ),
+            CustomWidget.text(
+              isExpired ? 'Expired' : 'Active',
+              fontSize: 10,
+              letterSpacing: 0,
+              maxLine: 1,
+            ),
+            CustomWidget.text(
+              expiryDate,
+              fontSize: 10,
+              letterSpacing: 0,
+              maxLine: 1,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Right: status lines, speed limit, indicators, address bar
+  Widget _buildRightSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: EdgeInsets.fromLTRB(10.w, 8.h, 10.w, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _oneLine(
+                CustomWidget.text(
+                  'Last Update : $lastUpdate',
+                  color: AppColors.logoutRedColor,
+                  fontSize: 11,
+                  letterSpacing: 0,
+                  maxLine: 1,
+                ),
+              ),
+              SizedBox(height: 2.h),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  _buildSpeedLimitSign(),
+                  SizedBox(width: 8.w),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: 4.h),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _oneLine(
+                            CustomWidget.text(
+                              status,
+                              color: AppColors.runningColor,
+                              fontSize: 11,
+                              letterSpacing: 0,
+                              maxLine: 1,
+                            ),
+                          ),
+                          SizedBox(height: 2.h),
+                          _oneLine(
+                            CustomWidget.text(
+                              'ODO : $odo',
+                              fontSize: 11,
+                              letterSpacing: 0,
+                              maxLine: 1,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        Container(height: 1, color: _lineColor),
+        Padding(
+          padding: EdgeInsets.fromLTRB(10.w, 4.h, 10.w, 4.h),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              _buildIndicator(Icons.satellite_alt_outlined, 'GPS'),
+              SizedBox(width: 16.w),
+              _buildIndicator(Icons.battery_charging_full, '100%'),
+              SizedBox(width: 16.w),
+              _buildIndicator(Icons.key, 'IGN'),
+              SizedBox(width: 16.w),
+              _buildIndicator(Icons.power, 'PWR'),
+            ],
+          ),
+        ),
+        const Spacer(),
+        _buildAddressBar(),
+      ],
+    );
+  }
+
+  Widget _buildSpeedLimitSign() {
+    return Padding(
+      padding: EdgeInsets.only(left: 2.w),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 24.w,
+            padding: EdgeInsets.symmetric(vertical: 1.h),
+            decoration: BoxDecoration(
+              color: AppColors.whiteColor,
+              border: Border.all(color: AppColors.blackColor, width: 0.8),
+              borderRadius: BorderRadius.circular(2.r),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CustomWidget.text(
+                  'SPEED\nLIMIT',
+                  fontSize: 4.5,
+                  fontWeight: FontWeight.w700,
+                  textAlign: TextAlign.center,
+                  letterSpacing: 0,
+                ),
+                CustomWidget.text(
+                  speedLimit,
+                  fontSize: 8,
+                  fontWeight: FontWeight.w500,
+                  textAlign: TextAlign.center,
+                  letterSpacing: 0,
+                ),
+              ],
+            ),
+          ),
+          Container(width: 1.5, height: 6.h, color: AppColors.blackColor),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAddressBar() {
+    return GestureDetector(
+      onTap: onLoadAddress,
+      child: Container(
+        height: 30.h,
+        padding: EdgeInsets.only(left: 18.w, right: 8.w),
+        decoration: BoxDecoration(
+          color: _addressBgColor,
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(22.r)),
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: EdgeInsets.all(3.r),
+              decoration: BoxDecoration(
+                color: AppColors.whiteColor,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: DashboardLogoMark.brandBlue,
+                  width: 1,
+                ),
+              ),
+              child: Icon(
+                Icons.location_on,
+                color: AppColors.logoutRedColor,
+                size: 14.r,
+              ),
+            ),
+            SizedBox(width: 10.w),
+            Expanded(
+              child: _oneLine(
+                CustomWidget.text(
+                  'Click here to load Address',
+                  color: DashboardLogoMark.brandBlue,
+                  fontSize: 11,
+                  letterSpacing: 0,
+                  maxLine: 1,
+                ),
+                alignment: Alignment.centerLeft,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -289,17 +351,25 @@ class VehicleCard extends StatelessWidget {
         Icon(
           iconData,
           color: AppColors.runningColor,
-          size: 16.r,
+          size: 15.r,
         ),
-        SizedBox(height: 1.h),
         CustomWidget.text(
           label,
-          fontSize: 7.5,
-          color: AppColors.grayColor,
-          fontWeight: FontWeight.w700,
+          fontSize: 5,
+          color: AppColors.blackColor,
           letterSpacing: 0,
         ),
       ],
+    );
+  }
+
+  // Keeps text on a single line, shrinking it only if space runs out
+  Widget _oneLine(Widget child,
+      {AlignmentGeometry alignment = Alignment.centerRight}) {
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      alignment: alignment,
+      child: child,
     );
   }
 }

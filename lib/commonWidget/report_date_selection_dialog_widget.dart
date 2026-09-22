@@ -87,8 +87,7 @@ class ReportDateSelectionDialogWidget extends StatelessWidget {
                       Expanded(
                         child: _dateOption(
                           label: AppStrings.yesterday,
-                          isSelected:
-                              selectedDateRange == AppStrings.yesterday,
+                          isSelected: selectedDateRange == AppStrings.yesterday,
                           onTap: () => onSelectDate(AppStrings.yesterday),
                         ),
                       ),
@@ -134,9 +133,8 @@ class ReportDateSelectionDialogWidget extends StatelessWidget {
         height: 44.h,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: isSelected
-              ? AppColors.supportTealColor
-              : AppColors.primaryColor,
+          color:
+              isSelected ? AppColors.supportTealColor : AppColors.primaryColor,
           borderRadius: BorderRadius.circular(10.r),
         ),
         child: CustomWidget.text(

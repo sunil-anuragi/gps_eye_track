@@ -10,6 +10,17 @@ import 'package:gps_software/generated/assets.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:gps_software/screens/alerts/view/alerts_view.dart';
+import 'package:gps_software/screens/engine_control/engine_control_dialogs.dart';
+import 'package:gps_software/screens/history/view/history_view.dart';
+import 'package:gps_software/screens/live_tracking/view/live_tracking_view.dart';
+import 'package:gps_software/screens/nearby/nearby_dialog.dart';
+import 'package:gps_software/screens/parking/parking_dialog.dart';
+import 'package:gps_software/screens/reports/view/all_reports_view.dart';
+import 'package:gps_software/screens/share_location/widgets/share_location_dialog.dart';
+import 'package:gps_software/screens/vehicle_details/view/vehicle_details_view.dart';
+import 'package:gps_software/screens/vehicle_management/view/vehicle_management_view.dart';
+import 'package:gps_software/screens/vehicle_settings/vehicle_value_dialogs.dart';
 
 class VehicleMenuView extends StatelessWidget {
   static const vehicleMenuView = '/vehicleMenuView';
@@ -319,24 +330,102 @@ class VehicleMenuView extends StatelessWidget {
                           padding: EdgeInsets.only(bottom: 30.h),
                           children: [
                             _buildGridItem(
-                                'Live Track', Assets.vehicleMenuTracking),
+                              'Live Track',
+                              Assets.vehicleMenuTracking,
+                              onTap: () => Get.toNamed(
+                                LiveTrackingView.liveTrackingView,
+                                arguments: vehicle,
+                              ),
+                            ),
                             _buildGridItem(
-                                'History', Assets.vehicleMenuPlayback),
+                              'History',
+                              Assets.vehicleMenuPlayback,
+                              onTap: () => Get.toNamed(
+           
+                                HistoryView.historyView,
+                                arguments: vehicle,
+                              ),
+                            ),
+                            _buildGridItem('Reports', Assets.vehicleMenuReports,
+                                onTap: () {
+                              print("data");
+                              Get.toNamed(
+                                AllReportsView.allReportsView,
+                                arguments: vehicle,
+                              );
+                            }),
                             _buildGridItem(
-                                'Reports', Assets.vehicleMenuReports),
-                            _buildGridItem('Details', Assets.vehicleMenuDetail),
-                            _buildGridItem('Engine', Assets.vehicleMenuCommand),
+                              'Details',
+                              Assets.vehicleMenuDetail,
+                              onTap: () => Get.toNamed(
+                                VehicleDetailsView.vehicleDetailsView,
+                                arguments: vehicle,
+                              ),
+                            ),
                             _buildGridItem(
-                                'Parking', Assets.playbackParkingIcon),
-                            _buildGridItem('Alerts', Assets.vehicleMenuAlert),
-                            _buildGridItem('Near By', null,
-                                iconData: Icons.sensors),
-                            _buildGridItem('Share', Assets.vehicleMenuShare),
-                            _buildGridItem('odometer', Assets.vehicleMenuImei),
+                              'Engine',
+                              Assets.vehicleMenuCommand,
+                              onTap: () => showEngineControl(vehicleNo),
+                            ),
                             _buildGridItem(
-                                'Over Speed', Assets.vehicleMenuOverspeed),
+                              'Parking',
+                              Assets.playbackParkingIcon,
+                              onTap: () => showParkingDialog(vehicleNo),
+                            ),
                             _buildGridItem(
-                                'Management', Assets.vehicleMenuManagement),
+                              'Alerts',
+                              Assets.vehicleMenuAlert,
+                              onTap: () => Get.toNamed(
+                                AlertsView.alertsView,
+                                arguments: vehicle,
+                              ),
+                            ),
+                            _buildGridItem(
+                              'Near By',
+                              null,
+                              iconData: Icons.sensors,
+                              onTap: () => showNearbyDialog(
+                                vehicleNo: vehicleNo,
+                                latitude: lat,
+                                longitude: lng,
+                              ),
+                            ),
+                            _buildGridItem(
+                              'Share',
+                              Assets.vehicleMenuShare,
+                              onTap: () => showShareLocationDialog(
+                                vehicle: vehicle,
+                                vehicleNo: vehicleNo,
+                                latitude: lat,
+                                longitude: lng,
+                              ),
+                            ),
+                            _buildGridItem(
+                              'odometer',
+                              Assets.vehicleMenuImei,
+                              onTap: () => showVehicleSettingDialog(
+                                VehicleSetting.odometer,
+                                vehicleNo: vehicleNo,
+                                currentValue: vehicle['odo'] as String?,
+                              ),
+                            ),
+                            _buildGridItem(
+                              'Over Speed',
+                              Assets.vehicleMenuOverspeed,
+                              onTap: () => showVehicleSettingDialog(
+                                VehicleSetting.overSpeed,
+                                vehicleNo: vehicleNo,
+                                currentValue: vehicle['speedLimit'] as String?,
+                              ),
+                            ),
+                            _buildGridItem(
+                              'Management',
+                              Assets.vehicleMenuManagement,
+                              onTap: () => Get.toNamed(
+                                VehicleManagementView.vehicleManagementView,
+                                arguments: vehicle,
+                              ),
+                            ),
                           ],
                         ),
                       ],
@@ -348,11 +437,14 @@ class VehicleMenuView extends StatelessWidget {
                 right: -15.w,
                 top: -510,
                 bottom: 0.h,
-                child: Image.asset(
-                  Assets.carImage,
-                  width: 190.w,
-                  height: 190.h,
-                  fit: BoxFit.contain,
+                // Decorative only: let taps reach the grid underneath
+                child: IgnorePointer(
+                  child: Image.asset(
+                    Assets.carImage,
+                    width: 190.w,
+                    height: 190.h,
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
             ],
@@ -362,18 +454,20 @@ class VehicleMenuView extends StatelessWidget {
     );
   }
 
-  Widget _buildGridItem(String title, String? assetPath, {IconData? iconData}) {
+  Widget _buildGridItem(String title, String? assetPath,
+      {IconData? iconData, VoidCallback? onTap}) {
     return GestureDetector(
-      onTap: () {
-        Get.snackbar(
-          title,
-          'Opening $title...',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: const Color(0xff18548f),
-          colorText: AppColors.whiteColor,
-          duration: const Duration(milliseconds: 1500),
-        );
-      },
+      onTap: onTap ??
+          () {
+            Get.snackbar(
+              title,
+              'Opening $title...',
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: const Color(0xff18548f),
+              colorText: AppColors.whiteColor,
+              duration: const Duration(milliseconds: 1500),
+            );
+          },
       child: Container(
         decoration: BoxDecoration(
           color: const Color(0xff18548f),

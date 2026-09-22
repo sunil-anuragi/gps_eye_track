@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:gps_software/commonWidget/custom_drawer_widget.dart';
 import 'package:gps_software/custom_widget.dart';
+import 'package:gps_software/screens/alerts/view/alerts_view.dart';
 import 'package:gps_software/screens/dashboard/viewModel/dashboard_view_model.dart';
 import 'package:gps_software/screens/dashboard/widgets/dashboard_logo_mark.dart';
 import 'package:gps_software/screens/dashboard/widgets/dashboard_profile_summary.dart';
@@ -55,7 +56,10 @@ class DashboardView extends GetView<DashboardViewModel> {
               color: AppColors.whiteColor,
               size: 24.w,
             ),
-            onPressed: () {},
+            onPressed: () => Get.toNamed(
+              AlertsView.alertsView,
+              arguments: {'vehicleNo': 'All Vehicles'},
+            ),
           ),
           SizedBox(width: 12.w),
         ],

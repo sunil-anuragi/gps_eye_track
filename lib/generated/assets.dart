@@ -62,6 +62,18 @@ class Assets {
   static const String reportTrip = 'assets/report_trip.png';
   static const String reportOverspeed = 'assets/report_overspeed.png';
   static const String reportGeofence = 'assets/report_geofence.png';
+  static const String reportTileAc = 'assets/report_tile_ac.png';
+  static const String reportTileDistance = 'assets/report_tile_distance.png';
+  static const String reportTileDuration = 'assets/report_tile_duration.png';
+  static const String reportTileGeofence = 'assets/report_tile_geofence.png';
+  static const String changePasswordIllustration =
+      'assets/change_password_illustration.jpg';
+  static const String reportTileIdle = 'assets/report_tile_idle.png';
+  static const String reportTileMovement = 'assets/report_tile_movement.png';
+  static const String reportTileOverspeed = 'assets/report_tile_overspeed.png';
+  static const String reportTileStop = 'assets/report_tile_stop.png';
+  static const String reportTileTemp = 'assets/report_tile_temp.png';
+  static const String reportTileTrip = 'assets/report_tile_trip.png';
   static const String geofenceReportIcon = 'assets/geofence_report_icon.png';
   static const String reportDownloadIcon = 'assets/report_download_icon.png';
   static const String reportCalendarIcon = 'assets/report_calendar_icon.png';

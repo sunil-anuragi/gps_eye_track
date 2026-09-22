@@ -67,8 +67,10 @@ class DefaultFirebaseOptions {
     projectId: 'twings-324f4',
     databaseURL: 'https://twings-324f4.firebaseio.com',
     storageBucket: 'twings-324f4.firebasestorage.app',
-    androidClientId: '781126975504-rca9qeqa17dae1utm40it7q96ct8r27t.apps.googleusercontent.com',
-    iosClientId: '781126975504-oo7p3tig3idcle7g536svfqin8efk3j6.apps.googleusercontent.com',
+    androidClientId:
+        '781126975504-rca9qeqa17dae1utm40it7q96ct8r27t.apps.googleusercontent.com',
+    iosClientId:
+        '781126975504-oo7p3tig3idcle7g536svfqin8efk3j6.apps.googleusercontent.com',
     iosBundleId: 'com.Twings',
   );
 

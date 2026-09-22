@@ -134,7 +134,7 @@ class _CustomInfoWindowState extends State<CustomInfoWindow> {
             ? false
             : true,
         child: MeasureSize(
-          onChange: (Size size){
+          onChange: (Size size) {
             print("object ==> $size   ${size.height}");
             _childWidgetSize = size;
             _updateInfoWindow();

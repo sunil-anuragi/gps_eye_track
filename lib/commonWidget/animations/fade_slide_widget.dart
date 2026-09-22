@@ -42,7 +42,9 @@ class _FadeSlideWidgetState extends State<FadeSlideWidget>
     );
 
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: const Interval(0.0, 1.0, curve: Curves.easeIn)),
+      CurvedAnimation(
+          parent: _controller,
+          curve: const Interval(0.0, 1.0, curve: Curves.easeIn)),
     );
 
     Offset startOffset;
@@ -61,7 +63,8 @@ class _FadeSlideWidgetState extends State<FadeSlideWidget>
         break;
     }
 
-    _slideAnimation = Tween<Offset>(begin: startOffset, end: Offset.zero).animate(
+    _slideAnimation =
+        Tween<Offset>(begin: startOffset, end: Offset.zero).animate(
       CurvedAnimation(parent: _controller, curve: widget.curve),
     );
 
