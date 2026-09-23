@@ -131,8 +131,13 @@ class ReportViewModel extends BaseController {
   }
 
   List<String> _csvHeader() => switch (reportType) {
-        ReportType.distance => ['Date', 'From', 'To', 'Distance (KM)'],
-        ReportType.stop || ReportType.idle || ReportType.ac => [
+        ReportType.distance || ReportType.ac => [
+            'Date',
+            'From',
+            'To',
+            'Distance (KM)'
+          ],
+        ReportType.stop || ReportType.idle => [
             'Start Time',
             'End Time',
             'Duration',
@@ -166,11 +171,23 @@ class ReportViewModel extends BaseController {
             'End Time',
             'Distance (KM)'
           ],
-        ReportType.temp => ['Time', 'Temperature (°C)', 'Address'],
+        ReportType.temp => [
+            'Time',
+            'Ignition',
+            'Temperature (°C)',
+            'Speed',
+            'Address'
+          ],
       };
 
   List<String> _csvRow(Object item) => switch (item) {
         DistanceReportItem i => [
+            isoDayFormat.format(i.date),
+            i.from.address,
+            i.to.address,
+            i.distanceKm.toStringAsFixed(2),
+          ],
+        AcReportItem i => [
             isoDayFormat.format(i.date),
             i.from.address,
             i.to.address,
@@ -212,7 +229,9 @@ class ReportViewModel extends BaseController {
           ],
         TempReportItem i => [
             fullFormat.format(i.time),
+            i.ignitionOn ? 'On' : 'Off',
             i.temperature.toStringAsFixed(1),
+            i.speed.toStringAsFixed(1),
             i.location.address,
           ],
         _ => const [],
@@ -266,9 +285,18 @@ class ReportViewModel extends BaseController {
           );
         });
 
+      case ReportType.ac:
+        return List.generate(count, (i) {
+          return AcReportItem(
+            date: at(i),
+            from: place(),
+            to: place(),
+            distanceKm: 40 + random.nextDouble() * 90,
+          );
+        });
+
       case ReportType.stop:
       case ReportType.idle:
-      case ReportType.ac:
         return List.generate(count, (i) {
           final start = at(i);
           return StopReportItem(
@@ -347,10 +375,13 @@ class ReportViewModel extends BaseController {
 
       case ReportType.temp:
         return List.generate(count, (i) {
+          final ignitionOn = i % 4 != 3;
           return TempReportItem(
             time: at(i),
             temperature: 18 + random.nextDouble() * 12,
             location: place(),
+            ignitionOn: ignitionOn,
+            speed: ignitionOn ? 20 + random.nextDouble() * 50 : 0,
           );
         });
     }

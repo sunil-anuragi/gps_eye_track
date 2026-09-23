@@ -183,16 +183,17 @@ class _EnginePasswordDialogState extends State<_EnginePasswordDialog> {
             obscureText: _obscure,
             autofocus: true,
             onSubmitted: (_) => _confirm(),
-            style: TextStyle(fontSize: 14.sp, fontFamily: 'Dmsans'),
+            style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.inter),
             decoration: InputDecoration(
               hintText: 'Enter Your Password',
               hintStyle: TextStyle(
                 fontSize: 13.sp,
                 color: const Color(0xff7a7a7a),
-                fontFamily: 'Dmsans',
+                fontFamily: AppFonts.inter,
               ),
               errorText: _error,
-              errorStyle: TextStyle(fontSize: 11.sp, fontFamily: 'Dmsans'),
+              errorStyle:
+                  TextStyle(fontSize: 11.sp, fontFamily: AppFonts.inter),
               isDense: true,
               contentPadding:
                   EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),

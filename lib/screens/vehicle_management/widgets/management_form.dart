@@ -219,14 +219,14 @@ class _ManagementFormState extends State<ManagementForm>
       style: TextStyle(
         fontSize: 13.sp,
         color: Colors.black87,
-        fontFamily: 'Dmsans',
+        fontFamily: AppFonts.inter,
       ),
       decoration: InputDecoration(
         hintText: field.label,
         hintStyle: TextStyle(
           fontSize: 13.sp,
           color: ManagementColors.hint,
-          fontFamily: 'Dmsans',
+          fontFamily: AppFonts.inter,
         ),
         labelText: null,
         isDense: true,

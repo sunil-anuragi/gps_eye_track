@@ -102,7 +102,7 @@ class _ShareEditDialogState extends State<ShareEditDialog> {
                         style: TextStyle(
                           color: AppColors.whiteColor,
                           fontSize: 13.sp,
-                          fontFamily: 'Dmsans',
+                          fontFamily: AppFonts.inter,
                         ),
                         decoration: const InputDecoration(
                           isDense: true,

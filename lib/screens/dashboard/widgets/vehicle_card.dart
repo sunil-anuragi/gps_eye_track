@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gps_software/custom_widget.dart';
 import 'package:gps_software/screens/dashboard/widgets/dashboard_logo_mark.dart';
 import 'package:gps_software/util/app_constant.dart';
+import 'package:gps_software/util/get_vehicle_image.dart';
 
 class VehicleCard extends StatelessWidget {
   const VehicleCard({
@@ -137,16 +138,16 @@ class VehicleCard extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: Icon(
-                    Icons.directions_car_filled,
-                    color: AppColors.runningColor,
-                    size: 46.r,
+                  child: Image.asset(
+                    getVehicleImage(
+                      vehicleType,
+                      vehicleStatusFromText(status, isExpired: isExpired),
+                    ),
+                    // The artwork is roughly 3:1, so width drives the size
+                    // and this just reserves the row height.
+                    height: 32.h,
+                    fit: BoxFit.contain,
                   ),
-                  // Image.asset(
-                  //   getVehicleImage(vehicleType, VehicleStatus.moving),
-                  //   height: 46.h,
-                  //   fit: BoxFit.contain,
-                  // ),
                 ),
                 Container(width: 1, height: 44.h, color: _lineColor),
               ],

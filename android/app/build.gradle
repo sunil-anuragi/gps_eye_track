@@ -65,7 +65,7 @@ android {
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
         multiDexEnabled true
-        manifestPlaceholders = [appName: envProps['APP_NAME'] ?: 'GPS Software', mapKey: envProps['MAP_KEY'] ?: '']
+        manifestPlaceholders = [appName: envProps['APP_NAME'] ?: 'GPS Track Eye', mapKey: envProps['MAP_KEY'] ?: '']
     }
 
     buildTypes {

@@ -121,13 +121,13 @@ class _PasswordField extends StatelessWidget {
         obscureText: obscure.value,
         textInputAction: action,
         onSubmitted: onSubmitted == null ? null : (_) => onSubmitted!(),
-        style: TextStyle(fontSize: 14.sp, fontFamily: 'Dmsans'),
+        style: TextStyle(fontSize: 14.sp, fontFamily: AppFonts.inter),
         decoration: InputDecoration(
           hintText: hint,
           hintStyle: TextStyle(
             fontSize: 14.sp,
             color: const Color(0xff7a7a7a),
-            fontFamily: 'Dmsans',
+            fontFamily: AppFonts.inter,
           ),
           filled: true,
           fillColor: const Color(0xffdcdcdc),

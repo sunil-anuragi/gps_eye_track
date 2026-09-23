@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:gps_software/custom_widget.dart';
-import 'package:gps_software/generated/assets.dart';
 import 'package:gps_software/util/app_constant.dart';
 
 class DashboardStatusGrid extends StatelessWidget {
@@ -13,6 +12,15 @@ class DashboardStatusGrid extends StatelessWidget {
   static const Color idleColor = Color(0xffff9800);
   static const Color inactiveColor = Color(0xff216dff);
   static const Color neutralBarColor = Color(0xffe5e5e5);
+
+  /// Cars from the vehicle icon pack, one per status colour
+  static const String _icRunning = 'assets/vehicle/car/car_running_green.png';
+  static const String _icStoppage = 'assets/vehicle/car/car_stoppage_red.png';
+  static const String _icIdle = 'assets/vehicle/car/car_idle_orange.png';
+  static const String _icInactive = 'assets/vehicle/car/car_inactive_blue.png';
+  static const String _icNoData = 'assets/vehicle/car/car_no_data_gray.png';
+  static const String _icExpire =
+      'assets/vehicle/car/car_expire_soon_yellow.png';
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +38,7 @@ class DashboardStatusGrid extends StatelessWidget {
         titleColor: runningColor,
         valueColor: runningColor,
         barColor: Color(0xff50c878),
-        imagePath: Assets.mapMarkerCarRunning,
+        imagePath: _icRunning,
       ),
       const DashboardStatusCard(
         title: 'Stoppage',
@@ -38,7 +46,7 @@ class DashboardStatusGrid extends StatelessWidget {
         titleColor: Color(0xfff40f17),
         valueColor: stoppageColor,
         barColor: stoppageColor,
-        imagePath: Assets.mapMarkerCarOffline,
+        imagePath: _icStoppage,
       ),
       const DashboardStatusCard(
         title: 'Idle',
@@ -46,8 +54,7 @@ class DashboardStatusGrid extends StatelessWidget {
         titleColor: Color(0xffcf7900),
         valueColor: idleColor,
         barColor: idleColor,
-        imagePath: Assets.mapMarkerCarRunning,
-        imageTint: Color(0xffffc400),
+        imagePath: _icIdle,
       ),
       const DashboardStatusCard(
         title: 'Inactive',
@@ -55,7 +62,7 @@ class DashboardStatusGrid extends StatelessWidget {
         titleColor: inactiveColor,
         valueColor: inactiveColor,
         barColor: inactiveColor,
-        imagePath: Assets.mapMarkerCarStop,
+        imagePath: _icInactive,
       ),
       const DashboardStatusCard(
         title: 'No Data',
@@ -63,7 +70,7 @@ class DashboardStatusGrid extends StatelessWidget {
         titleColor: Colors.black,
         valueColor: Colors.black,
         barColor: neutralBarColor,
-        imagePath: Assets.immobilizeCarIcon,
+        imagePath: _icNoData,
       ),
       const DashboardStatusCard(
         title: 'Expire Soon',
@@ -71,7 +78,7 @@ class DashboardStatusGrid extends StatelessWidget {
         titleColor: Colors.black,
         valueColor: Colors.black,
         barColor: neutralBarColor,
-        imagePath: Assets.immobilizeCarIcon,
+        imagePath: _icExpire,
       ),
       const DashboardStatusCard(
         title: 'Expired',
@@ -79,7 +86,7 @@ class DashboardStatusGrid extends StatelessWidget {
         titleColor: Colors.black,
         valueColor: Colors.black,
         barColor: neutralBarColor,
-        imagePath: Assets.immobilizeCarIcon,
+        imagePath: _icExpire,
       ),
     ];
 
@@ -206,8 +213,8 @@ class _VehicleStatusImage extends StatelessWidget {
   Widget build(BuildContext context) {
     final image = Image.asset(
       imagePath,
-      width: 38.w,
-      height: 32.h,
+      width: 54.w,
+      height: 22.h,
       fit: BoxFit.contain,
       color: tint,
       colorBlendMode: tint == null ? null : BlendMode.srcATop,

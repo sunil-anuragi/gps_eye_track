@@ -144,7 +144,7 @@ class _VehicleValueDialogState extends State<_VehicleValueDialog> {
             style: TextStyle(
                 fontSize: 15.sp,
                 fontWeight: FontWeight.w500,
-                fontFamily: 'Dmsans'),
+                fontFamily: AppFonts.inter),
             decoration: InputDecoration(
               filled: true,
               fillColor: AppColors.whiteColor,
@@ -155,8 +155,9 @@ class _VehicleValueDialogState extends State<_VehicleValueDialog> {
               suffixStyle: TextStyle(
                   fontSize: 13.sp,
                   color: const Color(0xff6b6b6b),
-                  fontFamily: 'Dmsans'),
-              errorStyle: TextStyle(fontSize: 11.sp, fontFamily: 'Dmsans'),
+                  fontFamily: AppFonts.inter),
+              errorStyle:
+                  TextStyle(fontSize: 11.sp, fontFamily: AppFonts.inter),
               errorText: _error,
               border: border,
               enabledBorder: border,

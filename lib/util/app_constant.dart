@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:gps_software/enum/vehicle_status.dart';
+
+/// Font families declared in pubspec.yaml.
+/// Referenced instead of bare strings so a change lands in one place.
+class AppFonts {
+  AppFonts._();
+
+  static const String inter = 'Inter';
+}
 
 class AppColors {
   static const Color primaryColor = Color(0xff174171);
@@ -129,80 +135,9 @@ class AppColors {
   );
 }
 
-class AppImage {
-  static const String _basePath = "assets";
-  static const String _vehicleBasePath = "$_basePath/vehicle";
-
-  static String ace({VehicleStatus type = VehicleStatus.out}) {
-    bool isGpsPointApp = dotenv.get('IS_GPS_POINT_APP') == "true";
-    return "$_vehicleBasePath/${type == (isGpsPointApp ? VehicleStatus.inactive : VehicleStatus.parking) ? "BLUE" : type == (isGpsPointApp ? VehicleStatus.parking : VehicleStatus.out) ? "RED" : type == VehicleStatus.moving ? "GREEN" : type == VehicleStatus.expired ? "PURPLE" : type == (isGpsPointApp ? VehicleStatus.out : VehicleStatus.inactive) ? "GRAY" : type == VehicleStatus.idle ? "YELLOW" : "YELLOW"}/ace.png";
-  }
-
-  static String bike({VehicleStatus type = VehicleStatus.out}) {
-    bool isGpsPointApp = dotenv.get('IS_GPS_POINT_APP') == "true";
-    return "$_vehicleBasePath/${type == (isGpsPointApp ? VehicleStatus.inactive : VehicleStatus.parking) ? "BLUE" : type == (isGpsPointApp ? VehicleStatus.parking : VehicleStatus.out) ? "RED" : type == VehicleStatus.moving ? "GREEN" : type == VehicleStatus.expired ? "PURPLE" : type == (isGpsPointApp ? VehicleStatus.out : VehicleStatus.inactive) ? "GRAY" : type == VehicleStatus.idle ? "YELLOW" : "YELLOW"}/bike.png";
-  }
-
-  static String bus({VehicleStatus type = VehicleStatus.out}) {
-    bool isGpsPointApp = dotenv.get('IS_GPS_POINT_APP') == "true";
-    return "$_vehicleBasePath/${type == (isGpsPointApp ? VehicleStatus.inactive : VehicleStatus.parking) ? "BLUE" : type == (isGpsPointApp ? VehicleStatus.parking : VehicleStatus.out) ? "RED" : type == VehicleStatus.moving ? "GREEN" : type == VehicleStatus.expired ? "PURPLE" : type == (isGpsPointApp ? VehicleStatus.out : VehicleStatus.inactive) ? "GRAY" : type == VehicleStatus.idle ? "YELLOW" : "YELLOW"}/bus.png";
-  }
-
-  static String car({VehicleStatus type = VehicleStatus.out}) {
-    bool isGpsPointApp = dotenv.get('IS_GPS_POINT_APP') == "true";
-    return "$_vehicleBasePath/${type == (isGpsPointApp ? VehicleStatus.inactive : VehicleStatus.parking) ? "BLUE" : type == (isGpsPointApp ? VehicleStatus.parking : VehicleStatus.out) ? "RED" : type == VehicleStatus.moving ? "GREEN" : type == VehicleStatus.expired ? "PURPLE" : type == (isGpsPointApp ? VehicleStatus.out : VehicleStatus.inactive) ? "GRAY" : type == VehicleStatus.idle ? "YELLOW" : "YELLOW"}/car.png";
-  }
-
-  static String container({VehicleStatus type = VehicleStatus.out}) {
-    bool isGpsPointApp = dotenv.get('IS_GPS_POINT_APP') == "true";
-    return "$_vehicleBasePath/${type == (isGpsPointApp ? VehicleStatus.inactive : VehicleStatus.parking) ? "BLUE" : type == (isGpsPointApp ? VehicleStatus.parking : VehicleStatus.out) ? "RED" : type == VehicleStatus.moving ? "GREEN" : type == VehicleStatus.expired ? "PURPLE" : type == (isGpsPointApp ? VehicleStatus.out : VehicleStatus.inactive) ? "GRAY" : type == VehicleStatus.idle ? "YELLOW" : "YELLOW"}/container.png";
-  }
-
-  static String cylinderTruck({VehicleStatus type = VehicleStatus.out}) {
-    bool isGpsPointApp = dotenv.get('IS_GPS_POINT_APP') == "true";
-    return "$_vehicleBasePath/${type == (isGpsPointApp ? VehicleStatus.inactive : VehicleStatus.parking) ? "BLUE" : type == (isGpsPointApp ? VehicleStatus.parking : VehicleStatus.out) ? "RED" : type == VehicleStatus.moving ? "GREEN" : type == VehicleStatus.expired ? "PURPLE" : type == (isGpsPointApp ? VehicleStatus.out : VehicleStatus.inactive) ? "GRAY" : type == VehicleStatus.idle ? "YELLOW" : "YELLOW"}/cylinder_truck.png";
-  }
-
-  static String jcb({VehicleStatus type = VehicleStatus.out}) {
-    bool isGpsPointApp = dotenv.get('IS_GPS_POINT_APP') == "true";
-    return "$_vehicleBasePath/${type == (isGpsPointApp ? VehicleStatus.inactive : VehicleStatus.parking) ? "BLUE" : type == (isGpsPointApp ? VehicleStatus.parking : VehicleStatus.out) ? "RED" : type == VehicleStatus.moving ? "GREEN" : type == VehicleStatus.expired ? "PURPLE" : type == (isGpsPointApp ? VehicleStatus.out : VehicleStatus.inactive) ? "GRAY" : type == VehicleStatus.idle ? "YELLOW" : "YELLOW"}/jcb.png";
-  }
-
-  static String loader({VehicleStatus type = VehicleStatus.out}) {
-    bool isGpsPointApp = dotenv.get('IS_GPS_POINT_APP') == "true";
-    return "$_vehicleBasePath/${type == (isGpsPointApp ? VehicleStatus.inactive : VehicleStatus.parking) ? "BLUE" : type == (isGpsPointApp ? VehicleStatus.parking : VehicleStatus.out) ? "RED" : type == VehicleStatus.moving ? "GREEN" : type == VehicleStatus.expired ? "PURPLE" : type == (isGpsPointApp ? VehicleStatus.out : VehicleStatus.inactive) ? "GRAY" : type == VehicleStatus.idle ? "YELLOW" : "YELLOW"}/loader.png";
-  }
-
-  static String openTruck({VehicleStatus type = VehicleStatus.out}) {
-    bool isGpsPointApp = dotenv.get('IS_GPS_POINT_APP') == "true";
-    return "$_vehicleBasePath/${type == (isGpsPointApp ? VehicleStatus.inactive : VehicleStatus.parking) ? "BLUE" : type == (isGpsPointApp ? VehicleStatus.parking : VehicleStatus.out) ? "RED" : type == VehicleStatus.moving ? "GREEN" : type == VehicleStatus.expired ? "PURPLE" : type == (isGpsPointApp ? VehicleStatus.out : VehicleStatus.inactive) ? "GRAY" : type == VehicleStatus.idle ? "YELLOW" : "YELLOW"}/open_truck.png";
-  }
-
-  static String rmcTruck({VehicleStatus type = VehicleStatus.out}) {
-    bool isGpsPointApp = dotenv.get('IS_GPS_POINT_APP') == "true";
-    return "$_vehicleBasePath/${type == (isGpsPointApp ? VehicleStatus.inactive : VehicleStatus.parking) ? "BLUE" : type == (isGpsPointApp ? VehicleStatus.parking : VehicleStatus.out) ? "RED" : type == VehicleStatus.moving ? "GREEN" : type == VehicleStatus.expired ? "PURPLE" : type == (isGpsPointApp ? VehicleStatus.out : VehicleStatus.inactive) ? "GRAY" : type == VehicleStatus.idle ? "YELLOW" : "YELLOW"}/rmc_truck.png";
-  }
-
-  static String tipper({VehicleStatus type = VehicleStatus.out}) {
-    bool isGpsPointApp = dotenv.get('IS_GPS_POINT_APP') == "true";
-    return "$_vehicleBasePath/${type == (isGpsPointApp ? VehicleStatus.inactive : VehicleStatus.parking) ? "BLUE" : type == (isGpsPointApp ? VehicleStatus.parking : VehicleStatus.out) ? "RED" : type == VehicleStatus.moving ? "GREEN" : type == VehicleStatus.expired ? "PURPLE" : type == (isGpsPointApp ? VehicleStatus.out : VehicleStatus.inactive) ? "GRAY" : type == VehicleStatus.idle ? "YELLOW" : "YELLOW"}/tipper.png";
-  }
-
-  static String tractor({VehicleStatus type = VehicleStatus.out}) {
-    bool isGpsPointApp = dotenv.get('IS_GPS_POINT_APP') == "true";
-    return "$_vehicleBasePath/${type == (isGpsPointApp ? VehicleStatus.inactive : VehicleStatus.parking) ? "BLUE" : type == (isGpsPointApp ? VehicleStatus.parking : VehicleStatus.out) ? "RED" : type == VehicleStatus.moving ? "GREEN" : type == VehicleStatus.expired ? "PURPLE" : type == (isGpsPointApp ? VehicleStatus.out : VehicleStatus.inactive) ? "GRAY" : type == VehicleStatus.idle ? "YELLOW" : "YELLOW"}/tractor.png";
-  }
-
-  static String truck({VehicleStatus type = VehicleStatus.out}) {
-    bool isGpsPointApp = dotenv.get('IS_GPS_POINT_APP') == "true";
-    return "$_vehicleBasePath/${type == (isGpsPointApp ? VehicleStatus.inactive : VehicleStatus.parking) ? "BLUE" : type == (isGpsPointApp ? VehicleStatus.parking : VehicleStatus.out) ? "RED" : type == VehicleStatus.moving ? "GREEN" : type == VehicleStatus.expired ? "PURPLE" : type == (isGpsPointApp ? VehicleStatus.out : VehicleStatus.inactive) ? "GRAY" : type == VehicleStatus.idle ? "YELLOW" : "YELLOW"}/truck.png";
-  }
-
-  static String manLifter({VehicleStatus type = VehicleStatus.out}) {
-    bool isGpsPointApp = dotenv.get('IS_GPS_POINT_APP') == "true";
-    return "$_vehicleBasePath/${type == (isGpsPointApp ? VehicleStatus.inactive : VehicleStatus.parking) ? "BLUE" : type == (isGpsPointApp ? VehicleStatus.parking : VehicleStatus.out) ? "RED" : type == VehicleStatus.moving ? "GREEN" : type == VehicleStatus.expired ? "PURPLE" : type == (isGpsPointApp ? VehicleStatus.out : VehicleStatus.inactive) ? "GRAY" : type == VehicleStatus.idle ? "YELLOW" : "YELLOW"}/man_lifter.png";
-  }
-}
+/// Vehicle artwork is resolved by `getVehicleImage` in
+/// `lib/util/get_vehicle_image.dart`, which reads the
+/// `assets/vehicle/<type>/<type>_<status>.png` icon pack.
 
 extension SizeBoxWidget on double {
   Widget sizeBoxFromHeight() {
@@ -215,7 +150,6 @@ extension SizeBoxWidget on double {
 }
 
 class AppStrings {
-
   static const String appName = "GpsTrack Eye";
   static const String appTitle = "Sangeetbhati";
   static const String me = "Me";

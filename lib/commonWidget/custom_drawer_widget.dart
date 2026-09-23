@@ -8,6 +8,7 @@ import 'package:gps_software/screens/authentications/view/sign_in_view.dart';
 import 'package:gps_software/screens/change_password/view/change_password_view.dart';
 import 'package:gps_software/screens/geofence/view/geofence_view.dart';
 import 'package:gps_software/screens/dashboard/widgets/dashboard_logo_mark.dart';
+import 'package:gps_software/screens/settings/view/setting_view.dart';
 import 'package:gps_software/util/app_constant.dart';
 import 'package:gps_software/util/user_details.dart';
 
@@ -66,8 +67,10 @@ class _CustomDrawerWidgetState extends State<CustomDrawerWidget> {
       case DrawerItem.geofence:
         Get.toNamed(GeofenceView.geofenceView);
         break;
-      // Screens not built yet
       case DrawerItem.setting:
+        Get.toNamed(SettingView.settingView);
+        break;
+
       case DrawerItem.support:
         Get.snackbar(
           item.title,

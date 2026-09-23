@@ -54,6 +54,21 @@ class TripReportItem {
   Duration get duration => end.difference(start);
 }
 
+/// AC report: a stretch driven with the AC on, shown as a route with distance
+class AcReportItem {
+  const AcReportItem({
+    required this.date,
+    required this.from,
+    required this.to,
+    required this.distanceKm,
+  });
+
+  final DateTime date;
+  final ReportLocation from;
+  final ReportLocation to;
+  final double distanceKm;
+}
+
 /// Distance travelled on one day
 class DistanceReportItem {
   const DistanceReportItem({
@@ -116,15 +131,19 @@ class GeofenceReportItem {
   final ReportLocation location;
 }
 
-/// Temperature sensor reading
+/// Temperature sensor reading, with the ignition state and speed at that moment
 class TempReportItem {
   const TempReportItem({
     required this.time,
     required this.temperature,
     required this.location,
+    required this.ignitionOn,
+    required this.speed,
   });
 
   final DateTime time;
   final double temperature;
   final ReportLocation location;
+  final bool ignitionOn;
+  final double speed;
 }

@@ -446,6 +446,7 @@ class _MyAppState extends State<MyApp> {
               colorScheme:
                   ColorScheme.fromSeed(seedColor: AppColors.primaryColorShades),
               useMaterial3: true,
+              fontFamily: AppFonts.inter,
               primarySwatch: AppColors.primaryColorShades,
               scaffoldBackgroundColor: Colors.white),
           getPages: AppPages.routes,

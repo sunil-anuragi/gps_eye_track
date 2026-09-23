@@ -84,7 +84,7 @@ class DashboardVehicleListView extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 14.sp,
                   color: AppColors.blackColor,
-                  fontFamily: 'Dmsans',
+                  fontFamily: AppFonts.inter,
                 ),
                 decoration: InputDecoration(
                   hintText: 'Search..',

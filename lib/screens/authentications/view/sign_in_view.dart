@@ -6,6 +6,7 @@ import 'package:gps_software/screens/authentications/viewModel/auth_view_model.d
 import 'package:gps_software/util/app_constant.dart';
 
 import '../../../custom_widget.dart';
+import 'package:gps_software/generated/assets.dart';
 
 class SignInView extends GetView<AuthViewModel> {
   static const signInView = '/signInView';
@@ -90,43 +91,16 @@ class _LogoBadge extends StatelessWidget {
       child: Container(
         width: 160.w,
         height: 160.w,
+        clipBehavior: Clip.antiAlias,
         decoration: const BoxDecoration(
           color: AppColors.whiteColor,
           shape: BoxShape.circle,
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Transform.rotate(
-              angle: 0.785398,
-              child: Container(
-                width: 39.w,
-                height: 39.w,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: AppColors.primaryColor,
-                    width: 1.7.w,
-                  ),
-                  borderRadius: BorderRadius.circular(11.r),
-                ),
-                child: Transform.rotate(
-                  angle: -0.785398,
-                  child: Icon(
-                    Icons.gps_fixed,
-                    color: AppColors.primaryColor,
-                    size: 28.w,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 22.h),
-            CustomWidget.text(
-              AppStrings.appName,
-              color: AppColors.primaryColor,
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
-          ],
+        // The artwork already carries the wordmark and its own white field,
+        // so it fills the badge rather than sitting inside it.
+        child: Image.asset(
+          Assets.brandLogo,
+          fit: BoxFit.cover,
         ),
       ),
     );

@@ -79,17 +79,18 @@ class _CreateGeofenceDialogState extends State<_CreateGeofenceDialog> {
                     autofocus: true,
                     textCapitalization: TextCapitalization.words,
                     onSubmitted: (_) => _save(),
-                    style: TextStyle(fontSize: 14.sp, fontFamily: 'Dmsans'),
+                    style:
+                        TextStyle(fontSize: 14.sp, fontFamily: AppFonts.inter),
                     decoration: InputDecoration(
                       hintText: 'Enter Name',
                       hintStyle: TextStyle(
                         fontSize: 14.sp,
                         color: const Color(0xff7a7a7a),
-                        fontFamily: 'Dmsans',
+                        fontFamily: AppFonts.inter,
                       ),
                       errorText: _error,
-                      errorStyle:
-                          TextStyle(fontSize: 11.sp, fontFamily: 'Dmsans'),
+                      errorStyle: TextStyle(
+                          fontSize: 11.sp, fontFamily: AppFonts.inter),
                       isDense: true,
                       filled: true,
                       fillColor: const Color(0xffdedede),

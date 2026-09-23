@@ -86,7 +86,7 @@ class VehicleMapTooltip extends StatelessWidget {
       child: RichText(
         text: TextSpan(
           style: TextStyle(
-            fontFamily: 'Dmsans',
+            fontFamily: AppFonts.inter,
             fontSize: 10.sp,
             color: AppColors.whiteColor,
           ),

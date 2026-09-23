@@ -56,9 +56,9 @@ class _SplashViewState extends State<SplashView>
         child: SlideTransition(
           position: _animation,
           child: CustomWidget.customAssetImageWidget(
-            image: Assets.assetsGpsLogo,
-            height: 200.r,
-            width: 200.r,
+            image: Assets.brandLogo,
+            height: 220.r,
+            width: 220.r,
           ),
         ),
       ),

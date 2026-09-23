@@ -1,5 +1,10 @@
 flutter_launcher_icons:
-  android: "ic_launcher"
+  # true keeps the default `ic_launcher` name the AndroidManifest points at.
+  # A string name here suppresses adaptive-icon generation.
+  android: true
   ios: true
-  image_path: "assets/app_logo.png"
+  image_path: "branding/app_icon.png"
   remove_alpha_ios: true
+  min_sdk_android: 24
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "branding/app_icon_foreground.png"

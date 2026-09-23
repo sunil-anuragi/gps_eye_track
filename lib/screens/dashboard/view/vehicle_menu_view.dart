@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:gps_software/custom_widget.dart';
 import 'package:gps_software/util/app_constant.dart';
 import 'package:gps_software/util/get_vehicle_image.dart';
-import 'package:gps_software/enum/vehicle_status.dart';
 import 'package:gps_software/generated/assets.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -78,17 +77,13 @@ class VehicleMenuView extends StatelessWidget {
       }
     }
 
-    // // Determine VehicleStatus enum for image loading
-    // VehicleStatus statusEnum = VehicleStatus.out;
-    // if (statusText.toLowerCase().contains('run')) {
-    //   statusEnum = VehicleStatus.moving;
-    // } else if (statusText.toLowerCase().contains('stop')) {
-    //   statusEnum = VehicleStatus.parking;
-    // } else if (statusText.toLowerCase().contains('idle')) {
-    //   statusEnum = VehicleStatus.idle;
-    // }
-
-    // final String vehicleImage = getVehicleImage(vehicleType, statusEnum);
+    final String vehicleImage = getVehicleImage(
+      vehicleType,
+      vehicleStatusFromText(
+        statusText,
+        isExpired: vehicle['isExpired'] as bool? ?? false,
+      ),
+    );
 
     return Scaffold(
       backgroundColor: const Color(0xfff3f6f9),
@@ -331,7 +326,7 @@ class VehicleMenuView extends StatelessWidget {
                           children: [
                             _buildGridItem(
                               'Live Track',
-                              Assets.vehicleMenuTracking,
+                              Assets.vehicleMenuIcLiveTrack,
                               onTap: () => Get.toNamed(
                                 LiveTrackingView.liveTrackingView,
                                 arguments: vehicle,
@@ -339,16 +334,15 @@ class VehicleMenuView extends StatelessWidget {
                             ),
                             _buildGridItem(
                               'History',
-                              Assets.vehicleMenuPlayback,
+                              Assets.vehicleMenuIcHistory,
                               onTap: () => Get.toNamed(
-           
                                 HistoryView.historyView,
                                 arguments: vehicle,
                               ),
                             ),
-                            _buildGridItem('Reports', Assets.vehicleMenuReports,
+                            _buildGridItem(
+                                'Reports', Assets.vehicleMenuIcReports,
                                 onTap: () {
-                              print("data");
                               Get.toNamed(
                                 AllReportsView.allReportsView,
                                 arguments: vehicle,
@@ -356,7 +350,7 @@ class VehicleMenuView extends StatelessWidget {
                             }),
                             _buildGridItem(
                               'Details',
-                              Assets.vehicleMenuDetail,
+                              Assets.vehicleMenuIcDetails,
                               onTap: () => Get.toNamed(
                                 VehicleDetailsView.vehicleDetailsView,
                                 arguments: vehicle,
@@ -364,17 +358,17 @@ class VehicleMenuView extends StatelessWidget {
                             ),
                             _buildGridItem(
                               'Engine',
-                              Assets.vehicleMenuCommand,
+                              Assets.vehicleMenuIcEngine,
                               onTap: () => showEngineControl(vehicleNo),
                             ),
                             _buildGridItem(
                               'Parking',
-                              Assets.playbackParkingIcon,
+                              Assets.vehicleMenuIcParking,
                               onTap: () => showParkingDialog(vehicleNo),
                             ),
                             _buildGridItem(
                               'Alerts',
-                              Assets.vehicleMenuAlert,
+                              Assets.vehicleMenuIcAlerts,
                               onTap: () => Get.toNamed(
                                 AlertsView.alertsView,
                                 arguments: vehicle,
@@ -382,8 +376,7 @@ class VehicleMenuView extends StatelessWidget {
                             ),
                             _buildGridItem(
                               'Near By',
-                              null,
-                              iconData: Icons.sensors,
+                              Assets.vehicleMenuIcNearby,
                               onTap: () => showNearbyDialog(
                                 vehicleNo: vehicleNo,
                                 latitude: lat,
@@ -392,7 +385,7 @@ class VehicleMenuView extends StatelessWidget {
                             ),
                             _buildGridItem(
                               'Share',
-                              Assets.vehicleMenuShare,
+                              Assets.vehicleMenuIcShare,
                               onTap: () => showShareLocationDialog(
                                 vehicle: vehicle,
                                 vehicleNo: vehicleNo,
@@ -402,7 +395,7 @@ class VehicleMenuView extends StatelessWidget {
                             ),
                             _buildGridItem(
                               'odometer',
-                              Assets.vehicleMenuImei,
+                              Assets.vehicleMenuIcOdometer,
                               onTap: () => showVehicleSettingDialog(
                                 VehicleSetting.odometer,
                                 vehicleNo: vehicleNo,
@@ -411,7 +404,7 @@ class VehicleMenuView extends StatelessWidget {
                             ),
                             _buildGridItem(
                               'Over Speed',
-                              Assets.vehicleMenuOverspeed,
+                              Assets.vehicleMenuIcOverspeed,
                               onTap: () => showVehicleSettingDialog(
                                 VehicleSetting.overSpeed,
                                 vehicleNo: vehicleNo,
@@ -420,7 +413,7 @@ class VehicleMenuView extends StatelessWidget {
                             ),
                             _buildGridItem(
                               'Management',
-                              Assets.vehicleMenuManagement,
+                              Assets.vehicleMenuIcManagement,
                               onTap: () => Get.toNamed(
                                 VehicleManagementView.vehicleManagementView,
                                 arguments: vehicle,
@@ -447,6 +440,20 @@ class VehicleMenuView extends StatelessWidget {
                   ),
                 ),
               ),
+              // Positioned(
+              //   right: -15.w,
+              //   top: -510,
+              //   bottom: 0.h,
+              //   // Decorative only: let taps reach the grid underneath
+              //   child: IgnorePointer(
+              //     child: Image.asset(
+              //       vehicleImage,
+              //       width: 190.w,
+              //       height: 190.h,
+              //       fit: BoxFit.contain,
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -479,8 +486,8 @@ class VehicleMenuView extends StatelessWidget {
             if (assetPath != null)
               Image.asset(
                 assetPath,
-                width: 24.w,
-                height: 24.h,
+                width: 40.w,
+                height: 40.h,
                 fit: BoxFit.contain,
               )
             else if (iconData != null)

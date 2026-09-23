@@ -15,7 +15,6 @@ PackageInfo? packageInfo;
 ApiService apiService = ApiService();
 
 class ApiService {
-  
   static final Dio _dio = Dio();
   String? packageName;
 
@@ -140,9 +139,8 @@ class ApiService {
             ? dio.FormData.fromMap(tempParams)
             : tempParams,
         options: dio.Options(
-          responseType: isBinary
-              ? dio.ResponseType.bytes
-              : dio.ResponseType.json,
+          responseType:
+              isBinary ? dio.ResponseType.bytes : dio.ResponseType.json,
         ),
       );
       logger("response  ===>  11 ${jsonEncode(response.data)}");
@@ -331,5 +329,3 @@ class ApiService {
     return;
   }
 }
-
-

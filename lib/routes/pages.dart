@@ -27,6 +27,10 @@ import 'package:gps_software/screens/change_password/view/change_password_view.d
 import 'package:gps_software/screens/geofence/bindings/geofence_binding.dart';
 import 'package:gps_software/screens/geofence/view/add_geofence_view.dart';
 import 'package:gps_software/screens/geofence/view/geofence_view.dart';
+import 'package:gps_software/screens/settings/bindings/setting_binding.dart';
+import 'package:gps_software/screens/settings/view/language_view.dart';
+import 'package:gps_software/screens/settings/view/notification_setting_view.dart';
+import 'package:gps_software/screens/settings/view/setting_view.dart';
 import 'package:gps_software/screens/splash/bindings/splash_binding.dart';
 import 'package:gps_software/screens/splash/view/splash_view.dart';
 
@@ -120,6 +124,21 @@ class AppPages {
         name: ChangePasswordView.changePasswordView,
         page: () => const ChangePasswordView(),
         binding: ChangePasswordBinding(),
+        transition: transition),
+    GetPage(
+        name: SettingView.settingView,
+        page: () => const SettingView(),
+        binding: SettingBinding(),
+        transition: transition),
+    GetPage(
+        name: LanguageView.languageView,
+        page: () => const LanguageView(),
+        binding: SettingBinding(),
+        transition: transition),
+    GetPage(
+        name: NotificationSettingView.notificationSettingView,
+        page: () => const NotificationSettingView(),
+        binding: SettingBinding(),
         transition: transition),
   ];
 }

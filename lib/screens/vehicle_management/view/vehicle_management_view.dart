@@ -64,9 +64,9 @@ class VehicleManagementView extends GetView<VehicleManagementViewModel> {
                 labelStyle: TextStyle(
                     fontSize: 13.sp,
                     fontWeight: FontWeight.w600,
-                    fontFamily: 'Dmsans'),
+                    fontFamily: AppFonts.inter),
                 unselectedLabelStyle:
-                    TextStyle(fontSize: 13.sp, fontFamily: 'Dmsans'),
+                    TextStyle(fontSize: 13.sp, fontFamily: AppFonts.inter),
                 indicatorColor: TrackingColors.brandBlue,
                 indicatorSize: TabBarIndicatorSize.label,
                 indicatorWeight: 1.5,

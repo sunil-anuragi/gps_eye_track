@@ -22,6 +22,7 @@ class Assets {
   static const String assetsVehicle = 'assets/vehicle.png';
   static const String ringtoneAlarmTone = 'assets/ringtone/alarm_tone.mp3';
   static const String assetsGpsLogo = 'assets/gps_logo.png';
+  static const String brandLogo = 'assets/brand_logo.png';
   static const String assetsPhone = 'assets/phone.png';
   static const String assetsForgetPassword = 'assets/forget_password_1.jpg';
   static const String assetsNavMap = 'assets/nav_map.png';
@@ -54,6 +55,43 @@ class Assets {
   static const String vehicleMenuOverspeed =
       'assets/vehicle_menu_overspeed.png';
   static const String vehicleMenuReports = 'assets/vehicle_menu_reports.png';
+  static const String vehicleMenuIcAlerts = 'assets/vehicle_menu_ic_alerts.png';
+  static const String vehicleMenuIcDetails =
+      'assets/vehicle_menu_ic_details.png';
+  static const String vehicleMenuIcEngine = 'assets/vehicle_menu_ic_engine.png';
+  static const String vehicleMenuIcHistory =
+      'assets/vehicle_menu_ic_history.png';
+  static const String vehicleMenuIcLiveTrack =
+      'assets/vehicle_menu_ic_live_track.png';
+  static const String vehicleMenuIcManagement =
+      'assets/vehicle_menu_ic_management.png';
+  static const String vehicleMenuIcNearby = 'assets/vehicle_menu_ic_nearby.png';
+  static const String vehicleMenuIcOdometer =
+      'assets/vehicle_menu_ic_odometer.png';
+  static const String vehicleMenuIcOverspeed =
+      'assets/vehicle_menu_ic_overspeed.png';
+  static const String vehicleMenuIcParking =
+      'assets/vehicle_menu_ic_parking.png';
+  static const String vehicleMenuIcReports =
+      'assets/vehicle_menu_ic_reports.png';
+  static const String vehicleMenuIcShare = 'assets/vehicle_menu_ic_share.png';
+  static const String settingIcLanguage = 'assets/setting_ic_language.png';
+  static const String settingIcTone = 'assets/setting_ic_tone.png';
+  static const String settingIcMapType = 'assets/setting_ic_map_type.png';
+  static const String settingIcRefresh = 'assets/setting_ic_refresh.png';
+  static const String settingIcScreen = 'assets/setting_ic_screen.png';
+  static const String settingIcMotion = 'assets/setting_ic_motion.png';
+  static const String settingIcShare = 'assets/setting_ic_share.png';
+  static const String settingIcMotionBadge =
+      'assets/setting_ic_motion_badge.png';
+  static const String mapTypeRoad = 'assets/map_type_road.png';
+  static const String mapTypeHybrid = 'assets/map_type_hybrid.png';
+  static const String mapTypeSatellite = 'assets/map_type_satellite.png';
+  static const String mapTypeTerrain = 'assets/map_type_terrain.png';
+  static const String langEnglish = 'assets/lang_english.png';
+  static const String langHindi = 'assets/lang_hindi.png';
+  static const String langGujarati = 'assets/lang_gujarati.png';
+  static const String langMarathi = 'assets/lang_marathi.png';
   static const String vehicleDetailCarIcon =
       'assets/vehicle_detail_car_icon.png';
   static const String reportDistance = 'assets/report_distance.png';

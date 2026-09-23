@@ -66,7 +66,7 @@ class DashboardVehicleChart extends StatelessWidget {
               labelPosition: ChartDataLabelPosition.inside,
               textStyle: TextStyle(
                 color: AppColors.whiteColor,
-                fontFamily: 'Dmsans',
+                fontFamily: AppFonts.inter,
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w700,
                 letterSpacing: 0,

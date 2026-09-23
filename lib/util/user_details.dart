@@ -83,6 +83,49 @@ class UserDetails {
     return sharedPreferences.getString("mapType") ?? MapTypeEnum.Terrain.name;
   }
 
+  /// Seconds between automatic refreshes on the tracking screens
+  Future<int> get getRefreshSeconds async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getInt("refreshSeconds") ?? 10;
+  }
+
+  Future<void> setRefreshSeconds({required int seconds}) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setInt("refreshSeconds", seconds);
+  }
+
+  /// How the marker moves between points: `slow` or `jump`
+  Future<String> get getVehicleMotion async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getString("vehicleMotion") ?? "slow";
+  }
+
+  Future<void> setVehicleMotion({required String motion}) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString("vehicleMotion", motion);
+  }
+
+  /// Screen shown when the app launches: `map` or `list`
+  Future<String> get getStartupScreen async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getString("startupScreen") ?? "map";
+  }
+
+  Future<void> setStartupScreen({required String screen}) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString("startupScreen", screen);
+  }
+
+  Future<bool> get getReceiveNotification async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getBool("receiveNotification") ?? true;
+  }
+
+  Future<void> setReceiveNotification({required bool isOn}) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setBool("receiveNotification", isOn);
+  }
+
   Future<void> setHistoryColor({required String historyColor}) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString("historyColor", historyColor);
@@ -152,8 +195,11 @@ class AuthenticationModel {
 
   AuthenticationModel({this.userData, this.appSettingModel});
 
-  factory AuthenticationModel.fromJson(Map<String, dynamic> json) => AuthenticationModel(
-        userData: json["user_data"] == null ? null : UserData.fromJson(json["user_data"]),
+  factory AuthenticationModel.fromJson(Map<String, dynamic> json) =>
+      AuthenticationModel(
+        userData: json["user_data"] == null
+            ? null
+            : UserData.fromJson(json["user_data"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -169,7 +215,13 @@ class UserData {
   User? user;
   String? token;
 
-  UserData({this.chart, this.summary, this.ivrCall, this.graph, this.user, this.token});
+  UserData(
+      {this.chart,
+      this.summary,
+      this.ivrCall,
+      this.graph,
+      this.user,
+      this.token});
 
   factory UserData.fromJson(Map<String, dynamic> json) => UserData(
         chart: json["chart"],
@@ -193,7 +245,8 @@ class UserData {
 class User {
   String? email;
   User({this.email});
-  factory User.fromJson(Map<String, dynamic> json) => User(email: json["email"]);
+  factory User.fromJson(Map<String, dynamic> json) =>
+      User(email: json["email"]);
   Map<String, dynamic> toJson() => {"email": email};
 }
 
