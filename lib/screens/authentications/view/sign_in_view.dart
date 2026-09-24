@@ -96,8 +96,8 @@ class _LogoBadge extends StatelessWidget {
           color: AppColors.whiteColor,
           shape: BoxShape.circle,
         ),
-        // The artwork already carries the wordmark and its own white field,
-        // so it fills the badge rather than sitting inside it.
+        // The artwork is already a circle carrying the wordmark, so it fills
+        // the badge rather than sitting inside it.
         child: Image.asset(
           Assets.brandLogo,
           fit: BoxFit.cover,
@@ -226,7 +226,6 @@ class _LoginSheet extends StatelessWidget {
                 textSize: 15,
                 color: AppColors.primaryColor,
                 width: double.infinity,
-                height: 35,
               ),
             ),
           ],

@@ -150,4 +150,11 @@ class Assets {
   static const String geofencePolygonIcon = 'assets/geofence_polygon_icon.png';
   static const String geofenceMyLocationIcon =
       'assets/geofence_my_location_icon.png';
+  static const String indicatorGps = 'assets/indicator_gps.png';
+  static const String indicatorBattery = 'assets/indicator_battery.png';
+  static const String indicatorIgnition = 'assets/indicator_ignition.png';
+  static const String indicatorPower = 'assets/indicator_power.png';
+  static const String reportCardCalendar = 'assets/report_card_calendar.png';
+  static const String reportCardClock = 'assets/report_card_clock.png';
+  static const String reportCardLocation = 'assets/report_card_location.png';
 }

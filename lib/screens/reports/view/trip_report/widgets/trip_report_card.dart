@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gps_software/generated/assets.dart';
 import 'package:gps_software/custom_widget.dart';
 import 'package:gps_software/screens/reports/model/report_items.dart';
 import 'package:gps_software/screens/reports/view/common/report_widgets.dart';
@@ -68,8 +69,8 @@ class TripReportCard extends StatelessWidget {
                   letterSpacing: 0,
                 ),
                 SizedBox(width: 8.w),
-                Icon(Icons.calendar_month,
-                    color: const Color(0xff9aa6b2), size: 22.r),
+                Image.asset(Assets.reportCardCalendar,
+                    width: 22.r, height: 22.r, fit: BoxFit.contain),
               ],
             ),
             SizedBox(height: 8.h),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gps_software/custom_widget.dart';
+import 'package:gps_software/generated/assets.dart';
 import 'package:gps_software/screens/dashboard/widgets/dashboard_logo_mark.dart';
 import 'package:gps_software/util/app_constant.dart';
 import 'package:gps_software/util/get_vehicle_image.dart';
@@ -96,7 +97,7 @@ class VehicleCard extends StatelessWidget {
                 CustomWidget.text(
                   '$vehicleNo | $_typeLabel',
                   color: AppColors.whiteColor,
-                  fontSize: 14,
+                  fontSize: 13,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 0,
                   maxLine: 1,
@@ -113,7 +114,7 @@ class VehicleCard extends StatelessWidget {
                 CustomWidget.text(
                   'Today - $todayKm',
                   color: AppColors.blackColor,
-                  fontSize: 12,
+                  fontSize: 11,
                   fontWeight: FontWeight.w400,
                   letterSpacing: 0,
                   maxLine: 1,
@@ -129,7 +130,7 @@ class VehicleCard extends StatelessWidget {
   // Left: vehicle image, speed, expiry
   Widget _buildLeftSection() {
     return Padding(
-      padding: EdgeInsets.fromLTRB(10.w, 10.h, 0, 6.h),
+      padding: EdgeInsets.fromLTRB(1.w, 10.h, 0, 6.h),
       child: SizedBox(
         width: 92.w,
         child: Column(
@@ -150,6 +151,9 @@ class VehicleCard extends StatelessWidget {
                   ),
                 ),
                 Container(width: 1, height: 44.h, color: _lineColor),
+                SizedBox(
+                  width: 20,
+                )
               ],
             ),
             SizedBox(height: 6.h),
@@ -192,7 +196,7 @@ class VehicleCard extends StatelessWidget {
                 CustomWidget.text(
                   'Last Update : $lastUpdate',
                   color: AppColors.logoutRedColor,
-                  fontSize: 11,
+                  fontSize: 10,
                   letterSpacing: 0,
                   maxLine: 1,
                 ),
@@ -213,7 +217,7 @@ class VehicleCard extends StatelessWidget {
                             CustomWidget.text(
                               status,
                               color: AppColors.runningColor,
-                              fontSize: 11,
+                              fontSize: 10,
                               letterSpacing: 0,
                               maxLine: 1,
                             ),
@@ -222,7 +226,7 @@ class VehicleCard extends StatelessWidget {
                           _oneLine(
                             CustomWidget.text(
                               'ODO : $odo',
-                              fontSize: 11,
+                              fontSize: 10,
                               letterSpacing: 0,
                               maxLine: 1,
                             ),
@@ -242,13 +246,13 @@ class VehicleCard extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              _buildIndicator(Icons.satellite_alt_outlined, 'GPS'),
+              _buildIndicator(Assets.indicatorGps, 'GPS'),
               SizedBox(width: 16.w),
-              _buildIndicator(Icons.battery_charging_full, '100%'),
+              _buildIndicator(Assets.indicatorBattery, '100%'),
               SizedBox(width: 16.w),
-              _buildIndicator(Icons.key, 'IGN'),
+              _buildIndicator(Assets.indicatorIgnition, 'IGN'),
               SizedBox(width: 16.w),
-              _buildIndicator(Icons.power, 'PWR'),
+              _buildIndicator(Assets.indicatorPower, 'PWR'),
             ],
           ),
         ),
@@ -265,8 +269,8 @@ class VehicleCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            width: 24.w,
-            padding: EdgeInsets.symmetric(vertical: 1.h),
+            width: 20.w,
+            // padding: EdgeInsets.symmetric(vertical: 1.h),
             decoration: BoxDecoration(
               color: AppColors.whiteColor,
               border: Border.all(color: AppColors.blackColor, width: 0.8),
@@ -277,7 +281,7 @@ class VehicleCard extends StatelessWidget {
               children: [
                 CustomWidget.text(
                   'SPEED\nLIMIT',
-                  fontSize: 4.5,
+                  fontSize: 3.5,
                   fontWeight: FontWeight.w700,
                   textAlign: TextAlign.center,
                   letterSpacing: 0,
@@ -345,14 +349,15 @@ class VehicleCard extends StatelessWidget {
     );
   }
 
-  Widget _buildIndicator(IconData iconData, String label) {
+  Widget _buildIndicator(String asset, String label) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(
-          iconData,
-          color: AppColors.runningColor,
-          size: 15.r,
+        Image.asset(
+          asset,
+          width: 15.r,
+          height: 15.r,
+          fit: BoxFit.contain,
         ),
         CustomWidget.text(
           label,

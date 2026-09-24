@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:gps_software/custom_widget.dart';
+import 'package:gps_software/generated/assets.dart';
 import 'package:gps_software/screens/reports/model/report_items.dart';
 import 'package:gps_software/screens/reports/viewModel/report_view_model.dart';
 import 'package:gps_software/util/app_constant.dart';
@@ -331,18 +332,21 @@ class ReportPanelTimes extends StatelessWidget {
   }
 }
 
-/// Icon + text row
+/// Icon + text row. Pass either a material [icon] or an image [asset].
 class ReportIconText extends StatelessWidget {
   const ReportIconText({
     super.key,
-    required this.icon,
+    this.icon,
+    this.asset,
     required this.text,
     this.iconColor = const Color(0xff9aa6b2),
     this.fontSize = 13,
     this.textColor = ReportColors.text,
-  });
+  }) : assert((icon == null) != (asset == null),
+            'Provide exactly one of icon or asset');
 
-  final IconData icon;
+  final IconData? icon;
+  final String? asset;
   final String text;
   final Color iconColor;
   final double fontSize;
@@ -353,7 +357,10 @@ class ReportIconText extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, color: iconColor, size: 20.r),
+        if (asset != null)
+          Image.asset(asset!, width: 20.r, height: 20.r, fit: BoxFit.contain)
+        else
+          Icon(icon, color: iconColor, size: 20.r),
         SizedBox(width: 8.w),
         Flexible(
           child: CustomWidget.text(
@@ -386,7 +393,7 @@ class ReportAddress extends StatelessWidget {
     return CustomWidget.text(
       location.address,
       color: color,
-      fontSize: 12.5,
+      fontSize: 11,
       letterSpacing: 0,
       maxLine: 2,
       overflow: TextOverflow.ellipsis,
@@ -493,7 +500,10 @@ class ReportMapFab extends StatelessWidget {
             ),
           ],
         ),
-        child: Icon(Icons.map, color: Colors.black, size: 30.r),
+        child: Center(
+          child: Image.asset(Assets.reportCardLocation,
+              width: 32.r, height: 32.r, fit: BoxFit.contain),
+        ),
       ),
     );
   }

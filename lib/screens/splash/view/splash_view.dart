@@ -15,37 +15,12 @@ class SplashView extends StatefulWidget {
   State<SplashView> createState() => _SplashViewState();
 }
 
-class _SplashViewState extends State<SplashView>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _controller;
-  late final Animation<Offset> _animation;
-
+class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     super.initState();
 
     Get.find<SplashViewModel>();
-
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1500),
-    );
-
-    _animation = Tween<Offset>(
-      begin: const Offset(0, -3.0),
-      end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _controller,
-      curve: Curves.bounceOut,
-    ));
-
-    _controller.forward();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 
   @override
@@ -53,13 +28,10 @@ class _SplashViewState extends State<SplashView>
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
       body: Center(
-        child: SlideTransition(
-          position: _animation,
-          child: CustomWidget.customAssetImageWidget(
-            image: Assets.brandLogo,
-            height: 220.r,
-            width: 220.r,
-          ),
+        child: CustomWidget.customAssetImageWidget(
+          image: Assets.brandLogo,
+          height: 220.r,
+          width: 220.r,
         ),
       ),
     );

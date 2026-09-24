@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gps_software/generated/assets.dart';
 import 'package:get/get.dart';
 import 'package:gps_software/screens/reports/model/report_items.dart';
 import 'package:gps_software/screens/reports/view/common/report_widgets.dart';
@@ -39,7 +40,7 @@ class _AcCard extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerLeft,
               child: ReportIconText(
-                icon: Icons.calendar_month,
+                asset: Assets.reportCardCalendar,
                 text: ReportViewModel.isoDayFormat.format(item.date),
                 fontSize: 14,
               ),

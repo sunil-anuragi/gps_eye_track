@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gps_software/generated/assets.dart';
 import 'package:gps_software/screens/reports/model/report_items.dart';
 import 'package:gps_software/screens/reports/view/common/report_widgets.dart';
 import 'package:gps_software/screens/reports/viewModel/report_view_model.dart';
@@ -42,13 +43,12 @@ class StopReportCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: ReportIconText(
-                    icon: Icons.calendar_month,
+                    asset: Assets.reportCardCalendar,
                     text: ReportViewModel.dayFormat.format(item.start),
                   ),
                 ),
                 ReportIconText(
-                  icon: Icons.history_toggle_off,
-                  iconColor: ReportColors.endDot,
+                  asset: Assets.reportCardClock,
                   text: ReportViewModel.formatDuration(item.duration),
                 ),
               ],
@@ -59,7 +59,8 @@ class StopReportCard extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(10.w, 12.h, 10.w, 14.h),
             child: Row(
               children: [
-                Icon(Icons.location_on, color: ReportColors.endDot, size: 26.r),
+                Image.asset(Assets.reportCardLocation,
+                    width: 26.r, height: 26.r, fit: BoxFit.contain),
                 SizedBox(width: 12.w),
                 Expanded(child: ReportAddress(item.location)),
               ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gps_software/generated/assets.dart';
 import 'package:get/get.dart';
 import 'package:gps_software/custom_widget.dart';
 import 'package:gps_software/screens/reports/model/report_items.dart';
@@ -60,7 +61,7 @@ class _TempCard extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerLeft,
               child: ReportIconText(
-                icon: Icons.calendar_month,
+                asset: Assets.reportCardCalendar,
                 text: ReportViewModel.dayFormat.format(item.time),
                 fontSize: 14,
               ),
@@ -71,7 +72,8 @@ class _TempCard extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(10.w, 12.h, 10.w, 14.h),
             child: Row(
               children: [
-                Icon(Icons.location_on, color: ReportColors.endDot, size: 26.r),
+                Image.asset(Assets.reportCardLocation,
+                    width: 26.r, height: 26.r, fit: BoxFit.contain),
                 SizedBox(width: 12.w),
                 Expanded(child: ReportAddress(item.location)),
               ],

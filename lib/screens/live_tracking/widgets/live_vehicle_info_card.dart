@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gps_software/commonWidget/tracking_map_widgets.dart';
 import 'package:gps_software/custom_widget.dart';
+import 'package:gps_software/generated/assets.dart';
 import 'package:gps_software/util/app_constant.dart';
 
 /// Bottom card on the live tracking screen: vehicle, speed, status,
@@ -125,21 +126,17 @@ class LiveVehicleInfoCard extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            _indicator(Icons.satellite_alt, 'GPS',
-                                AppColors.runningColor),
+                            _indicator(Assets.indicatorGps, 'GPS'),
                             _separator(),
-                            _indicator(Icons.battery_charging_full, '100%',
-                                AppColors.runningColor),
+                            _indicator(Assets.indicatorBattery, '100%'),
                             _separator(),
                             _indicator(
-                                Icons.key,
-                                'IGN',
-                                isRunning
-                                    ? AppColors.runningColor
-                                    : AppColors.logoutRedColor),
+                              Assets.indicatorIgnition,
+                              'IGN',
+                              tint: isRunning ? null : AppColors.logoutRedColor,
+                            ),
                             _separator(),
-                            _indicator(
-                                Icons.power, 'PWR', AppColors.runningColor),
+                            _indicator(Assets.indicatorPower, 'PWR'),
                           ],
                         ),
                       ],
@@ -189,13 +186,21 @@ class LiveVehicleInfoCard extends StatelessWidget {
     );
   }
 
-  Widget _indicator(IconData icon, String label, Color color) {
+  // The artwork is green; [tint] recolours it (e.g. red for ignition off).
+  Widget _indicator(String asset, String label, {Color? tint}) {
     return SizedBox(
       width: 36.w,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, color: color, size: 18.r),
+          Image.asset(
+            asset,
+            width: 18.r,
+            height: 18.r,
+            fit: BoxFit.contain,
+            color: tint,
+            colorBlendMode: tint == null ? null : BlendMode.srcIn,
+          ),
           CustomWidget.text(label, fontSize: 9, letterSpacing: 0, maxLine: 1),
         ],
       ),

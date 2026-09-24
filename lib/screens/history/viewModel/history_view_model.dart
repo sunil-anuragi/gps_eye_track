@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -112,7 +111,6 @@ class HistoryViewModel extends BaseController {
   }
 
   // --------------------------------------------------------------- loading
-
   /// Loads the route between [fromDate] and [toDate].
   /// Swap [_mockRoute] for the history API response when it is available.
   Future<void> loadHistory() async {
@@ -174,7 +172,6 @@ class HistoryViewModel extends BaseController {
       }
     }
     positions.add(waypoints.last);
-
     final span = to.difference(from).inSeconds;
     final last = positions.length - 1;
     return List.generate(positions.length, (i) {
