@@ -67,6 +67,9 @@ enum ManagementSection {
 
   final String label;
 
+  /// RTO-issued documents that carry a certificate file
+  bool get hasCertificate => this != battery && this != tyre;
+
   /// For [tyre] these are the fields of a single tyre
   final List<ManagementField> fields;
 }

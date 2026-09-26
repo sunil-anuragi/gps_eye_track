@@ -26,6 +26,7 @@ class ManagementForm extends StatefulWidget {
     required this.onSave,
     this.buttonColor = ManagementColors.button,
     this.shrinkWrap = false,
+    this.showCertificateActions = false,
   });
 
   final List<ManagementField> fields;
@@ -35,6 +36,9 @@ class ManagementForm extends StatefulWidget {
 
   /// true inside dialogs (no scrolling of its own)
   final bool shrinkWrap;
+
+  /// Download / View / Edit / Upload row for the RTO certificate
+  final bool showCertificateActions;
 
   static final DateFormat storeFormat = DateFormat('yyyy-MM-dd');
   static final DateFormat displayFormat = DateFormat('dd-MMM-yyyy');
@@ -154,6 +158,10 @@ class _ManagementFormState extends State<ManagementForm>
             color: const Color(0xff4f4f4f),
           ),
         ),
+      if (widget.showCertificateActions) ...[
+        SizedBox(height: 14.h),
+        const _CertificateActions(),
+      ],
       SizedBox(height: 18.h),
       SizedBox(
         height: 44.h,
@@ -243,6 +251,71 @@ class _ManagementFormState extends State<ManagementForm>
             ? Icon(Icons.calendar_today_outlined,
                 size: 16.r, color: ManagementColors.hint)
             : null,
+      ),
+    );
+  }
+}
+
+/// "RTO Certificate" label with Download / View / Edit / Upload buttons.
+/// Actions are not wired yet.
+class _CertificateActions extends StatelessWidget {
+  const _CertificateActions();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(left: 4.w, bottom: 8.h),
+          child: CustomWidget.text(
+            'RTO Certificate',
+            fontSize: 13,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 0,
+            color: Colors.black87,
+          ),
+        ),
+        Row(
+          children: [
+            _action(Icons.download_rounded, 'Download', () {}),
+            SizedBox(width: 8.w),
+            _action(Icons.visibility_outlined, 'View', () {}),
+            SizedBox(width: 8.w),
+            _action(Icons.edit_outlined, 'Edit', () {}),
+            SizedBox(width: 8.w),
+            _action(Icons.upload_rounded, 'Upload', () {}),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _action(IconData icon, String label, VoidCallback onTap) {
+    return Expanded(
+      child: Material(
+        color: ManagementColors.field,
+        borderRadius: BorderRadius.circular(10.r),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(10.r),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 10.h),
+            child: Column(
+              children: [
+                Icon(icon, size: 20.r, color: TrackingColors.brandBlue),
+                SizedBox(height: 4.h),
+                CustomWidget.text(
+                  label,
+                  fontSize: 11,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0,
+                  color: TrackingColors.brandBlue,
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

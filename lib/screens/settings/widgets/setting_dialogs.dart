@@ -81,7 +81,7 @@ Future<void> showMapTypeDialog(SettingViewModel controller) async {
                 mainAxisSpacing: 12.h,
                 childAspectRatio: 1,
                 children: [
-                  for (final type in MapTypeEnum.values)
+                  for (final type in _mapTypeOrder)
                     _MapTypeTile(
                       type: type,
                       selected: selected == type,
@@ -93,7 +93,7 @@ Future<void> showMapTypeDialog(SettingViewModel controller) async {
             Row(
               children: [
                 Expanded(child: _barButton('Cancel', Get.back)),
-                SizedBox(width: 4.w),
+                SizedBox(width: 16.w),
                 Expanded(
                   child: _barButton('Ok', () {
                     Get.back();
@@ -109,10 +109,18 @@ Future<void> showMapTypeDialog(SettingViewModel controller) async {
   );
 }
 
+/// Grid order from the design: Road Map, Hybrid / Satellite, Terrain
+const _mapTypeOrder = [
+  MapTypeEnum.Normal,
+  MapTypeEnum.Hybrid,
+  MapTypeEnum.Satellite,
+  MapTypeEnum.Terrain,
+];
+
 /// Flat navy bar button filling the bottom edge of the map type dialog
 Widget _barButton(String label, VoidCallback onTap) {
   return Material(
-    color: TrackingColors.brandBlue,
+    color: TrackingColors.darkNavy,
     child: InkWell(
       onTap: onTap,
       child: SizedBox(
@@ -157,34 +165,38 @@ class _MapTypeTile extends StatelessWidget {
         MapTypeEnum.Terrain => 'Terrain',
       };
 
-  /// Hybrid and satellite previews are dark, so their label flips to white
-  bool get _dark => type == MapTypeEnum.Hybrid || type == MapTypeEnum.Satellite;
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        padding: const EdgeInsets.all(3),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.r),
+          borderRadius: BorderRadius.circular(16.r),
           border: Border.all(
             color: selected ? const Color(0xff22c55e) : Colors.transparent,
             width: 3,
           ),
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(10.r),
+          borderRadius: BorderRadius.circular(12.r),
           child: Stack(
             fit: StackFit.expand,
             children: [
-              Image.asset(_asset, fit: BoxFit.cover),
+              // The previews carry a transparent margin (heaviest at the
+              // bottom); scale past it so the map fills the rounded tile
+              Transform.scale(
+                scale: 1.15,
+                alignment: const Alignment(0.2, -0.4),
+                child: Image.asset(_asset, fit: BoxFit.cover),
+              ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Padding(
                   padding: EdgeInsets.only(bottom: 8.h),
                   child: CustomWidget.text(
                     _label,
-                    color: _dark ? AppColors.whiteColor : Colors.black,
+                    color: Colors.black,
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 0,
@@ -243,7 +255,7 @@ Future<void> showVehicleMotionDialog(SettingViewModel controller) async {
         title: '',
         horizontalInset: 26,
         badge: Image.asset(
-          Assets.settingIcMotionBadge,
+          Assets.assetsMarkerAnimationCar,
           width: 58.r,
           height: 58.r,
           fit: BoxFit.contain,
