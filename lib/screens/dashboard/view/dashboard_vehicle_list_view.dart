@@ -141,7 +141,7 @@ class DashboardVehicleListView extends StatelessWidget {
                         'Address',
                         'Loading address for ${v['vehicleNo']}...',
                         snackPosition: SnackPosition.BOTTOM,
-                        backgroundColor: const Color(0xff18548f),
+                        backgroundColor: AppColors.primaryColor,
                         colorText: AppColors.whiteColor,
                         duration: const Duration(seconds: 2),
                       );
@@ -159,7 +159,7 @@ class DashboardVehicleListView extends StatelessWidget {
             'Map',
             'Opening map view...',
             snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: const Color(0xff18548f),
+            backgroundColor: AppColors.primaryColor,
             colorText: AppColors.whiteColor,
           );
         },
@@ -170,7 +170,7 @@ class DashboardVehicleListView extends StatelessWidget {
         elevation: 4,
         child: Icon(
           Icons.map_outlined,
-          color: const Color(0xff18548f),
+          color: AppColors.primaryColor,
           size: 26.r,
         ),
       ),

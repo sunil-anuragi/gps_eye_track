@@ -84,7 +84,6 @@ class VehicleManagementView extends GetView<VehicleManagementViewModel> {
                                 key: ValueKey(section),
                                 fields: section.fields,
                                 record: controller.recordOf(section),
-                                showCertificateActions: section.hasCertificate,
                                 onSave: (values) =>
                                     controller.saveSection(section, values),
                               ),

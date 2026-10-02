@@ -116,6 +116,9 @@ class Assets {
   static const String reportDownloadIcon = 'assets/report_download_icon.png';
   static const String reportCalendarIcon = 'assets/report_calendar_icon.png';
   static const String immobilizeCarIcon = 'assets/immobilize_car_icon.png';
+  static const String engineControlIcon = 'assets/engine_control_icon.png';
+  static const String nearbyPopupIcon = 'assets/nearby_popup_icon.png';
+  static const String sharePopupIcon = 'assets/share_popup_icon.png';
   static const String fuelCutoffSuccessIcon =
       'assets/fuel_cutoff_success_icon.png';
   static const String geofenceConfirmWarningIcon =

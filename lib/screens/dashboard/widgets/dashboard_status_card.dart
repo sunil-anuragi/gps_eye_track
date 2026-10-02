@@ -92,7 +92,7 @@ class DashboardStatusGrid extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xff18548f),
+        color: AppColors.primaryColor,
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(27.r),
         ),
@@ -159,13 +159,12 @@ class DashboardStatusCard extends StatelessWidget {
                             CustomWidget.text(
                               title,
                               color: titleColor,
-                              fontSize: 14,
+                              fontSize: 12,
                               fontWeight: FontWeight.w700,
                               letterSpacing: 0,
                               maxLine: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            SizedBox(height: 3.h),
                             CustomWidget.text(
                               value,
                               color: valueColor,
@@ -189,7 +188,7 @@ class DashboardStatusCard extends StatelessWidget {
                 ),
               ),
               Container(
-                height: 6.h,
+                height: 10.h,
                 color: barColor,
               ),
             ],
@@ -213,8 +212,8 @@ class _VehicleStatusImage extends StatelessWidget {
   Widget build(BuildContext context) {
     final image = Image.asset(
       imagePath,
-      width: 54.w,
-      height: 22.h,
+      width: 74.w,
+      height: 32.h,
       fit: BoxFit.contain,
       color: tint,
       colorBlendMode: tint == null ? null : BlendMode.srcATop,

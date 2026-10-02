@@ -70,7 +70,6 @@ class _CustomDrawerWidgetState extends State<CustomDrawerWidget> {
       case DrawerItem.setting:
         Get.toNamed(SettingView.settingView);
         break;
-
       case DrawerItem.support:
         Get.snackbar(
           item.title,
@@ -80,6 +79,7 @@ class _CustomDrawerWidgetState extends State<CustomDrawerWidget> {
           duration: const Duration(seconds: 2),
         );
         break;
+    
     }
   }
 

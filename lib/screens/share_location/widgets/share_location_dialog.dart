@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:gps_software/commonWidget/badge_dialog.dart';
+import 'package:gps_software/generated/assets.dart';
 import 'package:gps_software/screens/share_location/view/share_location_view.dart';
-import 'package:gps_software/util/app_constant.dart';
 import 'package:share_plus/share_plus.dart';
 
 enum _ShareChoice { duration, current }
@@ -47,15 +47,7 @@ class _ShareLocationDialog extends StatelessWidget {
       title: 'Share Location',
       titleColor: Colors.black,
       titleSize: 18,
-      badge: Container(
-        width: 64.r,
-        height: 64.r,
-        decoration: const BoxDecoration(
-          color: Color(0xff29b6d6),
-          shape: BoxShape.circle,
-        ),
-        child: Icon(Icons.share, color: AppColors.whiteColor, size: 32.r),
-      ),
+      badge: Image.asset(Assets.sharePopupIcon, width: 64.r, height: 64.r),
       children: [
         SizedBox(height: 16.h),
         Padding(

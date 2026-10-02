@@ -8,7 +8,7 @@ import 'package:gps_software/util/app_constant.dart';
 
 /// Shared colours for the live tracking & history screens
 class TrackingColors {
-  static const Color brandBlue = Color(0xff18548f);
+  static const Color brandBlue = AppColors.primaryColor;
   static const Color darkNavy = Color(0xff0c2440);
   static const Color divider = Color(0xffe3e6ea);
 }

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:gps_software/commonWidget/badge_dialog.dart';
+import 'package:gps_software/generated/assets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// Places that can be searched around the vehicle
@@ -54,7 +55,7 @@ class _NearbyDialog extends StatelessWidget {
     return BadgeDialog(
       title: 'Near By',
       horizontalInset: 44,
-      badge: const _NearbyBadge(),
+      badge: Image.asset(Assets.nearbyPopupIcon, width: 52.r, height: 52.r),
       children: [
         badgeDialogSubtitle(vehicleNo, fontSize: 13),
         SizedBox(height: 16.h),
@@ -78,41 +79,4 @@ class _NearbyDialog extends StatelessWidget {
           fontWeight: FontWeight.w500,
         ),
       );
-}
-
-/// Purple → blue diamond from the design
-class _NearbyBadge extends StatelessWidget {
-  const _NearbyBadge();
-
-  @override
-  Widget build(BuildContext context) {
-    return ShaderMask(
-      shaderCallback: (bounds) => const LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [Color(0xff4f7cff), Color(0xffb44cff), Color(0xffe44cf0)],
-      ).createShader(bounds),
-      child: Transform.rotate(
-        angle: 0.785398, // 45°
-        child: Container(
-          width: 38.r,
-          height: 38.r,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(7.r),
-            border: Border.all(color: Colors.white, width: 6.r),
-          ),
-          child: Center(
-            child: Container(
-              width: 12.r,
-              height: 12.r,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(3.r),
-                border: Border.all(color: Colors.white, width: 3.r),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 }

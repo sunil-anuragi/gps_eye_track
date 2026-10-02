@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:gps_software/commonWidget/badge_dialog.dart';
 import 'package:gps_software/commonWidget/tracking_map_widgets.dart';
 import 'package:gps_software/custom_widget.dart';
+import 'package:gps_software/generated/assets.dart';
 import 'package:gps_software/util/app_constant.dart';
 import 'package:gps_software/util/user_details.dart';
 
@@ -42,30 +43,7 @@ class _EngineBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = 96.r;
-    return SizedBox(
-      width: size,
-      height: size,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Icon(Icons.directions_car,
-              color: const Color(0xfff0717a), size: 46.r),
-          Positioned(
-            top: size * 0.2,
-            right: size * 0.26,
-            child:
-                Icon(Icons.vpn_key, color: const Color(0xff2d3a4a), size: 19.r),
-          ),
-          Positioned(
-            top: size * 0.26,
-            left: size * 0.22,
-            child: Icon(Icons.auto_awesome,
-                color: const Color(0xfff5c518), size: 13.r),
-          ),
-        ],
-      ),
-    );
+    return Image.asset(Assets.engineControlIcon, width: 60.r, height: 60.r);
   }
 }
 

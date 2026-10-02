@@ -111,7 +111,7 @@ class VehicleMenuView extends StatelessWidget {
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                             colors: [
-                              Color(0xff18548f),
+                              AppColors.primaryColor,
                               Color(0xff0d3a68),
                             ],
                           ),
@@ -470,14 +470,14 @@ class VehicleMenuView extends StatelessWidget {
               title,
               'Opening $title...',
               snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: const Color(0xff18548f),
+              backgroundColor: AppColors.primaryColor,
               colorText: AppColors.whiteColor,
               duration: const Duration(milliseconds: 1500),
             );
           },
       child: Container(
         decoration: BoxDecoration(
-          color: const Color(0xff18548f),
+          color: AppColors.primaryColor,
           borderRadius: BorderRadius.circular(6.r),
         ),
         child: Column(
